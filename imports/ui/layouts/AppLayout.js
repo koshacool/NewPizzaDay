@@ -48,7 +48,7 @@ class AppLayout extends React.Component {
       const isPublicRoute = isCurrentRouteOneOf(router, publicRoutes);
 
       if (isPublicRoute && isLoggedIn) {
-        redirectTo('/event', router);
+        redirectTo('/my-events', router);
       } else if (!isPublicRoute && !isLoggedIn && !loading) {
         redirectTo('/', router);
       }

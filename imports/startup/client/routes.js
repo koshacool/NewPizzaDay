@@ -6,19 +6,13 @@ import { browserHistory,
           Redirect,
         } from 'react-router';
 
-
 import AppLayout from '../../ui/layouts/AppLayout';
 import NotFoundPage from '../../ui/pages/NotFoundPage';
 
 import SignInPage from '../../ui/pages/SignInPage';
 import SignUpPage from '../../ui/pages/SignUpPage';
 
-// import Events from '../../ui/pages/Events';
-
-
-
-
-
+import MyEventsPage from '../../ui/pages/MyEventsPage';
 
 
 const publicRoutes = ['/', '/sign-in', 'sign-up'];
@@ -32,6 +26,8 @@ export const renderRoutes = () => (
 
       <Route path="sign-in" component={SignInPage} />
       <Route path="sign-up" component={SignUpPage} />
+
+      <Route path="my-events" component={MyEventsPage} />
       
 
       <Route path="not-found" component={NotFoundPage} />

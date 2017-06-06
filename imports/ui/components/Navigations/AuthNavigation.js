@@ -14,7 +14,8 @@ const navButton = (
 const logout = () => Meteor.logout();
 
 const actionsButtons = [
-  <LinkButton flat to="/events" label="Events" />,
+  <LinkButton flat to="/my-events" label="My Events" />,
+  <LinkButton flat to="/open-events" label="Open Events" />,
   <LinkButton flat label="Logout" onClick={logout} />,
 ];
 
@@ -22,7 +23,7 @@ const actionsButtons = [
 const AuthNavigation = () => (
   <Toolbar
     colored
-    title="Vote App"
+    
     nav={navButton}
     actions={actionsButtons}
   />
