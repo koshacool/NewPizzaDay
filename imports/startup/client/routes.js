@@ -13,7 +13,7 @@ import SignInPage from '../../ui/pages/SignInPage';
 import SignUpPage from '../../ui/pages/SignUpPage';
 
 import MyEventsPage from '../../ui/pages/MyEventsPage';
-
+import EditEventPage from '../../ui/pages/EditEventPage';
 
 const publicRoutes = ['/', '/sign-in', 'sign-up'];
 const commonRoutes = ['/not-found'];
@@ -28,7 +28,7 @@ export const renderRoutes = () => (
       <Route path="sign-up" component={SignUpPage} />
 
       <Route path="my-events" component={MyEventsPage} />
-      
+      <Route path="event/:_id" component={EditEventPage} />
 
       <Route path="not-found" component={NotFoundPage} />
       <Redirect path="*" to="not-found" />
