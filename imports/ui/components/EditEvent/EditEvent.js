@@ -4,8 +4,9 @@ import moment from 'moment';
 
 import { Meteor } from 'meteor/meteor';
 
-import { Col } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 import TextField from 'react-md/lib/TextFields/TextField';
+import Button from 'react-md/lib/Buttons/Button';
 
 import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
@@ -16,18 +17,21 @@ import ModalsManager from '../ModalsManager/ModalsManager';
 import { handleResult } from '../../../utils/client-utils';
 import { updateEvent, removeEvent } from '../../../api/events/methods';
 
+import EditEventInfo from './EditEventInfo';
+import AddFoodContainer from '../Containers/AddFoodContainer';
 
 class EditEvent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             modal: false,
+            renderData: false,
         }
 
-        this.onUpdateEvent = this.onUpdateEvent.bind(this);
+        this.onEventUpdate = this.onEventUpdate.bind(this);
         this.onEventRemove = this.onEventRemove.bind(this);
-        this.modalConfirmRemove = this.modalConfirmRemove.bind(this);
-        this.hideModal = this.hideModal.bind(this);
+        this.onRenderFood = this.onRenderFood.bind(this);
+        this.renderFood = this.renderFood.bind(this);
     }
 
     onEventRemove() {
@@ -36,19 +40,18 @@ class EditEvent extends React.Component {
         }));
     }
 
-    modalConfirmRemove() {
+    onRenderFood() {
         this.setState({
-            modal: true
+            renderData: 'renderFood',
         });
     }
 
-    hideModal() {
-        this.setState({
-            modal: false
-        });
+    renderFood() {
+        return (<AddFoodContainer event={this.props.event} />);
     }
+    
 
-    onUpdateEvent(field) {
+    onEventUpdate(field) {
         return (value) => {
             const updatedEvent = {
                 _id: this.props.eventId,
@@ -60,27 +63,34 @@ class EditEvent extends React.Component {
     }
 
     render() {
-        const { loading, event } = this.props;
-
+        const { loading, event, children } = this.props;
+        const { renderData } = this.state;
         return (
             <Spinner loading={loading}>
-                <Col xs={12}>
-                    <TextField
-                        id="event-title"
-                        label="Event Name"
-                        placeholder="My event"
-                        customSize="title"
-                        size={10}
-                        value={event.title}
-                        onChange={this.onUpdateEvent('title')}
-                        rightIcon={<RemoveIcon onRemove={this.modalConfirmRemove} />}
-                    />
-                </Col>
-                { this.state.modal && <ModalsManager
-                    modal={this.state.modal}
-                    onConfirm={this.onEventRemove}
-                    hideModal={this.hideModal}
-                /> }
+                <Row>
+                <Col xs={12} md={6} sm={8} mdOffset={3} smOffset={2}>
+                <EditEventInfo 
+                    event={event}
+                    onEventUpdate={this.onEventUpdate}
+                    onEventRemove={this.onEventRemove}
+                />
+
+                <Button
+                    raised
+                    label="FOOD"
+                    onClick={this.onRenderFood}
+                />
+
+                <Button
+                    raised
+                    label="PEOPLE"
+                   
+                />
+                
+                {renderData && this[renderData]() }
+                
+                </Col>            
+                </Row>
             </Spinner>
         );
     }
@@ -88,7 +98,7 @@ class EditEvent extends React.Component {
 
 
 EditEvent.defaultProps = {
-    event: {},
+    event: {}
 };
 
 

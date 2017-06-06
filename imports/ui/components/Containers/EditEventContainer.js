@@ -5,7 +5,7 @@ import { Events } from '../../../api/events/events';
 import EditEvent from '../EditEvent/EditEvent';
 
 
-export default createContainer(({eventId}) => {
+export default createContainer(({eventId, children}) => {
   const subsHandler = Meteor.subscribe('events.byId', eventId);
   
   return {
