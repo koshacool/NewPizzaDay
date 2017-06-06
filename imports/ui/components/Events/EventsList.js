@@ -15,10 +15,20 @@ import NoItems from '../NoItems';
 class EventsList extends React.Component {
   constructor(props) {
     super(props);
+
+    this.createEvent = this.createEvent.bind(this);
   }
 
   componentWillUnmount() {
     this.props.onUnmount();
+  }
+
+  createEvent(event) {
+    event.preventDefault();
+
+    createEvent.call({ event: {} }, handleResult((eventId) => {
+          this.context.router.push(`edit-event/${eventId}`);
+  }));
   }
   
 
@@ -38,7 +48,7 @@ class EventsList extends React.Component {
           ))}
         </Row>
 
-        <LinkButton floating fixed primary >add</LinkButton>
+        <LinkButton floating fixed primary onClick={this.createEvent}>add</LinkButton>
       </Spinner>
     );
   }

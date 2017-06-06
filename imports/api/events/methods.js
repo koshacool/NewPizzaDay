@@ -21,10 +21,12 @@ export const createEvent = new ValidatedMethod({
     }
 
     const defaultEvent = {
+      title: 'no name',
+      status: 'ordering',
       createdBy: userId,
       createdAt: new Date(),
       endAT: new Date(),
-      title: '',
+
       users:[],
       food: [],
       discount: {},
