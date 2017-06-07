@@ -5,22 +5,21 @@ import { Meteor } from 'meteor/meteor';
 import Dialog from 'react-md/lib/Dialogs';
 
 
-const Confirm = ({question, onConfirm, onReject, visible, closeDialog}) => {
+const Confirm = ({hideModal}) => {
 
   return (
       <Dialog
           id="speedBoost"
-          visible={visible}
+          visible={true}
           title="Are you sure you want to remove this event?"
-          onHide={this.closeDialog}
           aria-labelledby="speedBoostDescription"
           modal
           actions={[{
-            onClick: this.closeDialog,
+            onClick: hideModal,
             primary: true,
             label: 'Yes',
           }, {
-            onClick: this.closeDialog,
+            onClick: hideModal,
             primary: true,
             label: 'Now',
           }]}
@@ -30,12 +29,9 @@ const Confirm = ({question, onConfirm, onReject, visible, closeDialog}) => {
 };
 
 
-
-
-
-EventItem.propTypes = {
-  event: PropTypes.object.isRequired,
+Confirm.propTypes = {
+  hideModal: PropTypes.func.isRequired,
 };
 
 
-export default EventItem;
+export default Confirm;

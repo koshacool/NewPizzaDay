@@ -1,11 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import Confirm from '../Confirm';
+import CreateFood from '../CreateFood';
 
 
 export default createContainer(({hideModal}) => {
   return {
     hideModal,
   };
-}, Confirm);
+}, CreateFood);

@@ -47,9 +47,9 @@ class EditEvent extends React.Component {
     }
 
     renderFood() {
-        return (<AddFoodContainer event={this.props.event} />);
+        return (<AddFoodContainer event={this.props.event}/>);
     }
-    
+
 
     onEventUpdate(field) {
         return (value) => {
@@ -68,28 +68,28 @@ class EditEvent extends React.Component {
         return (
             <Spinner loading={loading}>
                 <Row>
-                <Col xs={12} md={6} sm={8} mdOffset={3} smOffset={2}>
-                <EditEventInfo 
-                    event={event}
-                    onEventUpdate={this.onEventUpdate}
-                    onEventRemove={this.onEventRemove}
-                />
+                    <Col xs={12} md={6} sm={8} mdOffset={3} smOffset={2}>
+                        <EditEventInfo
+                            event={event}
+                            onEventUpdate={this.onEventUpdate}
+                            onEventRemove={this.onEventRemove}
+                        />
 
-                <Button
-                    raised
-                    label="FOOD"
-                    onClick={this.onRenderFood}
-                />
+                        <Button
+                            raised
+                            label="FOOD"
+                            onClick={this.onRenderFood}
+                        />
 
-                <Button
-                    raised
-                    label="PEOPLE"
-                   
-                />
-                
-                {renderData && this[renderData]() }
-                
-                </Col>            
+                        <Button
+                            raised
+                            label="PEOPLE"
+
+                        />
+
+                        { renderData && this[renderData]() }
+
+                    </Col>
                 </Row>
             </Spinner>
         );
