@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Row, Col } from 'react-flexbox-grid';
 import Button from 'react-md/lib/Buttons/Button';
+import Divider from 'react-md/lib/Dividers';
 
 import { handleResult } from '../../../utils/client-utils';
 import { createEvent } from '../../../api/events/methods';
@@ -68,10 +69,13 @@ class FoodList extends React.Component {
     return (
       <Spinner loading={loading}>
         <Row>
-
-            <Button raised primary label="NEW FOOD" onClick={this.showModal('createFood')} />
-
-
+          <Col >
+          <Button raised primary label="NEW FOOD" onClick={this.showModal('createFood')} />           
+          </Col>
+        </Row>
+        <Divider />
+        <Row>
+          <Col>
           {!loading && food.length === 0 && <NoItems text="You don't have any food"/>}
 
           {food.length > 0 && food.map(foodItem => (
@@ -80,6 +84,7 @@ class FoodList extends React.Component {
               foodItem={foodItem}
             />
           ))}
+          </Col>
         </Row>
         {console.log(modal)}
         {modal && this[`modal${modal}`]()}

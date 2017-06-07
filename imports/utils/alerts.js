@@ -31,6 +31,7 @@ export const showError = error => {
   console.log(error);
 
   const errorMessage = getErrorMessage(error);
+  console.log(errorMessage)
   Alert.error(errorMessage, alertOptions);
 };
 

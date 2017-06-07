@@ -7,6 +7,7 @@ import { Meteor } from 'meteor/meteor';
 import { Row, Col } from 'react-flexbox-grid';
 import TextField from 'react-md/lib/TextFields/TextField';
 import Button from 'react-md/lib/Buttons/Button';
+import Divider from 'react-md/lib/Dividers';
 
 import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
@@ -86,9 +87,13 @@ class EditEvent extends React.Component {
                             label="PEOPLE"
 
                         />
+                                        
 
-                        { renderData && this[renderData]() }
-
+                    </Col>
+                     
+                    <Col xs={12} md={6} sm={8} mdOffset={3} smOffset={2}>
+                    
+                    { renderData && this[renderData]() }
                     </Col>
                 </Row>
             </Spinner>

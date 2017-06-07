@@ -15,7 +15,7 @@ const FoodItem = ({ foodItem }) => {
 
     return (
         <Col xs={12} className="m-b-20">
-            TEST
+            {foodItem.name}
         </Col>
     );
 };
