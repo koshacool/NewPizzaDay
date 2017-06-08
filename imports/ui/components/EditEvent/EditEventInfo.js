@@ -9,27 +9,22 @@ import LinkButton from '../LinkButton';
 
 
 const EditEventInfo = ({ event, onEventUpdate, onEventRemove }) => (
-  <Col xs={12}>
     <TextField
-                        id="event-title"
-                        label="Event Name"
-                        placeholder="My event"
-                        customSize="title"
-                        size={10}
-                        value={event.title}
-                        onChange={onEventUpdate('title')}
-                        rightIcon={<RemoveIcon onRemove={onEventRemove} />}
-                    />
-   
-  </Col>
+        id="event-title"
+        label="Event Name"
+        placeholder="My event"
+        customSize="title"
+        size={10}
+        value={event.title}
+        onChange={onEventUpdate('title')}
+        rightIcon={<RemoveIcon onRemove={onEventRemove} />}
+    />
 );
 
-
 EditEventInfo.propTypes = {
-  event: PropTypes.object.isRequired,
-  onEventUpdate: PropTypes.func.isRequired,
-  onEventRemove: PropTypes.func.isRequired,
+    event: PropTypes.object.isRequired,
+    onEventUpdate: PropTypes.func.isRequired,
+    onEventRemove: PropTypes.func.isRequired,
 };
-
 
 export default EditEventInfo;
