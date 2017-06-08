@@ -11,3 +11,14 @@ Meteor.publish('users.current', function usersCurrent() {
   	{ fields: { emails: 1, username: 1 } }
   );
 });
+
+Meteor.publish('users.list', function usersList() {
+  if (!this.userId) {
+    return this.ready();
+  }
+
+  return Meteor.users.find(
+  	{ }, 
+  	{ fields: { username: 1 } }
+  );
+});

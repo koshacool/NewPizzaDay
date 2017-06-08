@@ -27,7 +27,7 @@ class EventsList extends React.Component {
     event.preventDefault();
 
     createEvent.call({ event: {} }, handleResult((eventId) => {
-          this.context.router.push(`edit-event/${eventId}`);
+          this.context.router.push(`event/${eventId}`);
   }));
   }
   

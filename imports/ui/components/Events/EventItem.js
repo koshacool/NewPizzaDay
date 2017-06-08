@@ -52,7 +52,7 @@ const EventItem = ({ event }) => {
                     {canEdit && (
                         <LinkButton
                             flat
-                            to={`edit-poll/${event._id}`}
+                            to={`event/${event._id}`}
                             label="Edit"
                         />
                     )}
@@ -73,14 +73,11 @@ const EventItem = ({ event }) => {
 };
 
 
-EventItem.defaultProps = {
-    onPublicityToggle: () => true,
-};
+
 
 
 EventItem.propTypes = {
     event: PropTypes.object.isRequired,
-    onPublicityToggle: PropTypes.func,
 };
 
 
