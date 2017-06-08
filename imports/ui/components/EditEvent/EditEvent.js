@@ -51,7 +51,6 @@ class EditEvent extends React.Component {
         return (<AddFoodContainer event={this.props.event}/>);
     }
 
-
     onEventUpdate(field) {
         return (value) => {
             const updatedEvent = {
@@ -68,7 +67,7 @@ class EditEvent extends React.Component {
         const { renderData } = this.state;
         return (
             <Spinner loading={loading}>
-                <Row>
+                <Row className="m-b-20">
                     <Col xs={12} md={6} sm={8} mdOffset={3} smOffset={2}>
                         <EditEventInfo
                             event={event}
@@ -90,10 +89,11 @@ class EditEvent extends React.Component {
                                         
 
                     </Col>
-                     
+                </Row>
+
+                <Row>
                     <Col xs={12} md={6} sm={8} mdOffset={3} smOffset={2}>
-                    
-                    { renderData && this[renderData]() }
+                        { renderData && this[renderData]() }
                     </Col>
                 </Row>
             </Spinner>

@@ -43,7 +43,7 @@ export const updateEvent = new ValidatedMethod({
   name: 'Events.update',
   validate: new SimpleSchema({
     _id: { type: String },
-    partToUpdate: { type: EventsSchema.pick(['title', 'status']) },
+    partToUpdate: { type: EventsSchema.pick(['title', 'status', 'food', 'food.$', 'discount', 'discount.$']) },
   }).validator(),
 
   run({ _id, partToUpdate }) {
@@ -71,12 +71,6 @@ export const removeEvent = new ValidatedMethod({
       throw new Meteor.Error('You can\'t remove this event');
     }
 
-    //Orders.find({ eventId: _id }).forEach((order) => {
-    //  Meteor.call('Orders.remove', { _id: order._id });
-    //});
-
     return Events.remove({ _id });
   },
 });
-
-

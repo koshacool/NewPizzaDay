@@ -10,7 +10,7 @@ export const EventsSchema = new SimpleSchema({
 
   createdBy: { type: String, optional: true },
 
-  users: { type: [Object], optional: true },
-  food: { type: [Object], optional: true },
-  discount: { type: [Object], optional: true },
+  users: { type: [String], optional: true },
+  food: { type: [String], optional: true },
+  discount: { type: Object, optional: true, blackbox: true },
 });
