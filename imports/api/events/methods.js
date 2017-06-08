@@ -43,7 +43,16 @@ export const updateEvent = new ValidatedMethod({
   name: 'Events.update',
   validate: new SimpleSchema({
     _id: { type: String },
-    partToUpdate: { type: EventsSchema.pick(['title', 'status', 'food', 'food.$', 'discount', 'discount.$']) },
+    partToUpdate: { type: EventsSchema.pick([
+      'title', 
+      'status', 
+      'food', 
+      'food.$', 
+      'discount', 
+      'discount.$',
+      'users', 
+      'users.$',
+      ]) },
   }).validator(),
 
   run({ _id, partToUpdate }) {

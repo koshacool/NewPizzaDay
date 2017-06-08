@@ -120,7 +120,7 @@ class FoodList extends React.Component {
                         {!loading && food.length === 0 && <NoItems text="You don't have any food"/>}
 
                         <List>
-                            <Subheader primaryText="Available MENU" primary/>
+                            { food.length > 0 &&  <Subheader primaryText="Available MENU" primary/> }
                             <Divider />
                             {food.length > 0 && food.map(foodItem => (
                                 <FoodItem
@@ -137,7 +137,7 @@ class FoodList extends React.Component {
 
                     </Col>
                 </Row>
-                {console.log(event.discount)}
+                
                 {modal && this[`modal${modal}`]()}
             </Spinner>
         );

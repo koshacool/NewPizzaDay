@@ -11,6 +11,7 @@ import CreateFoodContainer from './Containers/CreateFoodContainer';
 const ModalsList = {
     Confirm: ({hideModal}) => (<ConfirmContainer hideModal={hideModal}/>),
     CreateFood: ({hideModal}) => (<CreateFoodContainer hideModal={hideModal}/>),
+    UserGroup: ({hideModal, otherProps: { users }}) => (<UserGroupContainer hideModal={hideModal}/>),
 };
 
 class ModalsManager extends PureComponent {

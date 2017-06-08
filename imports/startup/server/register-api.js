@@ -2,5 +2,5 @@ import '../../api/users';
 import '../../api/events';
 import '../../api/food';
 
-// import '../../api/user_groups';
+import '../../api/userGroups';
 // import '../../api/food_groups';
