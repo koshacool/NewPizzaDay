@@ -9,6 +9,7 @@ import Divider from 'react-md/lib/Dividers';
 import List from 'react-md/lib/Lists/List';
 
 import { updateGroup } from '../../../../api/userGroups/methods';
+import { updateEventRemoveUsers, updateEventAddUsers } from '../../../../api/events/methods';
 import { handleResult } from '../../../../utils/client-utils';
 import GroupItem from './GroupItem';
 import Spinner from '../../Spinner';
@@ -29,22 +30,22 @@ class GroupsList extends Component {
 
 
 
-    onAvailableToggle(groupId ,eventsArray) {
+    onAvailableToggle(group, isChecked) {
         const {_id: eventId} = this.props.event;
-        const eventPosition = eventsArray.indexOf(eventId);
-
-        if (eventPosition === -1) {
+        const {_id: groupId, events: eventsArray, users: usersArray} = group;
+        
+        if (isChecked) {
             eventsArray.push(eventId);
+            updateEventAddUsers.call({_id: eventId, users: usersArray}, handleResult());
         } else {
-            eventsArray.splice(eventPosition, 1);
+            eventsArray.splice(eventsArray.indexOf(eventId), 1);
+            updateEventRemoveUsers.call({_id: eventId, users: usersArray}, handleResult());
         }
 
-        const updatedGroup = {
+        updateGroup.call({
             _id: groupId,
             partToUpdate: {events: eventsArray},
-        };
-
-        updateGroup.call(updatedGroup, handleResult());
+        }, handleResult());
     }
 
 
@@ -73,7 +74,7 @@ class GroupsList extends Component {
                                         key={group._id}
                                         group={group}
                                         onAvailableToggle={this.onAvailableToggle}
-                                        checked={false}
+                                        checked={checkEvailable(group.events, event._id)}
                                     />
                             ))}
                         </List>

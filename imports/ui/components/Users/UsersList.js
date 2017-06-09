@@ -85,19 +85,18 @@ class UsersList extends React.Component {
     
     
 
-    onAvailableToggle(userId) {
+    onAvailableToggle(userId, isChecked) {
         const {event} = this.props;
         let usersArray = event.users;
 
-        const userPosition = usersArray.indexOf(userId);
-        if (userPosition === -1) {
+        if (isChecked) {
             usersArray.push(userId);
         } else {
-            usersArray.splice(userPosition, 1);
+            usersArray.splice(usersArray.indexOf(userId), 1);
         }
 
         const updatedEvent = {
-            _id: this.props.event._id,
+            _id: event._id,
             partToUpdate: {users: usersArray},
         };
 

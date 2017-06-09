@@ -81,19 +81,18 @@ class FoodList extends React.Component {
         };
     }
 
-    onAvailableToggle(foodId) {
+    onAvailableToggle(foodId, isChecked) {
         const {event} = this.props;
         let foodArray = event.food;
 
-        const foodItemPosition = foodArray.indexOf(foodId);
-        if (foodItemPosition === -1) {
+        if (isChecked) {
             foodArray.push(foodId);
         } else {
-            foodArray.splice(foodItemPosition, 1);
+            foodArray.splice(foodArray.indexOf(foodId), 1);
         }
 
         const updatedEvent = {
-            _id: this.props.event._id,
+            _id: event._id,
             partToUpdate: {food: foodArray},
         };
 

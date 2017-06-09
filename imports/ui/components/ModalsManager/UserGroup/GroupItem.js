@@ -11,7 +11,7 @@ import TextField from 'react-md/lib/TextFields';
 const GroupItem = ({ group, onAvailableToggle, checked }) => {
 
     const GroupIcon = () => <FontIcon>people</FontIcon>;
-    const evailableToggle = (isChecked) => onAvailableToggle(group._id, group.events);
+    const evailableToggle = (isChecked) => onAvailableToggle(group, isChecked);
 
     return (
         <div>

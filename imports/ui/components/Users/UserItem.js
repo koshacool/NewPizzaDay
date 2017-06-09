@@ -14,7 +14,7 @@ import TextField from 'react-md/lib/TextFields';
 
 const UserItem = ({ user, onAvailableToggle, checked}) => {
     const UserIcon = () => <FontIcon>people</FontIcon>;
-    const evailableToggle = (isChecked) => onAvailableToggle(user._id);
+    const evailableToggle = (isChecked) => onAvailableToggle(user._id, isChecked);
     
 
     return (

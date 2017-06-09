@@ -9,7 +9,7 @@ Meteor.publish('userGroups.currentUser', function userGroupsCurrentUser() {
         return this.ready();
     }
 
-    return UserGroups.find();
+    return UserGroups.find({createdBy: this.userId});
 });
 
 Meteor.publish('userGroups.byId', function userGroupsById(groupId) {
@@ -18,7 +18,7 @@ Meteor.publish('userGroups.byId', function userGroupsById(groupId) {
         return this.ready();
     }
 
-    return UserGroups.find({_id: groupId});
+    return UserGroups.find({_id: groupId, createdBy: this.userId});
 });
 
 
