@@ -81,19 +81,18 @@ class FoodList extends React.Component {
         };
     }
 
-    onAvailableToggle(foodId) {
+    onAvailableToggle(foodId, isChecked) {
         const {event} = this.props;
         let foodArray = event.food;
 
-        const foodItemPosition = foodArray.indexOf(foodId);
-        if (foodItemPosition === -1) {
+        if (isChecked) {
             foodArray.push(foodId);
         } else {
-            foodArray.splice(foodItemPosition, 1);
+            foodArray.splice(foodArray.indexOf(foodId), 1);
         }
 
         const updatedEvent = {
-            _id: this.props.event._id,
+            _id: event._id,
             partToUpdate: {food: foodArray},
         };
 
@@ -120,7 +119,7 @@ class FoodList extends React.Component {
                         {!loading && food.length === 0 && <NoItems text="You don't have any food"/>}
 
                         <List>
-                            <Subheader primaryText="Available MENU" primary/>
+                            { food.length > 0 &&  <Subheader primaryText="Available MENU" primary/> }
                             <Divider />
                             {food.length > 0 && food.map(foodItem => (
                                 <FoodItem
@@ -137,7 +136,7 @@ class FoodList extends React.Component {
 
                     </Col>
                 </Row>
-                {console.log(event.discount)}
+                
                 {modal && this[`modal${modal}`]()}
             </Spinner>
         );

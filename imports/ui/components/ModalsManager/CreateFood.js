@@ -27,10 +27,9 @@ class CreateFood extends Component {
         const getFormFieldValue = getFieldValue(event.target);
 
         const name = getFormFieldValue('name');
-        const price = +getFormFieldValue('price');
+        const price = getFormFieldValue('price');
         const description = getFormFieldValue('price');
 
-        name && console.log(name)
         const foodItem = {
             name,
             price,

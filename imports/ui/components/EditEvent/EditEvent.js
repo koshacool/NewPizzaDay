@@ -20,6 +20,8 @@ import { updateEvent, removeEvent } from '../../../api/events/methods';
 
 import EditEventInfo from './EditEventInfo';
 import AddFoodContainer from '../Containers/AddFoodContainer';
+import AddUsersContainer from '../Containers/AddUsersContainer';
+
 
 class EditEvent extends React.Component {
     constructor(props) {
@@ -33,6 +35,12 @@ class EditEvent extends React.Component {
         this.onEventRemove = this.onEventRemove.bind(this);
         this.onRenderFood = this.onRenderFood.bind(this);
         this.renderFood = this.renderFood.bind(this);
+        this.onRenderUsers = this.onRenderUsers.bind(this);
+        this.renderUsers = this.renderUsers.bind(this);
+    }
+
+    componentWillUnmount() {
+        this.props.onUnmount();
     }
 
     onEventRemove() {
@@ -47,8 +55,18 @@ class EditEvent extends React.Component {
         });
     }
 
+    onRenderUsers() {
+        this.setState({
+            renderData: 'renderUsers',
+        });
+    }
+
     renderFood() {
-        return (<AddFoodContainer event={this.props.event}/>);
+        return (<AddFoodContainer event={this.props.event} />);
+    }
+
+    renderUsers() {
+        return (<AddUsersContainer event={this.props.event} />);
     }
 
     onEventUpdate(field) {
@@ -84,9 +102,8 @@ class EditEvent extends React.Component {
                         <Button
                             raised
                             label="PEOPLE"
-
+                            onClick={this.onRenderUsers}    
                         />
-                                        
 
                     </Col>
                 </Row>

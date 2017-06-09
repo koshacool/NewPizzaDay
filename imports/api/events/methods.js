@@ -43,7 +43,16 @@ export const updateEvent = new ValidatedMethod({
   name: 'Events.update',
   validate: new SimpleSchema({
     _id: { type: String },
-    partToUpdate: { type: EventsSchema.pick(['title', 'status', 'food', 'food.$', 'discount', 'discount.$']) },
+    partToUpdate: { type: EventsSchema.pick([
+      'title', 
+      'status', 
+      'food', 
+      'food.$', 
+      'discount', 
+      'discount.$',
+      'users', 
+      'users.$',
+      ]) },
   }).validator(),
 
   run({ _id, partToUpdate }) {
@@ -72,5 +81,42 @@ export const removeEvent = new ValidatedMethod({
     }
 
     return Events.remove({ _id });
+  },
+});
+
+export const updateEventRemoveUsers = new ValidatedMethod({
+  name: 'Events.updateRemoveUsers',
+  validate: new SimpleSchema({
+    _id: { type: String },
+    users: { type: [String] },
+  }).validator(),
+
+  run({ _id, users }) {
+    const event = Events.findOne({ _id, createdBy: this.userId });
+
+    if (!event) {
+      throw new Meteor.Error('You can\'t edit this event');
+    }
+    
+    return Events.update({ _id }, { $pullAll: { users: users } });
+  },
+});
+
+
+export const updateEventAddUsers = new ValidatedMethod({
+  name: 'Events.updateAddUsers',
+  validate: new SimpleSchema({
+    _id: { type: String },
+    users: { type: [String] },
+  }).validator(),
+
+  run({ _id, users }) {
+    const event = Events.findOne({ _id, createdBy: this.userId });
+
+    if (!event) {
+      throw new Meteor.Error('You can\'t edit this event');
+    }
+    
+    return Events.update({ _id }, { $addToSet: { users: { $each: users }  }  });
   },
 });
