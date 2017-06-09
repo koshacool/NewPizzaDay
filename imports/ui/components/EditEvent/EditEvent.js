@@ -39,6 +39,10 @@ class EditEvent extends React.Component {
         this.renderUsers = this.renderUsers.bind(this);
     }
 
+    componentWillUnmount() {
+        this.props.onUnmount();
+    }
+
     onEventRemove() {
         removeEvent.call({_id: this.props.eventId}, handleResult(() => {
             this.context.router.push('my-events');
@@ -100,7 +104,6 @@ class EditEvent extends React.Component {
                             label="PEOPLE"
                             onClick={this.onRenderUsers}    
                         />
-                                        
 
                     </Col>
                 </Row>

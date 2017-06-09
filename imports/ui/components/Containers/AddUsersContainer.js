@@ -5,17 +5,12 @@ import UsersList from '../Users/UsersList';
 import { UserGroups } from '../../../api/userGroups/userGroups';
 
 export default createContainer(({event}) => {
-  const subsHandler1 = Meteor.subscribe('users.list');
-  const subsHandler2 = Meteor.subscribe('userGroups.currentUser');
+  const subsHandler = Meteor.subscribe('users.list');
   
   return {
     event,
     users: Meteor.users.find({}, { sort: { username: 1 } }).fetch(),
-    groups: UserGroups.find({}, { sort: { name: 1 } }).fetch(),
-    loading: !subsHandler1.ready() || !subsHandler2.ready(),
-    onUnmount: () => {
-    	subsHandler1.stop();
-    	subsHandler2.stop();
-    },
+    loading: !subsHandler.ready(),
+    onUnmount: subsHandler.stop,
   };
 }, UsersList);

@@ -22,57 +22,70 @@ export const createUserGroup = new ValidatedMethod({
     }
 
     const defaultGroup = {
-      name: 'No nema',
+      name: 'No name',
       createdBy: userId,
       users: [],
-      event: [],
+      events: [],
     };
 
     const groupToAdd = { ...defaultGroup, ...group };
-    
+
     return UserGroups.insert(groupToAdd);
   },
 });
 
 
-// export const updateEvent = new ValidatedMethod({
-//   name: 'Events.update',
-//   validate: new SimpleSchema({
-//     _id: { type: String },
-//     partToUpdate: { type: EventsSchema.pick(['title', 'status']) },
-//   }).validator(),
+ export const updateGroup = new ValidatedMethod({
+   name: 'UserGroups.update',
+   validate: new SimpleSchema({
+     _id: { type: String },
+     partToUpdate: { type: GroupSchema.pick(['name', 'events', 'events.$', 'users', 'users.$']) },
+   }).validator(),
 
-//   run({ _id, partToUpdate }) {
-//     const event = Events.findOne({ _id, createdBy: this.userId });
+   run({ _id, partToUpdate }) {
+     const group = UserGroups.findOne({ _id, createdBy: this.userId });
 
-//     if (!event) {
-//       throw new Meteor.Error('You can\'t edit this event');
-//     }
+     if (!group) {
+       throw new Meteor.Error('You can\'t edit this group');
+     }
 
-//     return Events.update({ _id }, { $set: partToUpdate });
-//   },
-// });
+     return UserGroups.update({ _id }, { $set: partToUpdate });
+   },
+ });
 
 
-// export const removeEvent = new ValidatedMethod({
-//   name: 'Events.remove',
-//   validate: new SimpleSchema({
-//     _id: { type: String },
-//   }).validator(),
+ export const removeGroup = new ValidatedMethod({
+   name: 'UserGroups.remove',
+   validate: new SimpleSchema({
+     _id: { type: String },
+   }).validator(),
 
-//   run({ _id }) {
-//     const event = Events.findOne({ _id, createdBy: this.userId });
+   run({ _id }) {
+     const group = UserGroups.findOne({ _id, createdBy: this.userId });
 
-//     if (!event) {
-//       throw new Meteor.Error('You can\'t remove this event');
-//     }
+     if (!group) {
+       throw new Meteor.Error('You can\'t remove this group');
+     }
 
-//     //Orders.find({ eventId: _id }).forEach((order) => {
-//     //  Meteor.call('Orders.remove', { _id: order._id });
-//     //});
+     return UserGroups.remove({ _id });
+   },
+ });
 
-//     return Events.remove({ _id });
-//   },
-// });
 
+export const findByIdGroup = new ValidatedMethod({
+  name: 'UserGroups.findById',
+  validate: new SimpleSchema({
+    _id: { type: String },
+  }).validator(),
+
+  run({ _id }) {
+    const group = UserGroups.findOne({ _id, createdBy: this.userId });
+
+    if (!group) {
+      throw new Meteor.Error('You can\'t remove this group');
+    }
+
+    return group;
+  },
+});
 

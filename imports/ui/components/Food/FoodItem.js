@@ -32,6 +32,7 @@ const FoodItem = ({ foodItem, onAvailableToggle, checked, onDiscount, discount }
     return (
         <div>
             <ListItem
+                key={foodItem._id}
                 leftIcon={<FoodIcon />}
                 primaryText={foodItem.name}
                 secondaryText={getPrice()}

@@ -6,12 +6,14 @@ import Button from 'react-md/lib/Buttons/Button';
 
 import ConfirmContainer from './Containers/ConfirmContainer';
 import CreateFoodContainer from './Containers/CreateFoodContainer';
-
+import UserGroupContainer from './Containers/UserGroupContainer';
+import GroupsListContainer from './Containers/GroupsListContainer';
 
 const ModalsList = {
-    Confirm: ({hideModal}) => (<ConfirmContainer hideModal={hideModal}/>),
-    CreateFood: ({hideModal}) => (<CreateFoodContainer hideModal={hideModal}/>),
-    UserGroup: ({hideModal, otherProps: { users }}) => (<UserGroupContainer hideModal={hideModal}/>),
+    Confirm: (props) => (<ConfirmContainer props={props} />),
+    CreateFood: (props) => (<CreateFoodContainer props={props} />),
+    UserGroup: (props) => (<UserGroupContainer props={props} />),
+    GroupsList: (props) => (<GroupsListContainer props={props} />),
 };
 
 class ModalsManager extends PureComponent {
@@ -23,7 +25,7 @@ class ModalsManager extends PureComponent {
 
     render() {
         const { modalName } = this.props;
-        return  ModalsList[modalName](this.props)
+        return  ModalsList[modalName](this.props);
     }
 }
 

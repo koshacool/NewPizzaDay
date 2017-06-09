@@ -1,8 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-
-import { Meteor } from 'meteor/meteor';
 
 import ListItem from 'react-md/lib/Lists/ListItem';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
@@ -11,37 +8,38 @@ import Divider from 'react-md/lib/Dividers';
 import TextField from 'react-md/lib/TextFields';
 
 
+const GroupItem = ({ group, onAvailableToggle, checked }) => {
 
-const UserItem = ({ user, onAvailableToggle, checked}) => {
-    const UserIcon = () => <FontIcon>people</FontIcon>;
-    const evailableToggle = (isChecked) => onAvailableToggle(user._id);
-    
+    const GroupIcon = () => <FontIcon>people</FontIcon>;
+    const evailableToggle = (isChecked) => onAvailableToggle(group._id, group.events);
 
     return (
         <div>
             <ListItem
-                leftIcon={<UserIcon />}
-                primaryText={user.username}
+                leftIcon={<GroupIcon />}
+                primaryText={group.name}
                 threeLines
-                key={user._id}
+                key={group._id}
             >
-                
+
                 <Checkbox
-                    checked={checked}
-                    id={user._id}
+                    checked={false}
+                    id={group._id}
                     name='activeUser'
                     onChange={evailableToggle}
+                    checked={checked}
                 />
             </ListItem>
             <Divider />
         </div>
     );
+
 };
 
-UserItem.propTypes = {
-    user: PropTypes.object.isRequired,
+GroupItem.propTypes = {
+    group: PropTypes.object.isRequired,
     onAvailableToggle: PropTypes.func.isRequired,
     checked: PropTypes.bool.isRequired,
 };
 
-export default UserItem;
+export default GroupItem;

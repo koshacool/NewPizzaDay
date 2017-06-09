@@ -4,7 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import CreateFood from '../CreateFood';
 
 
-export default createContainer(({hideModal}) => {
+export default createContainer(({props: {hideModal}}) => {
   return {
     hideModal,
   };

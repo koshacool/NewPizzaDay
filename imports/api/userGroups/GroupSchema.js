@@ -6,5 +6,5 @@ export const GroupSchema = new SimpleSchema({
   createdBy: { type: String, optional: true },
 
   users: { type: [String], optional: true },
-  event: { type: [String], optional: true },
+  events: { type: [String], optional: true },
 });
