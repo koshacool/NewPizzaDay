@@ -6,12 +6,14 @@ import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
 import FontIcon from 'react-md/lib/FontIcons';
 import Divider from 'react-md/lib/Dividers';
 import TextField from 'react-md/lib/TextFields';
+import Button from 'react-md/lib/Buttons/Button';
 
 
-const GroupItem = ({ group, onAvailableToggle, checked }) => {
+const GroupItem = ({ group, onAvailableToggle, checked, editGroup }) => {
 
     const GroupIcon = () => <FontIcon>people</FontIcon>;
     const evailableToggle = (isChecked) => onAvailableToggle(group, isChecked);
+    const edit = (groupId) => () => editGroup(groupId);
 
     return (
         <div>
@@ -21,6 +23,11 @@ const GroupItem = ({ group, onAvailableToggle, checked }) => {
                 threeLines
                 key={group._id}
             >
+                <Button 
+                    label="edit"
+                    flat
+                    onClick={edit(group._id)}
+                />
 
                 <Checkbox
                     checked={false}
@@ -29,6 +36,7 @@ const GroupItem = ({ group, onAvailableToggle, checked }) => {
                     onChange={evailableToggle}
                     checked={checked}
                 />
+
             </ListItem>
             <Divider />
         </div>
@@ -40,6 +48,7 @@ GroupItem.propTypes = {
     group: PropTypes.object.isRequired,
     onAvailableToggle: PropTypes.func.isRequired,
     checked: PropTypes.bool.isRequired,
+    editGroup: PropTypes.func.isRequired
 };
 
 export default GroupItem;

@@ -55,6 +55,7 @@ class FoodList extends React.Component {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
             hideModal={this.hideModal}
+            modalDescription="Create Menu Item"
             event={this.props.event}
         />);
     }

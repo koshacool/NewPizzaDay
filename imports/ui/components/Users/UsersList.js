@@ -17,9 +17,6 @@ import LinkButton from '../LinkButton';
 import NoItems from '../NoItems';
 import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerContainer';
 
-
-
-const ucFirst = str => str[0].toUpperCase() + str.slice(1);
 const checkEvailable = (arr, value) => arr.indexOf(value) !== -1;
 
 
@@ -37,6 +34,7 @@ class UsersList extends React.Component {
         this.onAvailableToggle = this.onAvailableToggle.bind(this);
         this.createGroup = this.createGroup.bind(this);
         this.modalUserGroup = this.modalUserGroup.bind(this);
+        this.ucFirst = this.ucFirst.bind(this);
     }
 
     componentWillUnmount() {
@@ -49,9 +47,13 @@ class UsersList extends React.Component {
         });
     }
 
+    ucFirst(str) {
+        return str[0].toUpperCase() + str.slice(1);
+    }
+
     showModal(name) {
       return (modalParams = null) =>  this.setState({
-            modal: ucFirst(name),
+            modal: this.ucFirst(name),
             modalParams,
         });
     }
@@ -61,7 +63,9 @@ class UsersList extends React.Component {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
             hideModal={this.hideModal}
+            modalDescription="Your Groups"
             event={this.props.event}
+            editGroup={this.showModal('userGroup')}
         />);
     }
 
@@ -69,6 +73,7 @@ class UsersList extends React.Component {
          return (<ModalsManagerContainer
              modalName={this.state.modal}
              hideModal={this.hideModal}
+             modalDescription="Edit Group"
              event={this.props.event}
              groupId={groupId}
              users={this.props.users}

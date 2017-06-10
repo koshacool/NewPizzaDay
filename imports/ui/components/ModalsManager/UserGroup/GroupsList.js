@@ -7,12 +7,14 @@ import Dialog from 'react-md/lib/Dialogs';
 import Button from 'react-md/lib/Buttons/Button';
 import Divider from 'react-md/lib/Dividers';
 import List from 'react-md/lib/Lists/List';
+import Subheader from 'react-md/lib/Subheaders';
 
 import { updateGroup } from '../../../../api/userGroups/methods';
 import { updateEventRemoveUsers, updateEventAddUsers } from '../../../../api/events/methods';
 import { handleResult } from '../../../../utils/client-utils';
 import GroupItem from './GroupItem';
 import Spinner from '../../Spinner';
+import NoItems from '../../NoItems';
 
 const checkEvailable = (arr, value) => arr.indexOf(value) !== -1;
 
@@ -20,15 +22,12 @@ class GroupsList extends Component {
     constructor(props) {
         super(props);
 
-
         this.onAvailableToggle = this.onAvailableToggle.bind(this);
     }
 
     componentWillUnmount() {
         this.props.onUnmount();
     }
-
-
 
     onAvailableToggle(group, isChecked) {
         const {_id: eventId} = this.props.event;
@@ -48,40 +47,33 @@ class GroupsList extends Component {
         }, handleResult());
     }
 
-
-
     render() {
-        const { loading, hideModal, groups, event } = this.props;
-
+        const { loading, hideModal, groups, event, editGroup } = this.props;
+       
         return (
-            <Dialog
-                id="speedBoost"
-                visible={true}
-                title="Groups List"
-                aria-labelledby="accessibleContent"
-                modal
-            >
+            <div>
                 < Button raised primary label="Close" className="md-cell--middle" onClick={hideModal}/>
                 <Divider />
 
-                <Spinner loading={loading}>
-
-
-
+                <Spinner loading={loading}>            
                         <List>
+                            <Subheader primaryText="Groups list" primary/>
+
                             {groups.length > 0 && groups.map(group => (
                                     <GroupItem
                                         key={group._id}
                                         group={group}
                                         onAvailableToggle={this.onAvailableToggle}
                                         checked={checkEvailable(group.events, event._id)}
+                                        editGroup={editGroup}
                                     />
                             ))}
+
+                            {groups.length === 0 && <NoItems text="You haven't any group" /> }
+
                         </List>
-
                 </Spinner>
-            </Dialog>
-
+            </div>
         )
     }
 }
@@ -92,6 +84,7 @@ GroupsList.propTypes = {
     groups: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
     onUnmount: PropTypes.func.isRequired,
+    editGroup: PropTypes.func.isRequired,
 };
 
 export default GroupsList;

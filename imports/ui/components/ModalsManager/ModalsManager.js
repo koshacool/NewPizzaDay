@@ -16,21 +16,44 @@ const ModalsList = {
     GroupsList: (props) => (<GroupsListContainer props={props} />),
 };
 
+const customStyles = {
+    width : 'auto',  
+    overflow: 'auto',
+};
+
 class ModalsManager extends PureComponent {
     constructor(props) {
         super(props);
 
-        //this.state = { visible: !!props.modal };
+        this.state = { visible: true };
+        this.closeDialog = this.closeDialog.bind(this);
     }
 
+    closeDialog() {
+    this.setState({ visible: false });
+    this.props.hideModal();
+  };
+
     render() {
-        const { modalName } = this.props;
-        return  ModalsList[modalName](this.props);
+        const { modalName, modalDescription } = this.props;
+
+        return  (
+            <Dialog
+          id="modalDialog"
+          dialogStyle={customStyles}
+          visible={this.state.visible}
+          title={modalDescription}
+          onHide={this.closeDialog}
+        >
+                { ModalsList[modalName](this.props) }
+            </Dialog>
+            )
     }
 }
 
 ModalsManager.propTypes = {
     modalName: PropTypes.string.isRequired,
+    modalDescription: PropTypes.string.isRequired,
     hideModal: PropTypes.func.isRequired,
     otherProps: PropTypes.object.isRequired,
 };

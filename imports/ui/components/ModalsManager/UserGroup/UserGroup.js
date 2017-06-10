@@ -7,6 +7,7 @@ import Dialog from 'react-md/lib/Dialogs';
 import Button from 'react-md/lib/Buttons/Button';
 import Divider from 'react-md/lib/Dividers';
 import List from 'react-md/lib/Lists/List';
+import Subheader from 'react-md/lib/Subheaders';
 
 import { handleResult } from '../../../../utils/client-utils';
 import { updateGroup, removeGroup } from '../../../../api/userGroups/methods';
@@ -71,15 +72,7 @@ class UserGroup extends Component {
     render() {
         const { loading, hideModal, group, users } = this.props;
 
-        return (
-            <Dialog
-                id="simpleDialogExample"
-                visible={true}
-                title="Edit User Group"
-                aria-labelledby="accessibleContent"
-
-                onHide={hideModal}
-            >
+        return (            
                 <Spinner loading={loading}>
                     {group && <div>
                         <UserGroupInfo
@@ -92,6 +85,8 @@ class UserGroup extends Component {
                         <Divider />
 
                         <List>
+                            <Subheader primaryText="Users list" primary/>
+
                             {users.length > 1 && users.map(user => (
                                 user._id === Meteor.userId() ?
                                     '' :
@@ -104,8 +99,7 @@ class UserGroup extends Component {
                             ))}
                         </List>
                     </div> }
-                </Spinner>
-            </Dialog>
+                </Spinner>          
 
         )
     }

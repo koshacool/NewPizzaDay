@@ -27,7 +27,7 @@ class CreateFood extends Component {
         const getFormFieldValue = getFieldValue(event.target);
 
         const name = getFormFieldValue('name');
-        const price = getFormFieldValue('price');
+        const price = +getFormFieldValue('price');
         const description = getFormFieldValue('price');
 
         const foodItem = {
@@ -45,13 +45,7 @@ class CreateFood extends Component {
     render() {
         const { hideModal } = this.props;
         return (
-            <Dialog
-                id="speedBoost"
-                visible={true}
-                title="Create new menu item"
-                aria-labelledby="speedBoostDescription"
-                modal
-            >
+            
                 <FocusContainer
                     focusOnMount
                     component="form"
@@ -93,7 +87,7 @@ class CreateFood extends Component {
                     <Button flat primary label="Cancel" className="md-cell--right" onClick={hideModal}/>
                     <Button flat primary label="Create" type="submit" className="md-cell--right" />
                 </FocusContainer>
-            </Dialog>
+           
         )
     }
 }
