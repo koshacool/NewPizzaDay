@@ -71,15 +71,7 @@ class UserGroup extends Component {
     render() {
         const { loading, hideModal, group, users } = this.props;
 
-        return (
-            <Dialog
-                id="simpleDialogExample"
-                visible={true}
-                title="Edit User Group"
-                aria-labelledby="accessibleContent"
-
-                onHide={hideModal}
-            >
+        return (            
                 <Spinner loading={loading}>
                     {group && <div>
                         <UserGroupInfo
@@ -104,8 +96,7 @@ class UserGroup extends Component {
                             ))}
                         </List>
                     </div> }
-                </Spinner>
-            </Dialog>
+                </Spinner>          
 
         )
     }

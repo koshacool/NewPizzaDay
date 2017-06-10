@@ -51,16 +51,10 @@ class GroupsList extends Component {
 
 
     render() {
-        const { loading, hideModal, groups, event } = this.props;
-
+        const { loading, hideModal, groups, event, editGroup } = this.props;
+       
         return (
-            <Dialog
-                id="speedBoost"
-                visible={true}
-                title="Groups List"
-                aria-labelledby="accessibleContent"
-                modal
-            >
+            <div>
                 < Button raised primary label="Close" className="md-cell--middle" onClick={hideModal}/>
                 <Divider />
 
@@ -75,12 +69,13 @@ class GroupsList extends Component {
                                         group={group}
                                         onAvailableToggle={this.onAvailableToggle}
                                         checked={checkEvailable(group.events, event._id)}
+                                        editGroup={editGroup}
                                     />
                             ))}
                         </List>
 
                 </Spinner>
-            </Dialog>
+            </div>
 
         )
     }
@@ -92,6 +87,7 @@ GroupsList.propTypes = {
     groups: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
     onUnmount: PropTypes.func.isRequired,
+    editGroup: PropTypes.func.isRequired,
 };
 
 export default GroupsList;

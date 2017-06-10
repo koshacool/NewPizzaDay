@@ -62,6 +62,8 @@ class UsersList extends React.Component {
             modalName={this.state.modal}
             hideModal={this.hideModal}
             event={this.props.event}
+            editGroup={this.showModal('userGroup')}
+
         />);
     }
 
