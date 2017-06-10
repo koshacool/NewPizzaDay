@@ -18,6 +18,8 @@ import EditEventPage from '../../ui/pages/EditEventPage';
 import AddFoodPage from '../../ui/pages/AddFoodPage';
 import AddPeoplePage from '../../ui/pages/AddPeoplePage';
 
+import OrderPage from '../../ui/pages/OrderPage';
+
 const publicRoutes = ['/', '/sign-in', 'sign-up'];
 const commonRoutes = ['/not-found'];
 
@@ -31,10 +33,8 @@ export const renderRoutes = () => (
       <Route path="sign-up" component={SignUpPage} />
 
       <Route path="my-events" component={MyEventsPage} />
-      <Route path="event/:_id" component={EditEventPage} >
-      {/*  <Route path='/event/:_id/food' component={AddFoodPage}/>
-        <Route path='/event/:_id/people' component={AddPeoplePage}/>*/}
-      </Route>
+      <Route path="event/:_id" component={EditEventPage} />
+      <Route path="order/:_id" component={OrderPage} />
 
       <Route path="not-found" component={NotFoundPage} />
       <Redirect path="*" to="not-found" />

@@ -17,6 +17,7 @@ import ModalsManager from '../ModalsManager/ModalsManager';
 
 import { handleResult } from '../../../utils/client-utils';
 import { updateEvent, removeEvent } from '../../../api/events/methods';
+import { removeOrder } from '../../../api/orders/methods';
 
 import EditEventInfo from './EditEventInfo';
 import AddFoodContainer from '../Containers/AddFoodContainer';
@@ -44,8 +45,10 @@ class EditEvent extends React.Component {
     }
 
     onEventRemove() {
-        removeEvent.call({_id: this.props.eventId}, handleResult(() => {
-            this.context.router.push('my-events');
+        const { eventId } = this.props;
+        removeEvent.call({_id: eventId}, handleResult(() => {
+            removeOrder.call({eventId: eventId}, handleResult());
+            this.context.router.push('/my-events');
         }));
     }
 
