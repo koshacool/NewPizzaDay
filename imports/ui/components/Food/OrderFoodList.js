@@ -31,6 +31,7 @@ class OrderFoodList extends React.Component {
         this.onAvailableToggle = this.onAvailableToggle.bind(this);
         this.getDiscount = this.getDiscount.bind(this);
         this.getQuantity = this.getQuantity.bind(this);
+        this.onQuantity = this.onQuantity.bind(this);
     }
 
     componentWillUnmount() {
@@ -59,6 +60,26 @@ class OrderFoodList extends React.Component {
         updateOrder.call(updatedOrder, handleResult());
     }
 
+    onQuantity(foodId) {     
+        return (value) => {
+            console.log(value)
+            const { order } = this.props;
+            let usersOrder = order.usersOrder;
+            const currentUserOrder = this.getCurrentUserOrder();
+
+            currentUserOrder.quantity[foodId] = value;
+            usersOrder[Meteor.userId()] = currentUserOrder;
+
+            const updatedOrder = {
+                _id: order._id,
+                partToUpdate: {usersOrder: usersOrder},
+            };     
+
+            updateOrder.call(updatedOrder, handleResult());
+        };    
+    }
+
+
     getEvailableFood() {
         const { event, food } = this.props;
         evailableFoodId = event.food;
@@ -77,11 +98,12 @@ class OrderFoodList extends React.Component {
     }
 
     getQuantity(userOrder, foodId) {
+        let quantity = 0;
         if (userOrder.quantity[foodId]) {
-            return 0;
+            quantity = userOrder.quantity[foodId];
         }
 
-        return +userOrder.quantity[foodId];
+        return quantity
     }
 
     getCurrentUserOrder() {
@@ -98,6 +120,7 @@ class OrderFoodList extends React.Component {
             };
     }
 
+    
 
     render() {
         const { loading, event, food, order } = this.props;
@@ -121,7 +144,7 @@ class OrderFoodList extends React.Component {
                                     onAvailableToggle={this.onAvailableToggle}                                    
                                     checked={existValueInArray(userOrder.food, foodItem._id)}
                                     quantity={this.getQuantity(userOrder, foodItem._id)}
-                                    onQuantity={() => console.log('count')}
+                                    onQuantity={this.onQuantity}
                                     discount={this.getDiscount(foodItem._id)}
                                 />
 

@@ -22,13 +22,8 @@ import MenuButtonStatus from '../MenuButton';
 const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quantity, discount }) => {
     const FoodIcon = () => <FontIcon>restaurant</FontIcon>;
     const evailableToggle = (isChecked) => onAvailableToggle(foodItem._id, isChecked);
-    const getPrice = () => {
-        if (discount > 0) {
-            return `₴ ${(foodItem.price - discount).toFixed(2)} (${foodItem.price})`;
-        }
-        return `₴ ${foodItem.price}`;
-    };
-
+    const getPrice = () =>  `₴ ${(foodItem.price - discount).toFixed(2)} `;        
+    
     return (
         <div>
             <ListItem
@@ -41,22 +36,22 @@ const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quant
 
                 <TextField
                     id="discount"
-                    placeholder="Discount"
-                    label="count"
+                    placeholder="Quantity"
+                    label="quantity"
                     paddedBlock
                     step={1}
                     min={0}
                     value={quantity}
-                    pattern="^\d+(\.|\,)\d{2}"
+                    pattern="^\d+"
                     type="number"
                     className="md-cell--2"
-                    onChange={onQuantity('discount', foodItem._id)}
+                    onChange={onQuantity(foodItem._id)}
                 />
 
                 <Checkbox
                     checked={checked}
                     id={foodItem._id}
-                    name='activeFood'
+                    name='orderedFood'
                     onChange={evailableToggle}
                 />
             </ListItem>
