@@ -45,14 +45,14 @@ const EventItem = ({ event }) => {
                 <CardActions>
                     <LinkButton
                         flat
-                        to={`/voting/${event._id}`}
+                        to={`/order/${event._id}`}
                         label="Order"
                     />
 
                     {canEdit && (
                         <LinkButton
                             flat
-                            to={`event/${event._id}`}
+                            to={`/event/${event._id}`}
                             label="Edit"
                         />
                     )}

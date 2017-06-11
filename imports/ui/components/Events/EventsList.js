@@ -5,6 +5,7 @@ import { Row } from 'react-flexbox-grid';
 
 import { handleResult } from '../../../utils/client-utils';
 import { createEvent } from '../../../api/events/methods';
+import { createOrder } from '../../../api/orders/methods';
 
 import EventItem from './EventItem';
 import Spinner from '../Spinner';
@@ -27,6 +28,7 @@ class EventsList extends React.Component {
     event.preventDefault();
 
     createEvent.call({ event: {} }, handleResult((eventId) => {
+          createOrder.call({ order: { eventId: eventId } }, handleResult());
           this.context.router.push(`event/${eventId}`);
   }));
   }
