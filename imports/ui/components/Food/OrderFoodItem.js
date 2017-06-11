@@ -19,7 +19,7 @@ import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
 
 
-const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onCount, count, discount }) => {
+const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quantity, discount }) => {
     const FoodIcon = () => <FontIcon>restaurant</FontIcon>;
     const evailableToggle = (isChecked) => onAvailableToggle(foodItem._id, isChecked);
     const getPrice = () => {
@@ -46,11 +46,11 @@ const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onCount, count, d
                     paddedBlock
                     step={1}
                     min={0}
-                    value={count}
+                    value={quantity}
                     pattern="^\d+(\.|\,)\d{2}"
                     type="number"
                     className="md-cell--2"
-                    onChange={onCount('discount', foodItem._id)}
+                    onChange={onQuantity('discount', foodItem._id)}
                 />
 
                 <Checkbox
@@ -69,8 +69,8 @@ OrderFoodItem.propTypes = {
     foodItem: PropTypes.object.isRequired,
     onAvailableToggle: PropTypes.func.isRequired,
     checked: PropTypes.bool.isRequired,    
-    count: PropTypes.number.isRequired,
-    onCount: PropTypes.func.isRequired,
+    quantity: PropTypes.number.isRequired,
+    onQuantity: PropTypes.func.isRequired,
     discount: PropTypes.number.isRequired,
 };
 

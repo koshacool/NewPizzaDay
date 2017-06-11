@@ -30,7 +30,7 @@ class OrderFoodList extends React.Component {
        
         this.onAvailableToggle = this.onAvailableToggle.bind(this);
         this.getDiscount = this.getDiscount.bind(this);
-        this.getCount = this.getCount.bind(this);
+        this.getQuantity = this.getQuantity.bind(this);
     }
 
     componentWillUnmount() {
@@ -40,7 +40,7 @@ class OrderFoodList extends React.Component {
 
     onAvailableToggle(foodId, isChecked) {
         const { order } = this.props;
-        const currentUserOrder = this.currentUserOrder();
+        const currentUserOrder = this.getCurrentUserOrder();
 
         if (isChecked) {
             currentUserOrder.food.push(foodId);
@@ -76,18 +76,16 @@ class OrderFoodList extends React.Component {
         return +discount[foodId];
     }
 
-    getCount(userOrder, foodId) {
-        if (userOrder.count[foodId]) {
+    getQuantity(userOrder, foodId) {
+        if (userOrder.quantity[foodId]) {
             return 0;
         }
 
-        return +userOrder.count[foodId];
+        return +userOrder.quantity[foodId];
     }
 
-    currentUserOrder() {
-        const {order} = this.props;
-        console.log(order)
-        let currentUserOrder = order.usersOrder[Meteor.userId()];
+    getCurrentUserOrder() {
+        const currentUserOrder = this.props.order.usersOrder[Meteor.userId()];
 
         if (currentUserOrder) {
             return currentUserOrder;
@@ -96,15 +94,14 @@ class OrderFoodList extends React.Component {
         return {
                 status: false,
                 food: [],
-                count: {},
+                quantity: {},
             };
-
     }
 
 
     render() {
         const { loading, event, food, order } = this.props;
-        const userOrder = this.currentUserOrder();
+        const userOrder = this.getCurrentUserOrder();
         const evailableFood = this.getEvailableFood();
         
         return (
@@ -123,8 +120,8 @@ class OrderFoodList extends React.Component {
                                     foodItem={foodItem} 
                                     onAvailableToggle={this.onAvailableToggle}                                    
                                     checked={existValueInArray(userOrder.food, foodItem._id)}
-                                    count={this.getCount(userOrder, foodItem._id)}
-                                    onCount={() => console.log('count')}
+                                    quantity={this.getQuantity(userOrder, foodItem._id)}
+                                    onQuantity={() => console.log('count')}
                                     discount={this.getDiscount(foodItem._id)}
                                 />
 
