@@ -10,28 +10,37 @@ import Spinner from '../Spinner';
 import LinkButton from '../LinkButton';
 import NoItems from '../NoItems';
 
+import OrderFoodContainer from '../Containers/OrderFoodContainer';
+
 
 class Order extends React.Component {
   constructor(props) {
-    super(props);
+    super(props);   
 
   }
 
   componentWillUnmount() {
     this.props.onUnmount();
   } 
+
+  renderFood() {
+    const {event, order} = this.props;
+        return (<OrderFoodContainer event={event} order={order} />);
+  }
   
 
   render() {
     const { loading, order } = this.props;
-   
+    
     return (
       <Spinner loading={loading}>
-        <Row>
-          {order}
-        </Row>
+        { order && (
+          <Row>
+            {this.renderFood()}
+          </Row>
+        )}
 
-        <LinkButton floating fixed primary onClick={this.createEvent}>add</LinkButton>
+       
       </Spinner>
     );
   }
@@ -39,8 +48,9 @@ class Order extends React.Component {
 
 
 Order.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  order: PropTypes.array.isRequired,
+  order: PropTypes.object,
+  event: PropTypes.object,
+  loading: PropTypes.bool.isRequired,  
   onUnmount: PropTypes.func.isRequired,
 };
 

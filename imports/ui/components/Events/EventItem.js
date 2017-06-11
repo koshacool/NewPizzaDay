@@ -52,7 +52,7 @@ const EventItem = ({ event }) => {
                     {canEdit && (
                         <LinkButton
                             flat
-                            to={`event/${event._id}`}
+                            to={`/event/${event._id}`}
                             label="Edit"
                         />
                     )}

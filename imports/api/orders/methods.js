@@ -22,7 +22,7 @@ export const createOrder = new ValidatedMethod({
 
     const defaultOrder = {
       eventId: null,
-      order: {},      
+      usersOrder: {},      
     };
 
     const orderToAdd = { ...defaultOrder, ...order };
@@ -45,5 +45,24 @@ export const removeOrder = new ValidatedMethod({
     }
 
     return Orders.remove({ eventId: eventId });
+  },
+});
+
+
+export const updateOrder = new ValidatedMethod({
+  name: 'Orders.update',
+  validate: new SimpleSchema({
+    _id: { type: String },
+    partToUpdate: { type: OrderSchema.pick([
+      'usersOrder',
+      ]) },
+  }).validator(),
+
+  run({ _id, partToUpdate }) {
+    if (!this.userId) {
+      throw new Meteor.Error('You can\'t edit this order');
+    }
+
+    return Orders.update({ _id }, { $set: partToUpdate });
   },
 });
