@@ -86,7 +86,7 @@ class EditEvent extends React.Component {
     render() {
         const { loading, event, children } = this.props;
         const { renderData } = this.state;
-        console.log(this.props)
+       
         return (
             <Spinner loading={loading}>
                 <Row className="m-b-20">

@@ -25,7 +25,7 @@ const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quant
     const getPrice = () =>  `₴ ${(foodItem.price - discount).toFixed(2)} `;        
     
     return (
-        <div>
+        <Col xs={12} md={12} sm={12} >
             <ListItem
                 key={foodItem._id}
                 leftIcon={<FoodIcon />}
@@ -56,7 +56,7 @@ const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quant
                 />
             </ListItem>
             <Divider />
-        </div>
+        </Col>
     );
 };
 

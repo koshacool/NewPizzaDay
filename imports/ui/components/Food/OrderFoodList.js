@@ -103,7 +103,7 @@ class OrderFoodList extends React.Component {
             quantity = userOrder.quantity[foodId];
         }
 
-        return quantity
+        return +quantity;
     }
 
     getCurrentUserOrder() {
@@ -130,13 +130,14 @@ class OrderFoodList extends React.Component {
         return (
             <Spinner loading={loading}>
            
-                <Row center="xs">
-                    <Col xs={12} md={12} sm={12}>
+                    <Col >
                         {!loading && evailableFood.length === 0 && <NoItems text="Any food is available"/>}
 
                         <List className="m-b-20">
                             { evailableFood.length > 0 &&  <Subheader primaryText="MENU" primary/> }
                             <Divider />
+                            <Row>
+                            
                             {evailableFood.length > 0 && evailableFood.map(foodItem => (
                                 <OrderFoodItem 
                                     key={foodItem._id}
@@ -149,10 +150,12 @@ class OrderFoodList extends React.Component {
                                 />
 
                             ))}
+
+                            </Row>
                         </List>
 
                     </Col>
-                </Row>
+               
             </Spinner>
         );
     }

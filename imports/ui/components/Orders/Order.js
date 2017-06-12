@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Row } from 'react-flexbox-grid';
+import Button from 'react-md/lib/Buttons/Button';
 
 import { handleResult } from '../../../utils/client-utils';
 import { createOrder } from '../../../api/orders/methods';
@@ -27,6 +28,10 @@ class Order extends React.Component {
     const {event, order} = this.props;
         return (<OrderFoodContainer event={event} order={order} />);
   }
+
+  submitOrder() {
+    console.log(123)
+  }
   
 
   render() {
@@ -35,12 +40,12 @@ class Order extends React.Component {
     return (
       <Spinner loading={loading}>
         { order && (
-          <Row>
+          <Row center="xs">
             {this.renderFood()}
           </Row>
         )}
 
-       
+       <Button floating fixed primary onClick={this.submitOrder}> done </Button>
       </Spinner>
     );
   }
