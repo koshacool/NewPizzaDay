@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import Button from 'react-md/lib/Buttons/Button';
-import Dialog from 'react-md/lib/Dialogs';
+import PropTypes from 'prop-types';
+
 import ListItem from 'react-md/lib/Lists/ListItem';
 import MenuButton from 'react-md/lib/Menus/MenuButton';
 
@@ -10,27 +10,25 @@ const styles = {
     flexWrap: 'wrap',
 };
 
+const MenuButtonStatus = ({ onSelect, eventId }) => (
+    <MenuButton
+        id="vert-menu"
+        icon
+        buttonChildren="more_vert"
+        className="menu-example"
+        tooltipLabel="Change status"
 
-export default class MenuButtonStatus extends PureComponent {
-    constructor(props) {
-        super(props);
-    }
+    >
+        <ListItem primaryText="Ordering" onClick={onSelect('ordering', eventId)}/>
+        <ListItem primaryText="Ordered" onClick={onSelect('ordered', eventId)}/>
+        <ListItem primaryText="Delivering" onClick={onSelect('delivering', eventId)}/>
+        <ListItem primaryText="Delivered" onClick={onSelect('delivered', eventId)}/>
+    </MenuButton>
+);
 
-    render() {
-        return (
-            <MenuButton
-                id="vert-menu"
-                icon
-                buttonChildren="more_vert"
-                className="menu-example"
-                tooltipLabel="Change status"
+MenuButtonStatus.propTypes = {
+    onSelect: PropTypes.func.isRequired,
+    eventId: PropTypes.string.isRequired,
+};
 
-            >
-                <ListItem primaryText="Ordering"/>
-                <ListItem primaryText="Ordered"/>
-                <ListItem primaryText="Delivering"/>
-                <ListItem primaryText="Delivered"/>
-            </MenuButton>
-        );
-    }
-}
+export default MenuButtonStatus;
