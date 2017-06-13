@@ -1,2 +1,2 @@
 # NewPizzaDay
-# To start server - write in terminal 'npm start'
+# To start project write in terminal 'npm start'
