@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Row } from 'react-flexbox-grid';
 
 import { handleResult } from '../../../utils/client-utils';
-import { createEvent } from '../../../api/events/methods';
+import { createEvent, updateEvent } from '../../../api/events/methods';
 import { createOrder } from '../../../api/orders/methods';
 
 import EventItem from './EventItem';
@@ -17,14 +17,15 @@ class EventsList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.createEvent = this.createEvent.bind(this);
+    this.onCreateEvent = this.onCreateEvent.bind(this);
+    this.onChangeStatus = this.onChangeStatus.bind(this);
   }
 
   componentWillUnmount() {
     this.props.onUnmount();
   }
 
-  createEvent(event) {
+  onCreateEvent(event) {
     event.preventDefault();
 
     createEvent.call({ event: {} }, handleResult((eventId) => {
@@ -32,7 +33,17 @@ class EventsList extends React.Component {
           this.context.router.push(`event/${eventId}`);
   }));
   }
-  
+
+  onChangeStatus(status, eventId) {
+    return () => {
+      const updatedEvent = {
+        _id: eventId,
+        partToUpdate: {'status': status},
+      };
+
+      updateEvent.call(updatedEvent, handleResult());
+    };
+  }
 
   render() {
     const { loading, events } = this.props;
@@ -46,11 +57,12 @@ class EventsList extends React.Component {
             <EventItem
               key={event._id}
               event={event}
+              onChangeStatus={this.onChangeStatus}
             />
           ))}
         </Row>
 
-        <LinkButton floating fixed primary onClick={this.createEvent}>add</LinkButton>
+        <LinkButton floating fixed primary onClick={this.onCreateEvent}>add</LinkButton>
       </Spinner>
     );
   }

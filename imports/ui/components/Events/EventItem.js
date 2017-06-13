@@ -26,7 +26,7 @@ const getHumanizeDuration = date => moment.duration(new Date() - date).humanize(
 const getTimeAgo = date => `${getHumanizeDuration(date)} ago`;
 
 
-const EventItem = ({ event }) => {
+const EventItem = ({ event, onChangeStatus }) => {
 
     const canEdit = event.createdBy === Meteor.userId();
 
@@ -62,7 +62,7 @@ const EventItem = ({ event }) => {
                         active
                         threeLines
                     >
-                        {canEdit && (<MenuButtonStatus />)}
+                        {canEdit && (<MenuButtonStatus onSelect={onChangeStatus} eventId={event._id} />)}
                     </ListItem>
                    </List>
 
@@ -78,6 +78,7 @@ const EventItem = ({ event }) => {
 
 EventItem.propTypes = {
     event: PropTypes.object.isRequired,
+    onChangeStatus: PropTypes.func.isRequired,
 };
 
 
