@@ -5,7 +5,7 @@ import { Food } from '../../../api/food/food';
 import OrderFoodList from '../Food/OrderFoodList';
 
 
-export default createContainer(({event, order}) => {
+export default createContainer(({event, order, onSubmit}) => {
   const subsHandler = Meteor.subscribe('food.userList');
   
   return {
@@ -13,6 +13,7 @@ export default createContainer(({event, order}) => {
     onUnmount: subsHandler.stop,
     event,
     order,
+    onSubmit,
     food: Food.find({}, { sort: { createdAt: -1 } }).fetch(),
     
   };

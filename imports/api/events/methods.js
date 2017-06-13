@@ -27,7 +27,7 @@ export const createEvent = new ValidatedMethod({
       createdAt: new Date(),
       endAT: new Date(),
 
-      users:[],
+      users:[Meteor.userId()],
       food: [],
       discount: {},
     };

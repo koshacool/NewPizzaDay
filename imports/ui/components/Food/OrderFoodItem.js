@@ -21,11 +21,10 @@ import MenuButtonStatus from '../MenuButton';
 
 const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quantity, discount }) => {
     const FoodIcon = () => <FontIcon>restaurant</FontIcon>;
-    const evailableToggle = (isChecked) => onAvailableToggle(foodItem._id, isChecked);
-    const getPrice = () =>  `₴ ${(foodItem.price - discount).toFixed(2)} `;        
-    
+    const getPrice = () => `₴ ${(foodItem.price - discount).toFixed(2)}`;
+
     return (
-        <Col xs={12} md={12} sm={12} >
+        <Col xs={12} md={12} sm={12}>
             <ListItem
                 key={foodItem._id}
                 leftIcon={<FoodIcon />}
@@ -40,11 +39,12 @@ const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quant
                     label="quantity"
                     paddedBlock
                     step={1}
-                    min={0}
+                    min={1}
                     value={quantity}
                     pattern="^\d+"
                     type="number"
                     className="md-cell--2"
+                    disabled={!checked}
                     onChange={onQuantity(foodItem._id)}
                 />
 
@@ -52,7 +52,7 @@ const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quant
                     checked={checked}
                     id={foodItem._id}
                     name='orderedFood'
-                    onChange={evailableToggle}
+                    onChange={onAvailableToggle(foodItem._id)}
                 />
             </ListItem>
             <Divider />
@@ -63,7 +63,7 @@ const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quant
 OrderFoodItem.propTypes = {
     foodItem: PropTypes.object.isRequired,
     onAvailableToggle: PropTypes.func.isRequired,
-    checked: PropTypes.bool.isRequired,    
+    checked: PropTypes.bool.isRequired,
     quantity: PropTypes.number.isRequired,
     onQuantity: PropTypes.func.isRequired,
     discount: PropTypes.number.isRequired,
