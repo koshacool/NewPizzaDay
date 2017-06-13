@@ -2,7 +2,7 @@
   "name": "NewPizzaDay",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor --settings settings.json"
   },
   "dependencies": {
     "react-addons-pure-render-mixin": "^15.5.2",    

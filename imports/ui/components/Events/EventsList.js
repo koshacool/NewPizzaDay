@@ -42,6 +42,11 @@ class EventsList extends React.Component {
       };
 
       updateEvent.call(updatedEvent, handleResult());
+
+      Meteor.call('sendEmail',
+          'roman.kushytskyy@gmail.com',
+          'Hello from Bob!',
+          'This is a test of Email.send.');
     };
   }
 
