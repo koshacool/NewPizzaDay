@@ -29,49 +29,51 @@ class GroupsList extends Component {
         this.props.onUnmount();
     }
 
-    onAvailableToggle(group, isChecked) {
-        const {_id: eventId} = this.props.event;
-        const {_id: groupId, events: eventsArray, users: usersArray} = group;
-        
-        if (isChecked) {
-            eventsArray.push(eventId);
-            updateEventAddUsers.call({_id: eventId, users: usersArray}, handleResult());
-        } else {
-            eventsArray.splice(eventsArray.indexOf(eventId), 1);
-            updateEventRemoveUsers.call({_id: eventId, users: usersArray}, handleResult());
-        }
+    onAvailableToggle(group) {
+        return (isChecked) => {
+            const {_id: eventId} = this.props.event;
+            const {_id: groupId, events: eventsArray, users: usersArray} = group;
 
-        updateGroup.call({
-            _id: groupId,
-            partToUpdate: {events: eventsArray},
-        }, handleResult());
+            if (isChecked) {
+                eventsArray.push(eventId);
+                updateEventAddUsers.call({_id: eventId, users: usersArray}, handleResult());
+            } else {
+                eventsArray.splice(eventsArray.indexOf(eventId), 1);
+                updateEventRemoveUsers.call({_id: eventId, users: usersArray}, handleResult());
+            }
+
+            updateGroup.call({
+                _id: groupId,
+                partToUpdate: {events: eventsArray},
+            }, handleResult());
+        };
     }
 
     render() {
         const { loading, hideModal, groups, event, editGroup } = this.props;
-       
+
         return (
             <div>
                 < Button raised primary label="Close" className="md-cell--middle" onClick={hideModal}/>
                 <Divider />
 
-                <Spinner loading={loading}>            
-                        <List>
-                            <Subheader primaryText="Groups list" primary/>
+                <Spinner loading={loading}>
+                    <List>
+                        <Subheader primaryText="Groups list" primary/>
 
-                            {groups.length > 0 && groups.map(group => (
-                                    <GroupItem
-                                        key={group._id}
-                                        group={group}
-                                        onAvailableToggle={this.onAvailableToggle}
-                                        checked={checkEvailable(group.events, event._id)}
-                                        editGroup={editGroup}
-                                    />
-                            ))}
+                        {groups.length > 0 && groups.map(group => (
+                            <GroupItem
+                                key={group._id}
+                                group={group}
+                                onAvailableToggle={this.onAvailableToggle}
+                                checked={checkEvailable(group.events, event._id)}
+                                editGroup={editGroup}
+                            />
+                        ))}
 
-                            {groups.length === 0 && <NoItems text="You haven't any group" /> }
+                        {groups.length === 0 && <NoItems text="You haven't any group"/> }
 
-                        </List>
+                    </List>
                 </Spinner>
             </div>
         )

@@ -110,8 +110,6 @@ class FoodList extends React.Component {
                 <Row className="m-b-20">
                     <Col >
                         <Button raised primary label="NEW FOOD" onClick={this.showModal('createFood')}/>
-                        <Button raised primary label="NEW GROUP" onClick={this.showModal('createGroup')}/>
-                        <Button raised primary label="GROUPS" onClick={this.showModal('groups')}/>
                     </Col>
                 </Row>
                 <Divider />

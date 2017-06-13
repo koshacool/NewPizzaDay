@@ -48,6 +48,7 @@ const FoodItem = ({ foodItem, onAvailableToggle, checked, onDiscount, discount }
                     min={0}
                     max={foodItem.price}
                     value={discount}
+                    disabled={!checked}
                     pattern="^\d+(\.|\,)\d{2}"
                     type="number"
                     className="md-cell--2"

@@ -27,28 +27,51 @@ class OrderFoodList extends React.Component {
             modal: false,
         };
 
-       
         this.onAvailableToggle = this.onAvailableToggle.bind(this);
         this.getDiscount = this.getDiscount.bind(this);
         this.getQuantity = this.getQuantity.bind(this);
+        this.onQuantity = this.onQuantity.bind(this);
+        this.onSubmitOrder = this.onSubmitOrder.bind(this);
     }
 
     componentWillUnmount() {
         this.props.onUnmount();
     }
-    
 
-    onAvailableToggle(foodId, isChecked) {
+    onAvailableToggle(foodId) {
+        return (isChecked) => {
+            const food = this.getCurrentUserOrder().food;
+
+            if (isChecked) {
+                food.push(foodId);
+            } else {
+                food.splice(food.indexOf(foodId), 1);
+            }
+
+            this.updateUserOrder('food', food);
+        }
+    }
+
+    onQuantity(foodId) {
+        return (value) => {
+            const quantity = this.getCurrentUserOrder().quantity;
+            quantity[foodId] = value;
+
+            this.updateUserOrder('quantity', quantity);
+        };
+    }
+
+    onSubmitOrder() {
+        this.updateUserOrder('status', true);
+        this.props.onSubmit();
+    }
+
+    updateUserOrder(field, value) {
         const { order } = this.props;
+        let usersOrder = order.usersOrder;
         const currentUserOrder = this.getCurrentUserOrder();
 
-        if (isChecked) {
-            currentUserOrder.food.push(foodId);
-        } else {
-            currentUserOrder.food.splice(currentUserOrder.food.indexOf(foodId), 1);
-        }
-
-        let usersOrder = order.usersOrder;
+        currentUserOrder[field] = value;
         usersOrder[Meteor.userId()] = currentUserOrder;
 
         const updatedOrder = {
@@ -57,6 +80,8 @@ class OrderFoodList extends React.Component {
         };
 
         updateOrder.call(updatedOrder, handleResult());
+
+
     }
 
     getEvailableFood() {
@@ -68,7 +93,7 @@ class OrderFoodList extends React.Component {
 
     getDiscount(foodId) {
         const { discount } = this.props.event;
-                
+
         if (!discount[foodId]) {
             return 0;
         }
@@ -77,11 +102,12 @@ class OrderFoodList extends React.Component {
     }
 
     getQuantity(userOrder, foodId) {
+        let quantity = 1;
         if (userOrder.quantity[foodId]) {
-            return 0;
+            quantity = userOrder.quantity[foodId];
         }
 
-        return +userOrder.quantity[foodId];
+        return +quantity;
     }
 
     getCurrentUserOrder() {
@@ -92,44 +118,46 @@ class OrderFoodList extends React.Component {
         }
 
         return {
-                status: false,
-                food: [],
-                quantity: {},
-            };
+            status: false,
+            food: [],
+            quantity: {},
+        };
     }
-
 
     render() {
         const { loading, event, food, order } = this.props;
         const userOrder = this.getCurrentUserOrder();
         const evailableFood = this.getEvailableFood();
-        
+
         return (
             <Spinner loading={loading}>
-           
-                <Row center="xs">
-                    <Col xs={12} md={12} sm={12}>
-                        {!loading && evailableFood.length === 0 && <NoItems text="Any food is available"/>}
 
-                        <List className="m-b-20">
-                            { evailableFood.length > 0 &&  <Subheader primaryText="MENU" primary/> }
-                            <Divider />
+                <Col >
+                    {!loading && evailableFood.length === 0 && <NoItems text="Any food is available"/>}
+
+                    <List className="m-b-20">
+                        { evailableFood.length > 0 && <Subheader primaryText="MENU" primary/> }
+                        <Divider />
+                        <Row>
+
                             {evailableFood.length > 0 && evailableFood.map(foodItem => (
-                                <OrderFoodItem 
+                                <OrderFoodItem
                                     key={foodItem._id}
-                                    foodItem={foodItem} 
-                                    onAvailableToggle={this.onAvailableToggle}                                    
+                                    foodItem={foodItem}
+                                    onAvailableToggle={this.onAvailableToggle}
                                     checked={existValueInArray(userOrder.food, foodItem._id)}
                                     quantity={this.getQuantity(userOrder, foodItem._id)}
-                                    onQuantity={() => console.log('count')}
+                                    onQuantity={this.onQuantity}
                                     discount={this.getDiscount(foodItem._id)}
                                 />
-
                             ))}
-                        </List>
 
-                    </Col>
-                </Row>
+                        </Row>
+                    </List>
+
+                </Col>
+
+                <Button floating fixed primary onClick={this.onSubmitOrder}> done </Button>
             </Spinner>
         );
     }
@@ -138,8 +166,9 @@ class OrderFoodList extends React.Component {
 OrderFoodList.propTypes = {
     loading: PropTypes.bool.isRequired,
     onUnmount: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
     event: PropTypes.object.isRequired,
-    food: PropTypes.array.isRequired,    
+    food: PropTypes.array.isRequired,
     order: PropTypes.object.isRequired,
 };
 

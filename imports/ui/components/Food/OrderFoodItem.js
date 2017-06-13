@@ -21,16 +21,10 @@ import MenuButtonStatus from '../MenuButton';
 
 const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quantity, discount }) => {
     const FoodIcon = () => <FontIcon>restaurant</FontIcon>;
-    const evailableToggle = (isChecked) => onAvailableToggle(foodItem._id, isChecked);
-    const getPrice = () => {
-        if (discount > 0) {
-            return `₴ ${(foodItem.price - discount).toFixed(2)} (${foodItem.price})`;
-        }
-        return `₴ ${foodItem.price}`;
-    };
+    const getPrice = () => `₴ ${(foodItem.price - discount).toFixed(2)}`;
 
     return (
-        <div>
+        <Col xs={12} md={12} sm={12}>
             <ListItem
                 key={foodItem._id}
                 leftIcon={<FoodIcon />}
@@ -41,34 +35,35 @@ const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quant
 
                 <TextField
                     id="discount"
-                    placeholder="Discount"
-                    label="count"
+                    placeholder="Quantity"
+                    label="quantity"
                     paddedBlock
                     step={1}
-                    min={0}
+                    min={1}
                     value={quantity}
-                    pattern="^\d+(\.|\,)\d{2}"
+                    pattern="^\d+"
                     type="number"
                     className="md-cell--2"
-                    onChange={onQuantity('discount', foodItem._id)}
+                    disabled={!checked}
+                    onChange={onQuantity(foodItem._id)}
                 />
 
                 <Checkbox
                     checked={checked}
                     id={foodItem._id}
-                    name='activeFood'
-                    onChange={evailableToggle}
+                    name='orderedFood'
+                    onChange={onAvailableToggle(foodItem._id)}
                 />
             </ListItem>
             <Divider />
-        </div>
+        </Col>
     );
 };
 
 OrderFoodItem.propTypes = {
     foodItem: PropTypes.object.isRequired,
     onAvailableToggle: PropTypes.func.isRequired,
-    checked: PropTypes.bool.isRequired,    
+    checked: PropTypes.bool.isRequired,
     quantity: PropTypes.number.isRequired,
     onQuantity: PropTypes.func.isRequired,
     discount: PropTypes.number.isRequired,
