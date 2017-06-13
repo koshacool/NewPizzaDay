@@ -102,7 +102,7 @@ class OrderFoodList extends React.Component {
     }
 
     getQuantity(userOrder, foodId) {
-        let quantity = 0;
+        let quantity = 1;
         if (userOrder.quantity[foodId]) {
             quantity = userOrder.quantity[foodId];
         }

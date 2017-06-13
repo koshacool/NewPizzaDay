@@ -54,8 +54,8 @@ class Order extends React.Component {
                 updatedEvent,
                 handleResult( () => browserHistory.push('/') )
             );
-
-
+        } else {
+            browserHistory.push('/');
         }
     }
 
