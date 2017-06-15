@@ -1,5 +1,5 @@
 import React from 'react';
-import EditEventContainer from '../components/Containers/EditEventContainer';
+import EditEventContainer from '../components/EditEvent/EditEventContainer';
 
 
 const EditEventPage = ({ params: { _id } }) => (

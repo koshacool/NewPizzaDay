@@ -1,5 +1,5 @@
 import React from 'react';
-import MyEventsContainer from '../components/Containers/MyEventsContainer';
+import MyEventsContainer from '../components/Events/MyEventsContainer';
 
 
 const MyEventsPage = () => (

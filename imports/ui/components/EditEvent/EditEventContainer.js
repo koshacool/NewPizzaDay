@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Events } from '../../../api/events/events';
-import EditEvent from '../EditEvent/EditEvent';
+import EditEvent from './EditEvent';
 
 
 export default createContainer(({eventId, children}) => {
