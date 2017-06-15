@@ -1,5 +1,5 @@
 import './register-api';
-import './fixtures';
+import './mail-config';
 
 
 import './messages/methods';
