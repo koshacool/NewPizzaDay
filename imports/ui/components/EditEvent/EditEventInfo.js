@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Col from 'react-flexbox-grid/lib/components/Col';
 import TextField from 'react-md/lib/TextFields/TextField';
 
-import RemoveIcon from '../RemoveIcon';
+import IconButton from '../IconButton';
 import LinkButton from '../LinkButton';
 
 
@@ -17,7 +17,7 @@ const EditEventInfo = ({ event, onEventUpdate, onEventRemove }) => (
         size={10}
         value={event.title}
         onChange={onEventUpdate('title')}
-        rightIcon={<RemoveIcon onRemove={onEventRemove} />}
+        rightIcon={<IconButton onClick={onEventRemove} name="delete" />}
     />
 );
 

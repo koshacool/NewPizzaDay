@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Col from 'react-flexbox-grid/lib/components/Col';
 import TextField from 'react-md/lib/TextFields/TextField';
 
-import RemoveIcon from '../../RemoveIcon';
+import IconButton from '../../IconButton';
 import LinkButton from '../../LinkButton';
 
 
@@ -16,7 +16,7 @@ const UserGroupInfo = ({ group, onGroupUpdate, onGroupRemove }) => (
         customSize="title"
         value={group.name}
         onChange={onGroupUpdate('name')}
-        rightIcon={<RemoveIcon onRemove={onGroupRemove} />}
+        rightIcon={<IconButton onClick={onGroupRemove} name="delete" />}
     />
 );
 

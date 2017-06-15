@@ -8,6 +8,8 @@ import Divider from 'react-md/lib/Dividers';
 import TextField from 'react-md/lib/TextFields';
 import Button from 'react-md/lib/Buttons/Button';
 
+import IconButton from '../../IconButton';
+
 
 const GroupItem = ({ group, onAvailableToggle, checked, editGroup }) => {
 
@@ -24,12 +26,11 @@ const GroupItem = ({ group, onAvailableToggle, checked, editGroup }) => {
                 key={group._id}
             >
 
-                <FontIcon
+                <IconButton
                     className="md-tile-content--left-icon"
                     onClick={edit(group._id)}
-                >
-                    edit
-                </FontIcon>
+                    name="edit"
+                />
 
                 <Checkbox
                     checked={false}
