@@ -12,7 +12,6 @@ import Divider from 'react-md/lib/Dividers';
 import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
 import Spinner from '../Spinner';
-import RemoveIcon from '../RemoveIcon';
 import ModalsManager from '../ModalsManager/ModalsManager';
 
 import { handleResult } from '../../../utils/client-utils';
