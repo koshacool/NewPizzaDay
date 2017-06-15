@@ -15,9 +15,6 @@ import SignUpPage from '../../ui/pages/SignUpPage';
 import MyEventsPage from '../../ui/pages/MyEventsPage';
 import EditEventPage from '../../ui/pages/EditEventPage';
 
-import AddFoodPage from '../../ui/pages/AddFoodPage';
-import AddPeoplePage from '../../ui/pages/AddPeoplePage';
-
 import OrderPage from '../../ui/pages/OrderPage';
 
 const publicRoutes = ['/', '/sign-in', 'sign-up'];

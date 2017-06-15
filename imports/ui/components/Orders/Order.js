@@ -13,7 +13,7 @@ import Spinner from '../Spinner';
 import LinkButton from '../LinkButton';
 import NoItems from '../NoItems';
 
-import OrderFoodContainer from '../Containers/OrderFoodContainer';
+import OrderFoodContainer from '../Food/OrderFoodContainer';
 
 
 class Order extends React.Component {

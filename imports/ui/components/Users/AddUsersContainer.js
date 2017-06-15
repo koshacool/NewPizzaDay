@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import UsersList from '../Users/UsersList';
+import UsersList from './UsersList';
 import { UserGroups } from '../../../api/userGroups/userGroups';
 
 export default createContainer(({event}) => {

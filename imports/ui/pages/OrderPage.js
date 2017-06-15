@@ -1,5 +1,5 @@
 import React from 'react';
-import OrderContainer from '../components/Containers/OrderContainer';
+import OrderContainer from '../components/Orders/OrderContainer';
 
 
 const OrderPage = ({ params: { _id } }) => (

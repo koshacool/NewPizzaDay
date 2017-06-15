@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Food } from '../../../api/food/food';
-import FoodList from '../Food/FoodList';
+import FoodList from './FoodList';
 
 
 export default createContainer(({event}) => {

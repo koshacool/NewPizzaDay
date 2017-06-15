@@ -1,16 +1,17 @@
 import React from 'react';
-
-import { Link } from 'react-router';
-import Button from 'react-md/lib/Buttons/Button';
+import LinkButton from '../components/LinkButton';
 
 
 const NotFoundPage = () => (
   <div className="md-text-center">
     <h1>Page not found!</h1>
 
-    <Link to="/">
-      <Button primary raised label="Go Home" />
-    </Link>
+    <LinkButton 
+    	to="/"
+    	primary 
+    	raised 
+    	label="Go Home"
+    />
   </div>
 );
 

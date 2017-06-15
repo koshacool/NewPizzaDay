@@ -19,8 +19,8 @@ import { updateEvent, removeEvent } from '../../../api/events/methods';
 import { removeOrder } from '../../../api/orders/methods';
 
 import EditEventInfo from './EditEventInfo';
-import AddFoodContainer from '../Containers/AddFoodContainer';
-import AddUsersContainer from '../Containers/AddUsersContainer';
+import AddFoodContainer from '../Food/AddFoodContainer';
+import AddUsersContainer from '../Users/AddUsersContainer';
 
 
 class EditEvent extends React.Component {

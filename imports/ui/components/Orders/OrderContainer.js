@@ -3,7 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import { Events } from '../../../api/events/events';
 import { Orders } from '../../../api/orders/orders';
-import Order from '../Orders/Order';
+import Order from './Order';
 
 
 export default createContainer(({ eventId }) => {
