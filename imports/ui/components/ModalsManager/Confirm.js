@@ -2,35 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 
-import Dialog from 'react-md/lib/Dialogs';
+import Button from 'react-md/lib/Buttons';
 
 
-const Confirm = ({hideModal}) => {
+const Confirm = ({ hideModal, onConfirm }) => {
+    return (
+        <div>
 
-  return (
-      <Dialog
-          id="speedBoost"
-          visible={true}
-          title="Are you sure you want to remove this event?"
-          aria-labelledby="speedBoostDescription"
-          modal
-          actions={[{
-            onClick: hideModal,
-            primary: true,
-            label: 'Yes',
-          }, {
-            onClick: hideModal,
-            primary: true,
-            label: 'Now',
-          }]}
-      >
-      </Dialog>
-  );
+            <Button flat primary label="Yes" className="md-cell--right" onClick={onConfirm} />
+            <Button flat primary label="No"  className="md-cell--right" onClick={hideModal} />
+        </div>
+    );
 };
 
-
 Confirm.propTypes = {
-  hideModal: PropTypes.func.isRequired,
+    hideModal: PropTypes.func.isRequired,
+    onConfirm: PropTypes.func.isRequired,
 };
 
 

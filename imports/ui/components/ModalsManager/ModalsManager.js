@@ -9,15 +9,15 @@ import CreateFoodContainer from './Containers/CreateFoodContainer';
 import UserGroupContainer from './Containers/UserGroupContainer';
 import GroupsListContainer from './Containers/GroupsListContainer';
 
-const ModalsList = {
-    Confirm: (props) => (<ConfirmContainer props={props} />),
-    CreateFood: (props) => (<CreateFoodContainer props={props} />),
-    UserGroup: (props) => (<UserGroupContainer props={props} />),
-    GroupsList: (props) => (<GroupsListContainer props={props} />),
+const ModalComponents = {
+    Confirm:    ConfirmContainer,
+    CreateFood: CreateFoodContainer,
+    UserGroup:  UserGroupContainer,
+    GroupsList: GroupsListContainer,
 };
 
 const customStyles = {
-    width : 'auto',  
+    width: 'auto',
     overflow: 'auto',
 };
 
@@ -25,29 +25,31 @@ class ModalsManager extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.state = { visible: true };
+        this.state = {visible: true};
         this.closeDialog = this.closeDialog.bind(this);
     }
 
     closeDialog() {
-    this.setState({ visible: false });
-    this.props.hideModal();
-  };
+        this.setState({visible: false});
+        this.props.hideModal();
+    };
 
     render() {
-        const { modalName, modalDescription } = this.props;
+        const { modalName, modalDescription, modal } = this.props;
+        const ModalComponent = ModalComponents[modalName];
 
-        return  (
+        return (
             <Dialog
-          id="modalDialog"
-          dialogStyle={customStyles}
-          visible={this.state.visible}
-          title={modalDescription}
-          onHide={this.closeDialog}
-        >
-                { ModalsList[modalName](this.props) }
+                id="modalDialog"
+                dialogStyle={customStyles}
+                visible={this.state.visible}
+                title={modalDescription}
+                onHide={this.closeDialog}
+                modal={modal ? true : false}
+            >
+                <ModalComponent props={this.props}/>
             </Dialog>
-            )
+        )
     }
 }
 
@@ -55,7 +57,9 @@ ModalsManager.propTypes = {
     modalName: PropTypes.string.isRequired,
     modalDescription: PropTypes.string.isRequired,
     hideModal: PropTypes.func.isRequired,
+    modal: PropTypes.bool,
     otherProps: PropTypes.object.isRequired,
+
 };
 
 export default ModalsManager;

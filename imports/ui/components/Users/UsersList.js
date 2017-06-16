@@ -58,7 +58,6 @@ class UsersList extends React.Component {
         });
     }
 
-
     modalGroupsList() {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
@@ -86,9 +85,6 @@ class UsersList extends React.Component {
 
         }));
     }
-
-    
-    
 
     onAvailableToggle(userId, isChecked) {
         const {event} = this.props;
