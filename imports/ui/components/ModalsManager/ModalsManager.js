@@ -35,7 +35,7 @@ class ModalsManager extends PureComponent {
     };
 
     render() {
-        const { modalName, modalDescription } = this.props;
+        const { modalName, modalDescription, modal } = this.props;
         const ModalComponent = ModalComponents[modalName];
 
         return (
@@ -45,6 +45,7 @@ class ModalsManager extends PureComponent {
                 visible={this.state.visible}
                 title={modalDescription}
                 onHide={this.closeDialog}
+                modal={modal ? true : false}
             >
                 <ModalComponent props={this.props}/>
             </Dialog>
@@ -56,7 +57,9 @@ ModalsManager.propTypes = {
     modalName: PropTypes.string.isRequired,
     modalDescription: PropTypes.string.isRequired,
     hideModal: PropTypes.func.isRequired,
+    modal: PropTypes.bool,
     otherProps: PropTypes.object.isRequired,
+
 };
 
 export default ModalsManager;

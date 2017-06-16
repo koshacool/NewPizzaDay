@@ -1,8 +1,8 @@
+import { Meteor } from 'meteor/meteor';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-
-import { Meteor } from 'meteor/meteor';
 
 import { Row, Col } from 'react-flexbox-grid';
 import TextField from 'react-md/lib/TextFields/TextField';
@@ -12,7 +12,6 @@ import Divider from 'react-md/lib/Dividers';
 import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
 import Spinner from '../Spinner';
-import ModalsManager from '../ModalsManager/ModalsManager';
 
 import { handleResult } from '../../../utils/client-utils';
 import { updateEvent, removeEvent } from '../../../api/events/methods';
@@ -21,6 +20,7 @@ import { removeOrder } from '../../../api/orders/methods';
 import EditEventInfo from './EditEventInfo';
 import AddFoodContainer from '../Food/AddFoodContainer';
 import AddUsersContainer from '../Users/AddUsersContainer';
+import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerContainer';
 
 
 class EditEvent extends React.Component {
@@ -28,6 +28,7 @@ class EditEvent extends React.Component {
         super(props);
         this.state = {
             modal: false,
+            modalParams: null,
             renderData: false,
         }
 
@@ -37,10 +38,41 @@ class EditEvent extends React.Component {
         this.renderFood = this.renderFood.bind(this);
         this.onRenderUsers = this.onRenderUsers.bind(this);
         this.renderUsers = this.renderUsers.bind(this);
+
+        this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
     }
 
     componentWillUnmount() {
         this.props.onUnmount();
+    }
+
+    hideModal() {
+        this.setState({
+            modal: false,
+        });
+    }
+
+    ucFirst(str) {
+        return str[0].toUpperCase() + str.slice(1);
+    }
+
+    showModal(name) {
+        return (modalParams = null) =>  this.setState({
+            modal: this.ucFirst(name),
+            modalParams,
+        });
+    }
+
+
+    modalConfirm() {
+        return (<ModalsManagerContainer
+            modalName={this.state.modal}
+            hideModal={this.hideModal}
+            modalDescription="Are you sure?"
+            onConfirm={this.onEventRemove}
+            modal={true}
+        />);
     }
 
     onEventRemove() {
@@ -84,8 +116,8 @@ class EditEvent extends React.Component {
 
     render() {
         const { loading, event, children } = this.props;
-        const { renderData } = this.state;
-       
+        const { renderData, modal, modalParams } = this.state;
+
         return (
             <Spinner loading={loading}>
                 <Row className="m-b-20">
@@ -93,7 +125,7 @@ class EditEvent extends React.Component {
                         <EditEventInfo
                             event={event}
                             onEventUpdate={this.onEventUpdate}
-                            onEventRemove={this.onEventRemove}
+                            onEventRemove={this.showModal('confirm')}
                         />
 
                         <Button
@@ -116,6 +148,8 @@ class EditEvent extends React.Component {
                         { renderData && this[renderData]() }
                     </Col>
                 </Row>
+
+                {modal && this[`modal${modal}`](modalParams)}
             </Spinner>
         );
     }
