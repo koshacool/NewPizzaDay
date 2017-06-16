@@ -10,3 +10,7 @@ export const handleResult = onSuccess => (error, result) => {
     onSuccess(result);
   }
 };
+
+export const ucFirst = str => str[0].toUpperCase() + str.slice(1);
+
+export const valueInArray = (arr, value) => arr.indexOf(value) !== -1;

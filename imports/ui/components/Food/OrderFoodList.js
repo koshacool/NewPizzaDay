@@ -5,7 +5,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import Button from 'react-md/lib/Buttons/Button';
 import Divider from 'react-md/lib/Dividers';
 
-import { handleResult } from '../../../utils/client-utils';
+import { handleResult, valueInArray } from '../../../utils/client-utils';
 import { updateOrder } from '../../../api/orders/methods';
 
 import OrderFoodItem from './OrderFoodItem';
@@ -15,8 +15,6 @@ import NoItems from '../NoItems';
 
 import List from 'react-md/lib/Lists/List';
 import Subheader from 'react-md/lib/Subheaders';
-
-const existValueInArray = (arr, value) => arr.indexOf(value) !== -1;
 
 
 class OrderFoodList extends React.Component {
@@ -145,7 +143,7 @@ class OrderFoodList extends React.Component {
                                     key={foodItem._id}
                                     foodItem={foodItem}
                                     onAvailableToggle={this.onAvailableToggle}
-                                    checked={existValueInArray(userOrder.food, foodItem._id)}
+                                    checked={valueInArray(userOrder.food, foodItem._id)}
                                     quantity={this.getQuantity(userOrder, foodItem._id)}
                                     onQuantity={this.onQuantity}
                                     discount={this.getDiscount(foodItem._id)}

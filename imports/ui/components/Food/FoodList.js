@@ -5,7 +5,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import Button from 'react-md/lib/Buttons/Button';
 import Divider from 'react-md/lib/Dividers';
 
-import { handleResult } from '../../../utils/client-utils';
+import { handleResult, ucFirst, valueInArray } from '../../../utils/client-utils';
 import { updateEvent } from '../../../api/events/methods';
 
 import FoodItem from './FoodItem';
@@ -16,9 +16,6 @@ import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerCon
 
 import List from 'react-md/lib/Lists/List';
 import Subheader from 'react-md/lib/Subheaders';
-
-const ucFirst = str => str[0].toUpperCase() + str.slice(1);
-const checkEvailable = (arr, value) => arr.indexOf(value) !== -1;
 
 
 class FoodList extends React.Component {
@@ -118,14 +115,14 @@ class FoodList extends React.Component {
                         {!loading && food.length === 0 && <NoItems text="You don't have any food"/>}
 
                         <List>
-                            { food.length > 0 &&  <Subheader primaryText="Available MENU" primary/> }
+                            { food.length > 0 && <Subheader primaryText="Available MENU" primary/> }
                             <Divider />
                             {food.length > 0 && food.map(foodItem => (
                                 <FoodItem
                                     key={foodItem._id}
                                     foodItem={foodItem}
                                     onAvailableToggle={this.onAvailableToggle}
-                                    checked={checkEvailable(event.food, foodItem._id)}
+                                    checked={valueInArray(event.food, foodItem._id)}
                                     discount={event.discount[foodItem._id] ? +event.discount[foodItem._id] : 0}
                                     onDiscount={this.onDiscount}
                                 />
@@ -135,7 +132,7 @@ class FoodList extends React.Component {
 
                     </Col>
                 </Row>
-                
+
                 {modal && this[`modal${modal}`]()}
             </Spinner>
         );

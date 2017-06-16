@@ -19,8 +19,6 @@ import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
 
 
-const getCheckboxId = poll => `checkbox-${poll._id}`;
-
 const getHumanizeDuration = date => moment.duration(new Date() - date).humanize();
 
 const getTimeAgo = date => `${getHumanizeDuration(date)} ago`;
