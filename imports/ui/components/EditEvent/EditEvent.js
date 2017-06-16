@@ -13,7 +13,7 @@ import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
 import Spinner from '../Spinner';
 
-import { handleResult } from '../../../utils/client-utils';
+import { handleResult, ucFirst } from '../../../utils/client-utils';
 import { updateEvent, removeEvent } from '../../../api/events/methods';
 import { removeOrder } from '../../../api/orders/methods';
 
@@ -53,17 +53,12 @@ class EditEvent extends React.Component {
         });
     }
 
-    ucFirst(str) {
-        return str[0].toUpperCase() + str.slice(1);
-    }
-
     showModal(name) {
         return (modalParams = null) =>  this.setState({
-            modal: this.ucFirst(name),
+            modal: ucFirst(name),
             modalParams,
         });
     }
-
 
     modalConfirm() {
         return (<ModalsManagerContainer

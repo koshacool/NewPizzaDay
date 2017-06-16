@@ -7,7 +7,7 @@ import Divider from 'react-md/lib/Dividers';
 import List from 'react-md/lib/Lists/List';
 import Subheader from 'react-md/lib/Subheaders';
 
-import { handleResult } from '../../../utils/client-utils';
+import { handleResult, ucFirst, valueInArray } from '../../../utils/client-utils';
 import { createUserGroup } from '../../../api/userGroups/methods';
 import { updateEvent } from '../../../api/events/methods';
 
@@ -16,8 +16,6 @@ import Spinner from '../Spinner';
 import LinkButton from '../LinkButton';
 import NoItems from '../NoItems';
 import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerContainer';
-
-const checkEvailable = (arr, value) => arr.indexOf(value) !== -1;
 
 
 class UsersList extends React.Component {
@@ -29,12 +27,12 @@ class UsersList extends React.Component {
             modalParams: null,
         };
 
-        this.showModal = this.showModal.bind(this);
-        this.hideModal = this.hideModal.bind(this);
         this.onAvailableToggle = this.onAvailableToggle.bind(this);
         this.createGroup = this.createGroup.bind(this);
         this.modalUserGroup = this.modalUserGroup.bind(this);
-        this.ucFirst = this.ucFirst.bind(this);
+
+        this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
     }
 
     componentWillUnmount() {
@@ -47,13 +45,9 @@ class UsersList extends React.Component {
         });
     }
 
-    ucFirst(str) {
-        return str[0].toUpperCase() + str.slice(1);
-    }
-
     showModal(name) {
       return (modalParams = null) =>  this.setState({
-            modal: this.ucFirst(name),
+            modal: ucFirst(name),
             modalParams,
         });
     }
@@ -131,7 +125,7 @@ class UsersList extends React.Component {
                                     key={user._id}
                                     user={user}
                                     onAvailableToggle={this.onAvailableToggle}
-                                    checked={checkEvailable(event.users, user._id)}
+                                    checked={valueInArray(event.users, user._id)}
                                 />
 
                             ))}
