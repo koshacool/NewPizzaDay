@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { UserGroups } from '../../../../api/userGroups/userGroups';
-import UserGroup from '../UserGroup/UserGroup';
+import EditGroup from '../UserGroup/EditGroup';
 
 
 
@@ -17,4 +17,4 @@ export default createContainer(({props: {hideModal, users, groupId}}) => {
     loading: !subsHandler.ready(),
     onUnmount: subsHandler.stop,
   };
-}, UserGroup);
+}, EditGroup);
