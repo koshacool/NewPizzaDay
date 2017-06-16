@@ -7,6 +7,7 @@ import Divider from 'react-md/lib/Dividers';
 
 import { handleResult, ucFirst, valueInArray } from '../../../utils/client-utils';
 import { updateEvent } from '../../../api/events/methods';
+import { createFoodGroup } from '../../../api/foodGroups/methods';
 
 import FoodItem from './FoodItem';
 import Spinner from '../Spinner';
@@ -24,12 +25,17 @@ class FoodList extends React.Component {
 
         this.state = {
             modal: false,
+            modalParams: null,
         };
 
-        this.hideModal = this.hideModal.bind(this);
         this.modalCreateFood = this.modalCreateFood.bind(this);
         this.onAvailableToggle = this.onAvailableToggle.bind(this);
         this.onDiscount = this.onDiscount.bind(this);
+        this.modalEditFoodGroup = this.modalEditFoodGroup.bind(this);
+        this.createGroup = this.createGroup.bind(this);
+
+        this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
     }
 
     componentWillUnmount() {
@@ -43,8 +49,9 @@ class FoodList extends React.Component {
     }
 
     showModal(name) {
-        return () => this.setState({
+      return (modalParams = null) =>  this.setState({
             modal: ucFirst(name),
+            modalParams,
         });
     }
 
@@ -57,12 +64,27 @@ class FoodList extends React.Component {
         />);
     }
 
-    modalDiscount() {
+
+    modalFoodGroupsList() {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
             hideModal={this.hideModal}
+            modalDescription="Your Groups"
             event={this.props.event}
+            editGroup={this.showModal('editGroup')}
         />);
+    }
+
+    modalEditFoodGroup(groupId) {
+        return (<ModalsManagerContainer
+             modalName={this.state.modal}
+             hideModal={this.hideModal}
+             modalDescription="Edit Group"
+             event={this.props.event}
+             groupId={groupId}
+             food={this.props.food}
+             modal={true}
+         />);
     }
 
     onDiscount(field, foodId) {
@@ -97,16 +119,24 @@ class FoodList extends React.Component {
         updateEvent.call(updatedEvent, handleResult());
     }
 
+    createGroup() {
+        createFoodGroup.call({ group: {} }, handleResult((groupId) => {           
+            this.showModal('editFoodGroup')(groupId);
+        }));
+    }
+
 
     render() {
         const { loading, event, food } = this.props;
-        const { modal } = this.state;
-
+        const { modal, modalParams } = this.state;
+         
         return (
             <Spinner loading={loading}>
                 <Row className="m-b-20">
                     <Col >
                         <Button raised primary label="NEW FOOD" onClick={this.showModal('createFood')}/>
+                        <Button raised primary label="NEW GROUP" onClick={this.createGroup}/>
+                        <Button raised primary label="GROUPS" onClick={this.showModal('foodGroupsList')}/>
                     </Col>
                 </Row>
                 <Divider />
@@ -133,7 +163,7 @@ class FoodList extends React.Component {
                     </Col>
                 </Row>
 
-                {modal && this[`modal${modal}`]()}
+                {modal && this[`modal${modal}`](modalParams)}
             </Spinner>
         );
     }

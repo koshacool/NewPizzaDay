@@ -7,14 +7,18 @@ import Button from 'react-md/lib/Buttons/Button';
 
 import ConfirmContainer from './Containers/ConfirmContainer';
 import CreateFoodContainer from './Containers/CreateFoodContainer';
-import EditGroupContainer from './Containers/EditGroupContainer';
-import GroupsListContainer from './Containers/GroupsListContainer';
+
+import EditUserGroupContainer from './Containers/EditUserGroupContainer';
+import UserGroupsListContainer from './Containers/UserGroupsListContainer';
+
+import EditFoodGroupContainer from './Containers/EditFoodGroupContainer';
 
 const ModalComponents = {
     Confirm:    ConfirmContainer,
     CreateFood: CreateFoodContainer,
-    EditGroup:  EditGroupContainer,
-    GroupsList: GroupsListContainer,
+    EditUserGroup:  EditUserGroupContainer,
+    UserGroupsList: UserGroupsListContainer,
+    EditFoodGroup:  EditFoodGroupContainer,
 };
 
 const customStyles = {

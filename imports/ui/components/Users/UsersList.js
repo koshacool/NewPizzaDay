@@ -29,10 +29,14 @@ class UsersList extends React.Component {
 
         this.onAvailableToggle = this.onAvailableToggle.bind(this);
         this.createGroup = this.createGroup.bind(this);
-        this.modalEditGroup = this.modalEditGroup.bind(this);
+        this.modalEditUserGroup = this.modalEditUserGroup.bind(this);
 
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
+    }
+
+    componentWillUnmount() {
+        this.props.onUnmount();
     }
 
     hideModal() {
@@ -49,17 +53,17 @@ class UsersList extends React.Component {
     }
 
 
-    modalGroupsList() {
+    modalUserGroupsList() {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
             hideModal={this.hideModal}
             modalDescription="Your Groups"
             event={this.props.event}
-            editGroup={this.showModal('editGroup')}
+            editGroup={this.showModal('editUserGroup')}
         />);
     }
 
-    modalEditGroup(groupId) {
+    modalEditUserGroup(groupId) {
          return (<ModalsManagerContainer
              modalName={this.state.modal}
              hideModal={this.hideModal}
@@ -73,7 +77,7 @@ class UsersList extends React.Component {
 
     createGroup() {
         createUserGroup.call({ group: {} }, handleResult((groupId) => {
-            this.showModal('editGroup')(groupId);
+            this.showModal('editUserGroup')(groupId);
         }));
     }
 
@@ -104,7 +108,7 @@ class UsersList extends React.Component {
                 <Row className="m-b-20">
                     <Col >                        
                         <Button raised primary label="NEW GROUP" onClick={this.createGroup}/>
-                        <Button raised primary label="GROUPS" onClick={this.showModal('groupsList')}/>
+                        <Button raised primary label="GROUPS" onClick={this.showModal('userGroupsList')}/>
                     </Col>
                 </Row>
                 <Divider />
