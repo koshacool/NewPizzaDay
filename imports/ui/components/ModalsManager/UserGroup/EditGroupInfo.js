@@ -8,7 +8,7 @@ import IconButton from '../../IconButton';
 import LinkButton from '../../LinkButton';
 
 
-const UserGroupInfo = ({ group, onGroupUpdate, onGroupRemove }) => (
+const EditGroupInfo = ({ group, onGroupUpdate, onGroupRemove }) => (
     <TextField
         id="group-name"
         label="Group Name"
@@ -20,10 +20,10 @@ const UserGroupInfo = ({ group, onGroupUpdate, onGroupRemove }) => (
     />
 );
 
-UserGroupInfo.propTypes = {
+EditGroupInfo.propTypes = {
     group: PropTypes.object.isRequired,
     onGroupUpdate: PropTypes.func.isRequired,
     onGroupRemove: PropTypes.func.isRequired,
 };
 
-export default UserGroupInfo;
+export default EditGroupInfo;

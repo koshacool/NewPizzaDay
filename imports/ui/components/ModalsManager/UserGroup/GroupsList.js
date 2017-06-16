@@ -11,12 +11,11 @@ import Subheader from 'react-md/lib/Subheaders';
 
 import { updateGroup } from '../../../../api/userGroups/methods';
 import { updateEventRemoveUsers, updateEventAddUsers } from '../../../../api/events/methods';
-import { handleResult } from '../../../../utils/client-utils';
+import { handleResult, valueInArray } from '../../../../utils/client-utils';
 import GroupItem from './GroupItem';
 import Spinner from '../../Spinner';
 import NoItems from '../../NoItems';
 
-const checkEvailable = (arr, value) => arr.indexOf(value) !== -1;
 
 class GroupsList extends Component {
     constructor(props) {
@@ -49,6 +48,7 @@ class GroupsList extends Component {
         };
     }
 
+
     render() {
         const { loading, hideModal, groups, event, editGroup } = this.props;
 
@@ -66,7 +66,7 @@ class GroupsList extends Component {
                                 key={group._id}
                                 group={group}
                                 onAvailableToggle={this.onAvailableToggle}
-                                checked={checkEvailable(group.events, event._id)}
+                                checked={valueInArray(group.events, event._id)}
                                 editGroup={editGroup}
                             />
                         ))}

@@ -14,8 +14,7 @@ import IconButton from '../../IconButton';
 const GroupItem = ({ group, onAvailableToggle, checked, editGroup }) => {
 
     const GroupIcon = () => <FontIcon>people</FontIcon>;
-    //const evailableToggle = (isChecked) => onAvailableToggle(group, isChecked);
-    const edit = (groupId) => () => editGroup(groupId);
+    const edit = groupId => () => editGroup(groupId);
 
     return (
         <div>

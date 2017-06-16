@@ -29,14 +29,10 @@ class UsersList extends React.Component {
 
         this.onAvailableToggle = this.onAvailableToggle.bind(this);
         this.createGroup = this.createGroup.bind(this);
-        this.modalUserGroup = this.modalUserGroup.bind(this);
+        this.modalEditGroup = this.modalEditGroup.bind(this);
 
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
-    }
-
-    componentWillUnmount() {
-        this.props.onUnmount();
     }
 
     hideModal() {
@@ -52,17 +48,18 @@ class UsersList extends React.Component {
         });
     }
 
+
     modalGroupsList() {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
             hideModal={this.hideModal}
             modalDescription="Your Groups"
             event={this.props.event}
-            editGroup={this.showModal('userGroup')}
+            editGroup={this.showModal('editGroup')}
         />);
     }
 
-    modalUserGroup(groupId) {
+    modalEditGroup(groupId) {
          return (<ModalsManagerContainer
              modalName={this.state.modal}
              hideModal={this.hideModal}
@@ -70,13 +67,13 @@ class UsersList extends React.Component {
              event={this.props.event}
              groupId={groupId}
              users={this.props.users}
+             modal={true}
          />);
     }
 
     createGroup() {
         createUserGroup.call({ group: {} }, handleResult((groupId) => {
-            this.showModal('userGroup')(groupId);
-
+            this.showModal('editGroup')(groupId);
         }));
     }
 

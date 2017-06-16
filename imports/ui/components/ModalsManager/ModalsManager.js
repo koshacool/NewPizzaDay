@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import Dialog from 'react-md/lib/Dialogs';
@@ -6,19 +7,20 @@ import Button from 'react-md/lib/Buttons/Button';
 
 import ConfirmContainer from './Containers/ConfirmContainer';
 import CreateFoodContainer from './Containers/CreateFoodContainer';
-import UserGroupContainer from './Containers/UserGroupContainer';
+import EditGroupContainer from './Containers/EditGroupContainer';
 import GroupsListContainer from './Containers/GroupsListContainer';
 
 const ModalComponents = {
     Confirm:    ConfirmContainer,
     CreateFood: CreateFoodContainer,
-    UserGroup:  UserGroupContainer,
+    EditGroup:  EditGroupContainer,
     GroupsList: GroupsListContainer,
 };
 
 const customStyles = {
     width: 'auto',
     overflow: 'auto',
+    top: '50%',
 };
 
 class ModalsManager extends PureComponent {
@@ -32,7 +34,7 @@ class ModalsManager extends PureComponent {
     closeDialog() {
         this.setState({visible: false});
         this.props.hideModal();
-    };
+    }
 
     render() {
         const { modalName, modalDescription, modal } = this.props;
@@ -40,7 +42,7 @@ class ModalsManager extends PureComponent {
 
         return (
             <Dialog
-                id="modalDialog"
+                id={modalName}
                 dialogStyle={customStyles}
                 visible={this.state.visible}
                 title={modalDescription}

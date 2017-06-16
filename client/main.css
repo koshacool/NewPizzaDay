@@ -1,1 +1,6 @@
 /* CSS declarations go here */
+.EditGroup {
+    width: auto;
+    overflow: auto;
+    top: 50%;
+}
