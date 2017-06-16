@@ -71,7 +71,7 @@ class FoodList extends React.Component {
             hideModal={this.hideModal}
             modalDescription="Your Groups"
             event={this.props.event}
-            editGroup={this.showModal('editGroup')}
+            editGroup={this.showModal('editFoodGroup')}
         />);
     }
 

@@ -9,9 +9,10 @@ import Divider from 'react-md/lib/Dividers';
 import List from 'react-md/lib/Lists/List';
 import Subheader from 'react-md/lib/Subheaders';
 
-import { updateGroup } from '../../../../api/userGroups/methods';
-import { updateEventRemoveUsers, updateEventAddUsers } from '../../../../api/events/methods';
+import { updateGroup } from '../../../../api/foodGroups/methods';
+import { updateEventRemoveFood, updateEventAddFood } from '../../../../api/events/methods';
 import { handleResult, valueInArray } from '../../../../utils/client-utils';
+
 import GroupItem from './GroupItem';
 import Spinner from '../../Spinner';
 import NoItems from '../../NoItems';
@@ -31,14 +32,14 @@ class GroupsList extends Component {
     onAvailableToggle(group) {
         return (isChecked) => {
             const {_id: eventId} = this.props.event;
-            const {_id: groupId, events: eventsArray, users: usersArray} = group;
+            const {_id: groupId, events: eventsArray, food: foodArray} = group;
 
             if (isChecked) {
                 eventsArray.push(eventId);
-                updateEventAddUsers.call({_id: eventId, users: usersArray}, handleResult());
+                updateEventAddFood.call({_id: eventId, food: foodArray}, handleResult());
             } else {
                 eventsArray.splice(eventsArray.indexOf(eventId), 1);
-                updateEventRemoveUsers.call({_id: eventId, users: usersArray}, handleResult());
+                updateEventRemoveFood.call({_id: eventId, food: foodArray}, handleResult());
             }
 
             updateGroup.call({

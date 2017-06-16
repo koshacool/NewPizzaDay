@@ -120,3 +120,40 @@ export const updateEventAddUsers = new ValidatedMethod({
     return Events.update({ _id }, { $addToSet: { users: { $each: users }  }  });
   },
 });
+
+export const updateEventRemoveFood = new ValidatedMethod({
+  name: 'Events.updateRemoveFood',
+  validate: new SimpleSchema({
+    _id: { type: String },
+    food: { type: [String] },
+  }).validator(),
+
+  run({ _id, food }) {
+    const event = Events.findOne({ _id, createdBy: this.userId });
+
+    if (!event) {
+      throw new Meteor.Error('You can\'t edit this event');
+    }
+    
+    return Events.update({ _id }, { $pullAll: { food: food } });
+  },
+});
+
+
+export const updateEventAddFood = new ValidatedMethod({
+  name: 'Events.updateAddFood',
+  validate: new SimpleSchema({
+    _id: { type: String },
+    food: { type: [String] },
+  }).validator(),
+
+  run({ _id, food }) {
+    const event = Events.findOne({ _id, createdBy: this.userId });
+
+    if (!event) {
+      throw new Meteor.Error('You can\'t edit this event');
+    }
+    
+    return Events.update({ _id }, { $addToSet: { food: { $each: food }  }  });
+  },
+});

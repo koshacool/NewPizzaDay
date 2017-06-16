@@ -12,6 +12,7 @@ import EditUserGroupContainer from './Containers/EditUserGroupContainer';
 import UserGroupsListContainer from './Containers/UserGroupsListContainer';
 
 import EditFoodGroupContainer from './Containers/EditFoodGroupContainer';
+import FoodGroupsListContainer from './Containers/FoodGroupsListContainer';
 
 const ModalComponents = {
     Confirm:    ConfirmContainer,
@@ -19,6 +20,7 @@ const ModalComponents = {
     EditUserGroup:  EditUserGroupContainer,
     UserGroupsList: UserGroupsListContainer,
     EditFoodGroup:  EditFoodGroupContainer,
+    FoodGroupsList: FoodGroupsListContainer,
 };
 
 const customStyles = {
