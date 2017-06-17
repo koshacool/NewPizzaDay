@@ -38,7 +38,7 @@ class OrderFoodList extends React.Component {
 
     onAvailableToggle(foodId) {
         return (isChecked) => {
-            const food = this.getCurrentUserOrder().food;
+            const {food} = this.props.order;
 
             if (isChecked) {
                 food.push(foodId);
@@ -52,7 +52,7 @@ class OrderFoodList extends React.Component {
 
     onQuantity(foodId) {
         return (value) => {
-            const quantity = this.getCurrentUserOrder().quantity;
+            const quantity = this.props.order.quantity;
             quantity[foodId] = value;
 
             this.updateUserOrder('quantity', quantity);
@@ -65,16 +65,11 @@ class OrderFoodList extends React.Component {
     }
 
     updateUserOrder(field, value) {
-        const { order } = this.props;
-        let usersOrder = order.usersOrder;
-        const currentUserOrder = this.getCurrentUserOrder();
-
-        currentUserOrder[field] = value;
-        usersOrder[Meteor.userId()] = currentUserOrder;
-
+        const { order } = this.props; 
+        
         const updatedOrder = {
             _id: order._id,
-            partToUpdate: {usersOrder: usersOrder},
+            partToUpdate: {[field]: value},
         };
 
         updateOrder.call(updatedOrder, handleResult());
@@ -108,25 +103,12 @@ class OrderFoodList extends React.Component {
         return +quantity;
     }
 
-    getCurrentUserOrder() {
-        const currentUserOrder = this.props.order.usersOrder[Meteor.userId()];
-
-        if (currentUserOrder) {
-            return currentUserOrder;
-        }
-
-        return {
-            status: false,
-            food: [],
-            quantity: {},
-        };
-    }
+    
 
     render() {
         const { loading, event, food, order } = this.props;
-        const userOrder = this.getCurrentUserOrder();
         const evailableFood = this.getEvailableFood();
-
+      
         return (
             <Spinner loading={loading}>
 
@@ -143,8 +125,8 @@ class OrderFoodList extends React.Component {
                                     key={foodItem._id}
                                     foodItem={foodItem}
                                     onAvailableToggle={this.onAvailableToggle}
-                                    checked={valueInArray(userOrder.food, foodItem._id)}
-                                    quantity={this.getQuantity(userOrder, foodItem._id)}
+                                    checked={valueInArray(order.food, foodItem._id)}
+                                    quantity={this.getQuantity(order, foodItem._id)}
                                     onQuantity={this.onQuantity}
                                     discount={this.getDiscount(foodItem._id)}
                                 />
@@ -167,7 +149,7 @@ OrderFoodList.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     event: PropTypes.object.isRequired,
     food: PropTypes.array.isRequired,
-    order: PropTypes.object.isRequired,
+    order: PropTypes.object,
 };
 
 export default OrderFoodList;

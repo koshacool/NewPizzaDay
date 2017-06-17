@@ -1,4 +1,3 @@
-
 import { Meteor } from 'meteor/meteor';
 
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
@@ -22,11 +21,14 @@ export const createOrder = new ValidatedMethod({
 
     const defaultOrder = {
       eventId: null,
-      usersOrder: {},      
+      owner: userId,  
+      food: [],
+      quantity: {},
+      status: false,    
     };
 
     const orderToAdd = { ...defaultOrder, ...order };
-    
+    // Person.update( { name : 'Ted' }, { name : 'Ted', age : 50 }, { upsert : true }, callback );
     return Orders.insert(orderToAdd);
   },
 });
@@ -54,12 +56,18 @@ export const updateOrder = new ValidatedMethod({
   validate: new SimpleSchema({
     _id: { type: String },
     partToUpdate: { type: OrderSchema.pick([
-      'usersOrder',
+      'eventId', 
+      'food', 
+      'food.$', 
+      'quantity',
+      'status'
       ]) },
   }).validator(),
 
   run({ _id, partToUpdate }) {
-    if (!this.userId) {
+     const order = Orders.findOne({ _id, owner: this.userId });
+
+    if (!order) {
       throw new Meteor.Error('You can\'t edit this order');
     }
 

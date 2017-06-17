@@ -13,3 +13,13 @@ Meteor.publish('orders.byEventId', function ordersByEventId(eventId) {
     return Orders.find({eventId: eventId});
 });
 
+Meteor.publish('orders.currentUserByEventId', function ordersCurrentUserByEventId(eventId) {
+	check(eventId, String);
+
+    if (!this.userId) {
+        return this.ready();
+    }
+
+    return Orders.find({ eventId: eventId, owner: this.userId });
+});
+

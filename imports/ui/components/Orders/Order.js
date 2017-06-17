@@ -18,27 +18,39 @@ import OrderFoodContainer from '../Food/OrderFoodContainer';
 
 class Order extends React.Component {
     constructor(props) {
-        super(props);
+        super(props);        
 
         this.onConfirmOrder = this.onConfirmOrder.bind(this);
-
     }
 
     componentWillUnmount() {
         this.props.onUnmount();
     }
 
-    renderFood() {
-        const {event, order} = this.props;
-        return (<OrderFoodContainer event={event} order={order} onSubmit={this.onConfirmOrder} />);
+    componentWillReceiveProps(nextProps) {
+        //Create empty user order if such collection doesn't exist
+        if (!nextProps.currentUserOrder) {
+            this.createUserOrder();
+        }
     }
 
-    onConfirmOrder() {
-        const {event} = this.props;
-        const {usersOrder} = this.props.order;
+    createUserOrder() {
+        const { eventId } = this.props;
+        createOrder.call({ order: { eventId: eventId } }, handleResult());       
+    }
+
+    
+
+    renderFood() {
+        const {event, currentUserOrder} = this.props;
+        return (<OrderFoodContainer event={event} order={currentUserOrder} onSubmit={this.onConfirmOrder} />);
+    }
+
+    onConfirmOrder() {        
+        const {event, orders} = this.props;
 
         const allOrdered = (this.checkAllSubmittedOrder(
-            this.getOrderedUsers(usersOrder),
+            this.getOrderedUsers(orders),
             event.users)
         );
 
@@ -59,24 +71,24 @@ class Order extends React.Component {
         }
     }
 
-    getOrderedUsers(usersOrder) {
-        return Object.keys(usersOrder).filter((userId) => usersOrder[userId].status);
+    getOrderedUsers(orders) {
+        return orders.filter((order) => order.status);
     }
+    
 
     checkAllSubmittedOrder(orderedUsersArr, availableUsersArr) {
         return orderedUsersArr.length === availableUsersArr.length;
     }
 
     render() {
-        const { loading, order } = this.props;
-
+        const { loading, currentUserOrder, orders } = this.props;
+        // console.log(currentUserOrder, orders, loading)
+        
         return (
-            <Spinner loading={loading}>
-                { order && (
-                    <Row center="xs">
+            <Spinner loading={loading}>                
+                    {currentUserOrder && <Row center="xs">
                         {this.renderFood()}
-                    </Row>
-                )}
+                    </Row>}              
             </Spinner>
         );
     }
@@ -84,8 +96,10 @@ class Order extends React.Component {
 
 
 Order.propTypes = {
-    order: PropTypes.object,
+    orders: PropTypes.array,
+    currentUserOrder: PropTypes.object,
     event: PropTypes.object,
+    eventId: PropTypes.string.isRequired,
     loading: PropTypes.bool.isRequired,
     onUnmount: PropTypes.func.isRequired,
 };
