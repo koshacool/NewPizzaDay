@@ -13,9 +13,9 @@ import Subheader from 'react-md/lib/Subheaders';
 import ModalsManagerContainer from '../Containers/ModalsManagerContainer';
 
 import { handleResult, valueInArray, ucFirst } from '../../../../utils/client-utils';
-import { updateGroup, removeGroup } from '../../../../api/userGroups/methods';
+import { updateGroup, removeGroup } from '../../../../api/foodGroups/methods';
 import EditGroupInfo from './EditGroupInfo';
-import UserItem from '../../Users/UserItem';
+import FoodItem from '../../Food/FoodItem';
 import Spinner from '../../Spinner';
 
 class EditGroup extends Component {
@@ -28,10 +28,20 @@ class EditGroup extends Component {
 
         this.onGroupUpdate = this.onGroupUpdate.bind(this);
         this.onGroupRemove = this.onGroupRemove.bind(this);
-        this.onUserAvailableToggle = this.onUserAvailableToggle.bind(this);
+        this.onFoodAvailableToggle = this.onFoodAvailableToggle.bind(this);
 
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (!prevState.modal) {
+            document.getElementById('EditFoodGroup').style.top = "50%";
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.onUnmount();
     }
 
     hideModal() {
@@ -50,11 +60,6 @@ class EditGroup extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (!prevState.modal) {
-            document.getElementById('EditUserGroup').style.top = "50%";
-        }
-    }
 
 
     modalConfirm() {
@@ -66,11 +71,7 @@ class EditGroup extends Component {
             modal={true}
         />);
     }
-
-
-    componentWillUnmount() {
-        this.props.onUnmount();
-    }
+    
 
     onGroupUpdate(field) {
         return (value) => {
@@ -91,29 +92,30 @@ class EditGroup extends Component {
         }));
     }
 
-    onUserAvailableToggle(userId) {
+    onFoodAvailableToggle(foodId) {
         const {group} = this.props;
-        let usersArray = group.users;
+        let foodArray = group.food;
 
-        const userPosition = usersArray.indexOf(userId);
-        if (userPosition === -1) {
-            usersArray.push(userId);
+        const foodPosition = foodArray.indexOf(foodId);
+        if (foodPosition === -1) {
+            foodArray.push(foodId);
         } else {
-            usersArray.splice(userPosition, 1);
+            foodArray.splice(foodPosition, 1);
         }
 
         const updatedGroup = {
             _id: this.props.group._id,
-            partToUpdate: {users: usersArray},
+            partToUpdate: {food: foodArray},
         };
 
         updateGroup.call(updatedGroup, handleResult());
     }
 
-    render() {
-        const { loading, hideModal, group, users } = this.props;
-        const { modal, modalParams } = this.state;
 
+    render() {
+        const { loading, hideModal, group, food } = this.props;
+        const { modal, modalParams } = this.state;
+        
         return (
             <Spinner loading={loading}>
                 {group && <div>
@@ -123,20 +125,20 @@ class EditGroup extends Component {
                         onGroupRemove={this.showModal('confirm')}
                     />
 
-                    < Button raised primary label="Close" className="md-cell--middle" onClick={hideModal}/>
+                    <Button raised primary label="Close" className="md-cell--middle" onClick={hideModal}/>
                     <Divider />
 
                     <List>
-                        <Subheader primaryText="Users list" primary/>
+                        <Subheader primaryText="Food list" primary/>
 
-                        {users.length > 1 && users.map(user => (
-                            user._id === Meteor.userId() ?
+                        {food.length > 1 && food.map(foodItem => (
+                            foodItem._id === Meteor.userId() ?
                                 '' :
-                                <UserItem
-                                    key={user._id}
-                                    user={user}
-                                    onAvailableToggle={this.onUserAvailableToggle}
-                                    checked={valueInArray(group.users, user._id)}
+                                <FoodItem
+                                    key={foodItem._id}
+                                    foodItem={foodItem}
+                                    onAvailableToggle={this.onFoodAvailableToggle}
+                                    checked={valueInArray(group.food, foodItem._id)}
                                 />
                         ))}
                     </List>
@@ -151,7 +153,7 @@ class EditGroup extends Component {
 
 EditGroup.propTypes = {
     hideModal: PropTypes.func.isRequired,
-    users: PropTypes.array.isRequired,
+    food: PropTypes.array.isRequired,
     groupId: PropTypes.string.isRequired,
     group: PropTypes.object,
     loading: PropTypes.bool.isRequired,

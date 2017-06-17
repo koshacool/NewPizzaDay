@@ -39,7 +39,7 @@ const FoodItem = ({ foodItem, onAvailableToggle, checked, onDiscount, discount }
                 threeLines
             >
 
-                <TextField
+              {onDiscount && <TextField
                     id="discount"
                     placeholder="Discount"
                     label="discount"
@@ -53,7 +53,7 @@ const FoodItem = ({ foodItem, onAvailableToggle, checked, onDiscount, discount }
                     type="number"
                     className="md-cell--2"
                     onChange={onDiscount('discount', foodItem._id)}
-                />
+                /> }  
 
                 <Checkbox
                     checked={checked}
@@ -71,8 +71,8 @@ FoodItem.propTypes = {
     foodItem: PropTypes.object.isRequired,
     onAvailableToggle: PropTypes.func.isRequired,
     checked: PropTypes.bool.isRequired,
-    onDiscount: PropTypes.func.isRequired,
-    discount: PropTypes.number.isRequired,
+    onDiscount: PropTypes.func,
+    discount: PropTypes.number
 };
 
 export default FoodItem;
