@@ -17,11 +17,13 @@ import TextField from 'react-md/lib/TextFields';
 
 import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
+import IconButton from '../IconButton';
 
 
-const FoodItem = ({ foodItem, onAvailableToggle, checked, onDiscount, discount }) => {
+const FoodItem = ({ foodItem, onAvailableToggle, checked, onDiscount, discount, onEdit }) => {
     const FoodIcon = () => <FontIcon>restaurant</FontIcon>;
-    const evailableToggle = (isChecked) => onAvailableToggle(foodItem._id, isChecked);
+    const evailableToggle = isChecked => onAvailableToggle(foodItem._id, isChecked);
+    const edit = foodId => () => onEdit(foodId);
     const getPrice = () => {
         if (discount > 0) {
             return `₴ ${(foodItem.price - discount).toFixed(2)} (${foodItem.price})`;
@@ -55,6 +57,12 @@ const FoodItem = ({ foodItem, onAvailableToggle, checked, onDiscount, discount }
                     onChange={onDiscount('discount', foodItem._id)}
                 /> }  
 
+                {onEdit && <IconButton
+                    className="md-tile-content--left-icon"
+                    onClick={edit(foodItem)}
+                    name="edit"
+                />}
+
                 <Checkbox
                     checked={checked}
                     id={foodItem._id}
@@ -72,7 +80,8 @@ FoodItem.propTypes = {
     onAvailableToggle: PropTypes.func.isRequired,
     checked: PropTypes.bool.isRequired,
     onDiscount: PropTypes.func,
-    discount: PropTypes.number
+    discount: PropTypes.number,
+    onEdit: PropTypes.func,
 };
 
 export default FoodItem;
