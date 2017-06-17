@@ -1,6 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {check} from 'meteor/check';
-import {Email} from 'meteor/email'
+import {Email} from 'meteor/email';
 
 
 Meteor.methods({

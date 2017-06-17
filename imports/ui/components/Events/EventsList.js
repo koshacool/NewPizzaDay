@@ -5,6 +5,7 @@ import { Row } from 'react-flexbox-grid';
 
 import { handleResult } from '../../../utils/client-utils';
 import { createEvent, updateEvent } from '../../../api/events/methods';
+import { sendEmail } from '../../../api/messages/methods';
 import { createOrder } from '../../../api/orders/methods';
 
 import EventItem from './EventItem';
@@ -45,7 +46,9 @@ class EventsList extends React.Component {
       Meteor.call('sendEmail',
           'roman.kushytskyy@gmail.com',
           'Hello from Bob!',
-          'This is a test of Email.send.');
+          'This is a test of Email.send.'
+      );
+      
     };
   }
 
