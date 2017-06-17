@@ -28,10 +28,9 @@ class EventsList extends React.Component {
   onCreateEvent(event) {
     event.preventDefault();
 
-    createEvent.call({ event: {} }, handleResult((eventId) => {
-          createOrder.call({ order: { eventId: eventId } }, handleResult());
+    createEvent.call({ event: {} }, handleResult((eventId) => {          
           this.context.router.push(`event/${eventId}`);
-  }));
+    }));
   }
 
   onChangeStatus(status, eventId) {
