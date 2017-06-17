@@ -33,3 +33,21 @@ export const createFood = new ValidatedMethod({
     return Food.insert(foodToAdd);
   },
 });
+
+ export const updateFood = new ValidatedMethod({
+   name: 'Food.update',
+   validate: new SimpleSchema({
+     _id: { type: String },
+     partToUpdate: { type: FoodSchema.pick(['name', 'price', 'description']) },
+   }).validator(),
+
+   run({ _id, partToUpdate }) {
+     const foodItem = Food.findOne({ _id, createdBy: this.userId });
+
+     if (!foodItem) {
+       throw new Meteor.Error('You can\'t edit this food');
+     }
+
+     return Food.update({ _id }, { $set: partToUpdate });
+   },
+ });

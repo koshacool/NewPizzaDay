@@ -29,6 +29,7 @@ class FoodList extends React.Component {
         };
 
         this.modalCreateFood = this.modalCreateFood.bind(this);
+        this.modalEditFood = this.modalEditFood.bind(this);
         this.onAvailableToggle = this.onAvailableToggle.bind(this);
         this.onDiscount = this.onDiscount.bind(this);
         this.modalEditFoodGroup = this.modalEditFoodGroup.bind(this);
@@ -61,6 +62,16 @@ class FoodList extends React.Component {
             hideModal={this.hideModal}
             modalDescription="Create Menu Item"
             event={this.props.event}
+        />);
+    }
+
+    modalEditFood(foodItem) {
+        return (<ModalsManagerContainer
+            modalName={this.state.modal}
+            hideModal={this.hideModal}
+            modalDescription="Edit Menu Item"
+            event={this.props.event}        
+            foodItem={foodItem}    
         />);
     }
 
@@ -155,6 +166,7 @@ class FoodList extends React.Component {
                                     checked={valueInArray(event.food, foodItem._id)}
                                     discount={event.discount[foodItem._id] ? +event.discount[foodItem._id] : 0}
                                     onDiscount={this.onDiscount}
+                                    onEdit={this.showModal('editFood')}
                                 />
 
                             ))}

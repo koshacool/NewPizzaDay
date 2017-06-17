@@ -11,3 +11,12 @@ Meteor.publish('food.userList', function foodUserList() {
 
     return Food.find({createdBy: this.userId});
 });
+
+Meteor.publish('food.byId', function foodById(foodId) {
+    check(foodId, String);
+    if (!this.userId) {
+        return this.ready();
+    }
+
+    return Food.find({_id: foodId, createdBy: this.userId});
+});

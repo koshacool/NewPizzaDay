@@ -6,7 +6,9 @@ import Dialog from 'react-md/lib/Dialogs';
 import Button from 'react-md/lib/Buttons/Button';
 
 import ConfirmContainer from './Containers/ConfirmContainer';
+
 import CreateFoodContainer from './Containers/CreateFoodContainer';
+import EditFoodContainer from './Containers/EditFoodContainer';
 
 import EditUserGroupContainer from './Containers/EditUserGroupContainer';
 import UserGroupsListContainer from './Containers/UserGroupsListContainer';
@@ -15,8 +17,9 @@ import EditFoodGroupContainer from './Containers/EditFoodGroupContainer';
 import FoodGroupsListContainer from './Containers/FoodGroupsListContainer';
 
 const ModalComponents = {
-    Confirm:    ConfirmContainer,
-    CreateFood: CreateFoodContainer,
+    Confirm:        ConfirmContainer,
+    CreateFood:     CreateFoodContainer,
+    EditFood:       EditFoodContainer,
     EditUserGroup:  EditUserGroupContainer,
     UserGroupsList: UserGroupsListContainer,
     EditFoodGroup:  EditFoodGroupContainer,
