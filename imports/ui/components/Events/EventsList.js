@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactDOMServer from 'react-dom/server'
 
 import { Row } from 'react-flexbox-grid';
 
 import { handleResult } from '../../../utils/client-utils';
-import { createEvent, updateEvent } from '../../../api/events/methods';
+import { createEvent } from '../../../api/events/methods';
 import { createOrder } from '../../../api/orders/methods';
 
-import EventItem from './EventItem';
+import EventItemContainer from './EventItemContainer';
 import Spinner from '../Spinner';
 import LinkButton from '../LinkButton';
 import NoItems from '../NoItems';
@@ -18,7 +19,6 @@ class EventsList extends React.Component {
     super(props);
 
     this.onCreateEvent = this.onCreateEvent.bind(this);
-    this.onChangeStatus = this.onChangeStatus.bind(this);
   }
 
   componentWillUnmount() {
@@ -33,21 +33,7 @@ class EventsList extends React.Component {
     }));
   }
 
-  onChangeStatus(status, eventId) {
-    return () => {
-      const updatedEvent = {
-        _id: eventId,
-        partToUpdate: {'status': status},
-      };
-
-      updateEvent.call(updatedEvent, handleResult());
-
-      Meteor.call('sendEmail',
-          'roman.kushytskyy@gmail.com',
-          'Hello from Bob!',
-          'This is a test of Email.send.');
-    };
-  }
+  
 
   render() {
     const { loading, events } = this.props;
@@ -58,10 +44,9 @@ class EventsList extends React.Component {
           {!loading && events.length === 0 && <NoItems text="You don't have any events"/>}
 
           {events.length > 0 && events.map(event => (
-            <EventItem
+            <EventItemContainer
               key={event._id}
               event={event}
-              onChangeStatus={this.onChangeStatus}
             />
           ))}
         </Row>

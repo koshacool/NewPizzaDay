@@ -21,7 +21,7 @@ Meteor.methods({
             to: to,
             from: Meteor.user().emails[0].address,
             subject: subject,
-            text: text,
+            html: text,
         });
     }
 });

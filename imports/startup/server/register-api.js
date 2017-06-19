@@ -6,3 +6,4 @@ import '../../api/userGroups';
 import '../../api/foodGroups';
 
 import '../../api/orders';
+import '../../api/messages';
