@@ -17,7 +17,7 @@ import List from 'react-md/lib/Lists/List';
 
 import { handleResult } from '../../../utils/client-utils';
 import { updateEvent } from '../../../api/events/methods';
-import  Email  from '../Email/Email';
+import OrdersTable   from '../Tables/OrdersTable';
 
 import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
@@ -53,7 +53,8 @@ class EventItem extends React.Component {
     }
 
     sendEmail() {
-        const emailBody = <Email userName="koshacool" orders={this.getOrder()} totalPrice={1321} />;
+        const emailBody = <OrdersTable userName="koshacool" orders={this.getOrder()} totalPrice={1321} />;
+
         Meteor.call('sendEmail',
             'roman.kushytskyy@gmail.com',
             'Hello from Bob!',

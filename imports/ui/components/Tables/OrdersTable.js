@@ -1,20 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import userOrderTable from './userOrderTable';
+import UserOrderTable from './UserOrderTable';
 
 const border = {
     border: '1px solid black',
 };
 
-class Email extends React.Component {
+class OrdersTable extends React.Component {
     constructor(props) {
         super(props);
+
+        this.renderUserOrder = this.renderUserOrder.bind(this);
+    }
+
+    renderUserOrder() {
+        const {orders} = this.props;
+
+        return orders.map((order, i) =>  (
+                <tr key={i}>
+                    <td>{order.userName}</td>
+                    <td>
+                        <UserOrderTable
+                            order={order.order}
+                        />
+                    </td>
+                    <td>{234 + 'grn.'}</td>
+                </tr>
+            )
+        );
+
     }
 
     render() {
         const {orders, totalPrice} = this.props;
-        console.log(orders)
+
         return (
             <table style={border}>
                 <thead>
@@ -24,25 +44,11 @@ class Email extends React.Component {
                     <th >Total price</th>
                 </tr>
                 </thead>
+
                 <tbody>
-                {
-                    orders.map((order, i) => {
-
-                        return (
-                            <tr key={i}>
-                                <td>{order.userName}</td>
-                                <td>
-                                    <userOrderTable
-                                        order={order.order}
-                                    />
-                                </td>
-                                <td>{234 + 'grn.'}</td>
-                            </tr>
-                        );
-
-                    })
-                }
+                { this.renderUserOrder() }
                 </tbody>
+
                 <tfoot>
                 <tr>
                     <td>
@@ -56,10 +62,10 @@ class Email extends React.Component {
 }
 
 
-Email.propTypes = {
+OrdersTable.propTypes = {
     orders: PropTypes.array.isRequired,//[{ userNamem, order[{foodName, count, price}, ...] }]
-    totalPrice: PropTypes.number.isRequired,
+    totalPrice: PropTypes.number.isRequired,//Sum of all users price
 };
 
 
-export default Email;
+export default OrdersTable;
