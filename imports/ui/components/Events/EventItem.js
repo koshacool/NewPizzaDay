@@ -83,12 +83,7 @@ class EventItem extends React.Component {
     };
 
     detailedUsersPrice() {
-        const {event, orders} = this.props;
-        const confirmedOrders = this.getConfirmedOrders();
-
-        confirmedOrders.map(order => {
-            order.food.map();
-        });
+        //const allOrders = .
 
     }
 
@@ -104,7 +99,7 @@ class EventItem extends React.Component {
     render() {
         const {event} = this.props
         const canEdit = event.createdBy === Meteor.userId();
-
+        console.log(event.title, this.props)
         return (
             <Col xs={12} className="m-b-20">
                 <Card>
@@ -155,7 +150,6 @@ class EventItem extends React.Component {
 
 EventItem.propTypes = {
     event: PropTypes.object.isRequired,
-    orders: PropTypes.array.isRequired,
 
     onUnmount: PropTypes.func.isRequired,
 };

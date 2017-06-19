@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-
+import { check } from 'meteor/check';
 
 Meteor.publish('users.current', function usersCurrent() {
   if (!this.userId) {
@@ -21,4 +21,14 @@ Meteor.publish('users.list', function usersList() {
   	{ }, 
   	{ fields: { username: 1 } }
   );
+});
+
+Meteor.publish('users.byArrayId', function usersByArrayId(arrayId) {
+  check(arrayId, Array);
+
+  if (!this.userId) {
+    return this.ready();
+  }
+
+  return Meteor.users.find({ _id: { $in: arrayId } });
 });
