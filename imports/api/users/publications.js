@@ -30,5 +30,8 @@ Meteor.publish('users.byArrayId', function usersByArrayId(arrayId) {
     return this.ready();
   }
 
-  return Meteor.users.find({ _id: { $in: arrayId } });
+  return Meteor.users.find(
+      { _id: { $in: arrayId } },
+      { fields: { emails: 1, username: 1 } }
+  );
 });

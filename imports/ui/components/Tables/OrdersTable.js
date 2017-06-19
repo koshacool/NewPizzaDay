@@ -40,7 +40,7 @@ class OrdersTable extends React.Component {
                 <thead>
                 <tr >
                     <th >Name</th>
-                    <th >Order</th>
+                    <th >Quantity</th>
                     <th >Total price</th>
                 </tr>
                 </thead>

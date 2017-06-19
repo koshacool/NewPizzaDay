@@ -19,13 +19,14 @@ const UserOrderTable = ({ order }) => (
         <tbody>
         {
             order.map((orderItem, i) => {
-                const {name, count, price} = orderItem;
+                console.log(orderItem)
+                const {name, quantity, price} = orderItem;
 
                 return (
                     <tr key={i}>
                         <td style={border}>{name}</td>
-                        <td style={border}>{count}</td>
-                        <td style={border}>{count * price}</td>
+                        <td style={border}>{quantity}</td>
+                        <td style={border}>{quantity * price}</td>
                     </tr>
                 );
             })
@@ -36,7 +37,7 @@ const UserOrderTable = ({ order }) => (
 
 
 UserOrderTable.propTypes = {
-    order: PropTypes.array.isRequired,//[{foodName, count, price}],
+    order: PropTypes.array.isRequired,//[{foodName, quantity, price}],
 };
 
 export default UserOrderTable;

@@ -53,13 +53,15 @@ class EventItem extends React.Component {
     }
 
     sendEmail() {
-        const emailBody = <OrdersTable userName="koshacool" orders={this.getOrder()} totalPrice={1321} />;
+        const emailBody = <OrdersTable userName="koshacool" orders={this.detailedUsersPrice()} totalPrice={1321}/>;
 
         Meteor.call('sendEmail',
             'roman.kushytskyy@gmail.com',
             'Hello from Bob!',
             ReactDOMServer.renderToStaticMarkup(emailBody)
         );
+
+        this.detailedUsersPrice();
     }
 
     getOrder() {
@@ -69,12 +71,12 @@ class EventItem extends React.Component {
                 order: [
                     {
                         name: 'Pizza',
-                        count: 5,
+                        quantity: 5,
                         price: 54
                     },
                     {
                         name: 'Cheese',
-                        count: 1,
+                        quantity: 1,
                         price: 74.23,
                     }
                 ],
@@ -83,23 +85,52 @@ class EventItem extends React.Component {
     };
 
     detailedUsersPrice() {
-        //const allOrders = .
+        const { users, orders, food } = this.props;
+
+
+        const confirmedOrders = this.getConfirmedOrders(orders);
+
+        const ordersForMail = this.getOrdersForMail(confirmedOrders);
+
+        return ordersForMail;
 
     }
 
-    userPrice(userId, food, quantities, discounts) {
 
+    getOrdersForMail(orders) {
+        const { users, food } = this.props;
+
+        return orders.map((order) => {
+            const getObjFromArr = (arr, paramName, value) => arr.filter(obj => obj[paramName] === value)[0];
+
+            const userInfo = getObjFromArr(users, '_id', order.owner);
+            const foodInfoArr = order.food.map( (foodId) => getObjFromArr(food, '_id', foodId) );
+
+            const OrderInfo = foodInfoArr.map((foodItem) => {
+                let quantity = order.quantity[foodItem._id];
+                return {
+                    name: foodItem.name,
+                    price: foodItem.price,
+                    quantity: quantity ? quantity : 1,//If quantity not exist set it to 1
+                }
+            });
+
+
+            return {
+                userName: userInfo.username,
+                order: OrderInfo
+            };
+        });
     }
 
-    getConfirmedOrders() {
-        const {orders} = this.props;
+    getConfirmedOrders(orders) {
         return orders.filter(order => order.status);
     }
 
     render() {
         const {event} = this.props
         const canEdit = event.createdBy === Meteor.userId();
-        console.log(event.title, this.props)
+        //console.log(event.title, this.props)
         return (
             <Col xs={12} className="m-b-20">
                 <Card>
@@ -145,13 +176,14 @@ class EventItem extends React.Component {
 
 
 }
-;
 
 
 EventItem.propTypes = {
     event: PropTypes.object.isRequired,
-
     onUnmount: PropTypes.func.isRequired,
+    users: PropTypes.array,
+    order: PropTypes.array,
+    food: PropTypes.array,
 };
 
 
