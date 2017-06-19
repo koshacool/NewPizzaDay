@@ -15,7 +15,7 @@ class OrdersTable extends React.Component {
     }
 
     renderUserOrder() {
-        const {orders} = this.props;
+        const {orders} = this.props;        
 
         return orders.map((order, i) =>  (
                 <tr key={i}>
@@ -25,11 +25,17 @@ class OrdersTable extends React.Component {
                             order={order.order}
                         />
                     </td>
-                    <td>{234 + 'grn.'}</td>
+                    <td>{`₴${this.getUserTotalPrice(order.order)}`}</td>
                 </tr>
             )
         );
+    }
 
+    getUserTotalPrice(order) {
+       return order.reduce((sum, current) => {
+            const {quantity, price} = current;
+            return sum + quantity * price;
+        }, 0);
     }
 
     render() {
@@ -40,8 +46,8 @@ class OrdersTable extends React.Component {
                 <thead>
                 <tr >
                     <th >Name</th>
-                    <th >Quantity</th>
-                    <th >Total price</th>
+                    <th >Order</th>
+                    <th >User price</th>
                 </tr>
                 </thead>
 

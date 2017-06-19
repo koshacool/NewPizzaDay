@@ -12,14 +12,13 @@ const UserOrderTable = ({ order }) => (
         <thead>
         <tr>
             <th >Name</th>
-            <th >Count</th>
+            <th >Quantity</th>
             <th >Price</th>
         </tr>
         </thead>
         <tbody>
         {
-            order.map((orderItem, i) => {
-                console.log(orderItem)
+            order.map((orderItem, i) => {                
                 const {name, quantity, price} = orderItem;
 
                 return (
