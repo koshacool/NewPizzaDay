@@ -25,7 +25,7 @@ const UserOrderTable = ({ order }) => (
                     <tr key={i}>
                         <td style={border}>{name}</td>
                         <td style={border}>{quantity}</td>
-                        <td style={border}>{quantity * price}</td>
+                        <td style={border}>{(quantity * price).toFixed(2)}</td>
                     </tr>
                 );
             })

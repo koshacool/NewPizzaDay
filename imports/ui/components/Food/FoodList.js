@@ -62,6 +62,7 @@ class FoodList extends React.Component {
             hideModal={this.hideModal}
             modalDescription="Create Menu Item"
             event={this.props.event}
+            modal
         />);
     }
 
@@ -71,7 +72,8 @@ class FoodList extends React.Component {
             hideModal={this.hideModal}
             modalDescription="Edit Menu Item"
             event={this.props.event}        
-            foodItem={foodItem}    
+            foodItem={foodItem}
+            modal
         />);
     }
 
