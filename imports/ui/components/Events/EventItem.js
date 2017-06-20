@@ -81,16 +81,16 @@ class EventItem extends React.Component {
                     const body = <OrdersTable
                         orders={[order]}
                     />;
-                    this.sendEmail(order.email, eventStatus, body);//Send email to each ordered user
+                    this.sendEmail(order.email, event.title, eventStatus, body);//Send email to each ordered user
                 });
                 break;
         }
     }
 
-    sendEmail(from, subject, emailBody) {
+    sendEmail(from, eventName, status, emailBody) {
         Meteor.call('sendEmail',
             from,
-            `Pizza DAY: ${subject}`,
+            `Pizza DAY "${eventName}": ${status}`,
             ReactDOMServer.renderToStaticMarkup(emailBody)
         );
     };
@@ -99,6 +99,8 @@ class EventItem extends React.Component {
     render() {
         const {event} = this.props
         const canEdit = event.createdBy === Meteor.userId();
+        const canOrder = event.status === 'ordering';
+        const isEventOver = event.status === 'delivered';
 
         return (
             <Col xs={12} className="m-b-20">
@@ -113,11 +115,13 @@ class EventItem extends React.Component {
                     </CardText>
 
                     <CardActions>
-                        <LinkButton
-                            flat
-                            to={`/order/${event._id}`}
-                            label="Order"
-                        />
+                            {canOrder && (
+                                <LinkButton
+                                    flat
+                                    to={`/order/${event._id}`}
+                                    label="Order"
+                                />
+                            )}
 
                         {canEdit && (
                             <LinkButton
@@ -132,7 +136,7 @@ class EventItem extends React.Component {
                                 active
                                 threeLines
                             >
-                                {canEdit && (<MenuButtonStatus onSelect={this.onChangeStatus} eventId={event._id}/>)}
+                                {canEdit && !isEventOver && (<MenuButtonStatus onSelect={this.onChangeStatus} eventId={event._id} />)}
                             </ListItem>
                         </List>
 

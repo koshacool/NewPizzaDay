@@ -19,7 +19,7 @@ Meteor.publish('users.list', function usersList() {
 
   return Meteor.users.find(
   	{ }, 
-  	{ fields: { username: 1 } }
+  	{ fields: { emails: 1, username: 1 } }
   );
 });
 
