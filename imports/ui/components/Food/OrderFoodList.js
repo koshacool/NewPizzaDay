@@ -99,7 +99,7 @@ class OrderFoodList extends React.Component {
         return +quantity;
     }
 
-    
+
 
     render() {
         const {  event, food, order } = this.props;

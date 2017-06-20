@@ -5,7 +5,6 @@ import OrderFoodList from './OrderFoodList';
 
 
 export default createContainer(({event, order, food, onSubmit}) => {
-
   
   return {
     event,

@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import { handleResult } from '../../../utils/client-utils';
+import { createOrder } from '../../../api/orders/methods';
 import { Events } from '../../../api/events/events';
 import { Orders } from '../../../api/orders/orders';
 import { Food } from '../../../api/food/food';
@@ -14,10 +16,19 @@ export default createContainer(({ eventId }) => {
 
     let subsHandler4 = {ready: () => false};
     let subsHandler5 = {ready: () => false};
-
-    const event = Events.findOne({_id: eventId});
     let users = [];
     let food = [];
+    let currentUserOrder = {};
+
+    if (subsHandler2.ready()) {
+        currentUserOrder = Orders.findOne({eventId: eventId, owner: Meteor.userId()});
+        if (!currentUserOrder) {
+            createOrder.call({order: {eventId: eventId}}, handleResult());
+        }
+    }
+
+    const event = Events.findOne({_id: eventId});
+
 
     if (event) {
         subsHandler4 = Meteor.subscribe('food.byArrayId', event.food);
@@ -32,9 +43,8 @@ export default createContainer(({ eventId }) => {
         event,
         users,
         food,
+        currentUserOrder,
         orders: Orders.find({eventId: eventId}).fetch(),
-        currentUserOrder: Orders.findOne({eventId: eventId}),
-
         loading: !subsHandler1.ready() ||
             !subsHandler2.ready() ||
             !subsHandler3.ready() ||

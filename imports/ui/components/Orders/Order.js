@@ -30,12 +30,12 @@ class Order extends React.Component {
         this.props.onUnmount();
     }
 
-    componentWillReceiveProps(nextProps) {
-        //Create empty user order if such collection doesn't exist
-        if (!nextProps.currentUserOrder) {
-            this.createUserOrder();
-        }
-    }
+    //componentWillReceiveProps(nextProps) {
+    //    //Create empty user order if such collection doesn't exist
+    //    if (!nextProps.currentUserOrder) {
+    //        this.createUserOrder();
+    //    }
+    //}
 
     createUserOrder() {
         const { eventId } = this.props;
@@ -109,7 +109,7 @@ class Order extends React.Component {
 
     render() {
         const { loading, currentUserOrder } = this.props;
-        console.log(this.props)
+
         return (
             <Spinner loading={loading}>
                 {currentUserOrder && <Row center="xs">

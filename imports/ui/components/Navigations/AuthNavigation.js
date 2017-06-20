@@ -15,7 +15,7 @@ const logout = () => Meteor.logout();
 
 const actionsButtons = [
   <LinkButton flat to="/my-events" label="My Events" />,
-  <LinkButton flat to="/open-events" label="Open Events" />,
+  <LinkButton flat to="/public-events" label="Open Events" />,
   <LinkButton flat label="Logout" onClick={logout} />,
 ];
 
