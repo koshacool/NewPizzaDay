@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Food } from '../../../api/food/food';
 import OrderFoodList from './OrderFoodList';
 
 
@@ -14,7 +13,5 @@ export default createContainer(({event, order, onSubmit}) => {
     event,
     order,
     onSubmit,
-    food: Food.find({}, { sort: { createdAt: -1 } }).fetch(),
-    
   };
 }, OrderFoodList);

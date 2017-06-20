@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
+import ReactDOMServer from 'react-dom/server';
 
 import { Row } from 'react-flexbox-grid';
 import Button from 'react-md/lib/Buttons/Button';
@@ -8,12 +9,14 @@ import Button from 'react-md/lib/Buttons/Button';
 import { createOrder } from '../../../api/orders/methods';
 import { updateEvent } from '../../../api/events/methods';
 import { handleResult } from '../../../utils/client-utils';
+import { detailedUsersPrice, totalPrice } from '../../../utils/order-result';
 
 import Spinner from '../Spinner';
 import LinkButton from '../LinkButton';
 import NoItems from '../NoItems';
 
 import OrderFoodContainer from '../Food/OrderFoodContainer';
+import OrdersTable   from '../Tables/OrdersTable';
 
 
 class Order extends React.Component {
@@ -21,6 +24,7 @@ class Order extends React.Component {
         super(props);        
 
         this.onConfirmOrder = this.onConfirmOrder.bind(this);
+        this.checkAllSubmitAndSendEmail = this.checkAllSubmitAndSendEmail.bind(this);
     }
 
     componentWillUnmount() {
@@ -39,50 +43,72 @@ class Order extends React.Component {
         createOrder.call({ order: { eventId: eventId } }, handleResult());       
     }
 
-    
-
     renderFood() {
-        const {event, currentUserOrder} = this.props;
-        return (<OrderFoodContainer event={event} order={currentUserOrder} onSubmit={this.onConfirmOrder} />);
+        const {event, currentUserOrder, food} = this.props;
+        return (<OrderFoodContainer event={event} order={currentUserOrder} onSubmit={this.onConfirmOrder} food={food} />);
     }
 
-    onConfirmOrder() {        
+    onConfirmOrder() {
+        const updatedEvent = {
+            _id: this.props.event._id,
+            partToUpdate: {'status': 'ordered'},
+        };
+
+        updateEvent.call(
+            updatedEvent,
+            handleResult(this.checkAllSubmitAndSendEmail)
+        );
+    }
+
+    checkAllSubmitAndSendEmail() {
         const {event, orders} = this.props;
 
         const allOrdered = (this.checkAllSubmittedOrder(
-            this.getOrderedUsers(orders),
-            event.users)
+                this.getConfirmedOrders(orders),
+                event.users)
         );
 
         if (allOrdered) {
             console.log('ordered');
-
-            const updatedEvent = {
-                _id: this.props.event._id,
-                partToUpdate: {'status': 'ordered'},
-            };
-
-            updateEvent.call(
-                updatedEvent,
-                handleResult( () => browserHistory.push('/') )
-            );
+            this.prepareOrdersResultAndSendEmail();
+            browserHistory.push('/');
         } else {
             browserHistory.push('/');
         }
     }
 
-    getOrderedUsers(orders) {
+    getConfirmedOrders(orders) {
         return orders.filter((order) => order.status);
     }
-    
 
-    checkAllSubmittedOrder(orderedUsersArr, availableUsersArr) {
-        return orderedUsersArr.length === availableUsersArr.length;
+    checkAllSubmittedOrder(confirmedOrdersArr, availableUsersArr) {
+        return confirmedOrdersArr.length === availableUsersArr.length;
     }
+
+    prepareOrdersResultAndSendEmail() {
+        const userEmail = Meteor.user().emails[0].address;
+        const { orders, food, event } = this.props;
+
+        const users = Meteor.users.find({ _id: { $in: event.users } }).fetch();
+
+        let  emailBody = <OrdersTable
+            orders={detailedUsersPrice(orders, users, food, event)}
+            totalPrice={+totalPrice(orders, food, event)}
+        />;
+
+        this.sendEmail(userEmail, event.title, 'ordered', emailBody);
+    }
+
+    sendEmail(from, eventName, status, emailBody) {
+        Meteor.call('sendEmail',
+            from,
+            `Pizza DAY "${eventName}": ${status}`,
+            ReactDOMServer.renderToStaticMarkup(emailBody)
+        );
+    };
 
     render() {
         const { loading, currentUserOrder, orders } = this.props;
-        // console.log(currentUserOrder, orders, loading)
         
         return (
             <Spinner loading={loading}>                
@@ -97,6 +123,8 @@ class Order extends React.Component {
 
 Order.propTypes = {
     orders: PropTypes.array,
+    food: PropTypes.array,
+    users: PropTypes.array,
     currentUserOrder: PropTypes.object,
     event: PropTypes.object,
     eventId: PropTypes.string.isRequired,

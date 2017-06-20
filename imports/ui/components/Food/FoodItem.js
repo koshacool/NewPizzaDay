@@ -46,7 +46,7 @@ const FoodItem = ({ foodItem, onAvailableToggle, checked, onDiscount, discount, 
                     placeholder="Discount"
                     label="discount"
                     paddedBlock
-                    step={0.01}
+                    step={1}
                     min={0}
                     max={foodItem.price}
                     value={discount}
