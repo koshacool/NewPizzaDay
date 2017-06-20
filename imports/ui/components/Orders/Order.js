@@ -45,7 +45,12 @@ class Order extends React.Component {
 
     renderFood() {
         const {event, currentUserOrder, food} = this.props;
-        return (<OrderFoodContainer event={event} order={currentUserOrder} onSubmit={this.onConfirmOrder} food={food} />);
+        return (<OrderFoodContainer
+                    event={event}
+                    order={currentUserOrder}
+                    onSubmit={this.onConfirmOrder}
+                    food={food}
+                 />);
     }
 
     onConfirmOrder() {
@@ -87,9 +92,7 @@ class Order extends React.Component {
 
     prepareOrdersResultAndSendEmail() {
         const userEmail = Meteor.user().emails[0].address;
-        const { orders, food, event } = this.props;
-
-        const users = Meteor.users.find({ _id: { $in: event.users } }).fetch();
+        const { orders, food, users, event } = this.props;
 
         let  emailBody = <OrdersTable
             orders={detailedUsersPrice(orders, users, food, event)}
@@ -108,8 +111,8 @@ class Order extends React.Component {
     };
 
     render() {
-        const { loading, currentUserOrder, orders } = this.props;
-        
+        const { loading, currentUserOrder } = this.props;
+        console.log(this.props)
         return (
             <Spinner loading={loading}>                
                     {currentUserOrder && <Row center="xs">

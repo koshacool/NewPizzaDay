@@ -28,5 +28,5 @@ Meteor.publish('food.byArrayId', function foodByArrayId(arrayId) {
         return this.ready();
     }
 
-    return Food.find({ _id: { $in: arrayId }, createdBy: this.userId });
+    return Food.find({ _id: { $in: arrayId } });
 });

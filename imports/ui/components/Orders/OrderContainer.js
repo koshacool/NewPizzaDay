@@ -11,18 +11,30 @@ export default createContainer(({ eventId }) => {
     const subsHandler1 = Meteor.subscribe('orders.byEventId', eventId);
     const subsHandler2 = Meteor.subscribe('orders.currentUserByEventId', eventId);
     const subsHandler3 = Meteor.subscribe('events.byId', eventId);
-    const subsHandler4 = Meteor.subscribe('food.userList');
-    const subsHandler5 = Meteor.subscribe('users.list');
+
+    let subsHandler4 = {ready: () => false};
+    let subsHandler5 = {ready: () => false};
 
     const event = Events.findOne({_id: eventId});
+    let users = [];
+    let food = [];
 
+    if (event) {
+        subsHandler4 = Meteor.subscribe('food.byArrayId', event.food);
+        food = Food.find({}).fetch();
+
+        subsHandler5 = Meteor.subscribe('users.byArrayId', event.users);
+        users = Meteor.users.find({}).fetch();
+    }
 
     return {
         eventId,
         event,
+        users,
+        food,
         orders: Orders.find({eventId: eventId}).fetch(),
         currentUserOrder: Orders.findOne({eventId: eventId}),
-        food: Food.find({}, {sort: {createdAt: -1}}).fetch(),
+
         loading: !subsHandler1.ready() ||
             !subsHandler2.ready() ||
             !subsHandler3.ready() ||
