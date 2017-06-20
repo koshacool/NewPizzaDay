@@ -17,7 +17,7 @@ class OrdersTable extends React.Component {
     renderUserOrder() {
         const {orders} = this.props;
 
-        return orders.map((order, i) =>  (
+        return orders.map((order, i) => (
                 <tr key={i}>
                     <td>{order.userName}</td>
                     <td>
@@ -25,11 +25,17 @@ class OrdersTable extends React.Component {
                             order={order.order}
                         />
                     </td>
-                    <td>{234 + 'grn.'}</td>
+                    <td>{`₴${this.getUserTotalPrice(order.order)}`}</td>
                 </tr>
             )
         );
+    }
 
+    getUserTotalPrice(order) {
+        return order.reduce((sum, current) => {
+            const {quantity, price} = current;
+            return sum + quantity * price;
+        }, 0).toFixed(2);
     }
 
     render() {
@@ -41,14 +47,15 @@ class OrdersTable extends React.Component {
                 <tr >
                     <th >Name</th>
                     <th >Order</th>
-                    <th >Total price</th>
+                    <th >User price</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                { this.renderUserOrder() }
+                    { this.renderUserOrder() }
                 </tbody>
 
+                {totalPrice &&
                 <tfoot>
                 <tr>
                     <td>
@@ -56,6 +63,7 @@ class OrdersTable extends React.Component {
                     </td>
                 </tr>
                 </tfoot>
+                }
             </table>
         );
     }
@@ -64,7 +72,7 @@ class OrdersTable extends React.Component {
 
 OrdersTable.propTypes = {
     orders: PropTypes.array.isRequired,//[{ userNamem, order[{foodName, count, price}, ...] }]
-    totalPrice: PropTypes.number.isRequired,//Sum of all users price
+    totalPrice: PropTypes.number,//Sum of all users price
 };
 
 

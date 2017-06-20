@@ -1,9 +1,8 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOMServer from 'react-dom/server';
-
 import moment from 'moment';
-import { Meteor } from 'meteor/meteor';
 
 import { Col } from 'react-flexbox-grid';
 import Card from 'react-md/lib/Cards/Card';
@@ -16,6 +15,7 @@ import ListItem from 'react-md/lib/Lists/ListItem';
 import List from 'react-md/lib/Lists/List';
 
 import { handleResult } from '../../../utils/client-utils';
+import { detailedUsersPrice, totalPrice } from '../../../utils/order-result';
 import { updateEvent } from '../../../api/events/methods';
 import OrdersTable   from '../Tables/OrdersTable';
 
@@ -27,13 +27,13 @@ const getHumanizeDuration = date => moment.duration(new Date() - date).humanize(
 
 const getTimeAgo = date => `${getHumanizeDuration(date)} ago`;
 
+
 class EventItem extends React.Component {
     constructor(props) {
         super(props);
 
         this.onChangeStatus = this.onChangeStatus.bind(this);
         this.sendEmail = this.sendEmail.bind(this);
-        this.getOrder = this.getOrder.bind(this);
     }
 
     componentWillUnmount() {
@@ -47,59 +47,54 @@ class EventItem extends React.Component {
                 partToUpdate: {'status': status},
             };
 
-            updateEvent.call(updatedEvent, handleResult(this.sendEmail));
-
+            updateEvent.call(updatedEvent,
+                handleResult(
+                    () => this.prepareOrdersResultAndSendEmail(status)
+                )
+            );//Update event and send email with orders result
         };
     }
 
-    sendEmail() {
-        const emailBody = <OrdersTable userName="koshacool" orders={this.getOrder()} totalPrice={1321} />;
+    prepareOrdersResultAndSendEmail(eventStatus) {
+        const userEmail = Meteor.user().emails[0].address;
+        const { orders, users, food, event } = this.props;
+        let emailBody = null;
 
+        switch (eventStatus) {
+            case 'ordered':
+                emailBody = <OrdersTable
+                    orders={detailedUsersPrice(orders, users, food, event)}
+                    totalPrice={+totalPrice(orders, food, event)}
+                />;
+
+                this.sendEmail(userEmail, eventStatus, emailBody);// Send email to event owner with detailed orders and price
+                break;
+
+            case 'delivered':
+                const usersOrders = detailedUsersPrice(orders, users, food, event);
+                emailBody = <OrdersTable
+                    orders={usersOrders}
+                    totalPrice={+totalPrice(orders, food, event)}
+                />;
+
+                usersOrders.forEach((order) => {
+                    const body = <OrdersTable
+                        orders={[order]}
+                    />;
+                    this.sendEmail(order.email, eventStatus, body);//Send email to each ordered user
+                });
+                break;
+        }
+    }
+
+    sendEmail(from, subject, emailBody) {
         Meteor.call('sendEmail',
-            'roman.kushytskyy@gmail.com',
-            'Hello from Bob!',
+            from,
+            `Pizza DAY: ${subject}`,
             ReactDOMServer.renderToStaticMarkup(emailBody)
         );
-    }
-
-    getOrder() {
-        return [
-            {
-                userName: 'kosha',
-                order: [
-                    {
-                        name: 'Pizza',
-                        count: 5,
-                        price: 54
-                    },
-                    {
-                        name: 'Cheese',
-                        count: 1,
-                        price: 74.23,
-                    }
-                ],
-            },
-        ];
     };
 
-    detailedUsersPrice() {
-        const {event, orders} = this.props;
-        const confirmedOrders = this.getConfirmedOrders();
-
-        confirmedOrders.map(order => {
-            order.food.map();
-        });
-
-    }
-
-    userPrice(userId, food, quantities, discounts) {
-
-    }
-
-    getConfirmedOrders() {
-        const {orders} = this.props;
-        return orders.filter(order => order.status);
-    }
 
     render() {
         const {event} = this.props
@@ -150,14 +145,14 @@ class EventItem extends React.Component {
 
 
 }
-;
 
 
 EventItem.propTypes = {
     event: PropTypes.object.isRequired,
-    orders: PropTypes.array.isRequired,
-
     onUnmount: PropTypes.func.isRequired,
+    users: PropTypes.array,
+    order: PropTypes.array,
+    food: PropTypes.array,
 };
 
 
