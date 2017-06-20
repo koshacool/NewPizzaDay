@@ -21,10 +21,9 @@ import OrdersTable   from '../Tables/OrdersTable';
 
 class Order extends React.Component {
     constructor(props) {
-        super(props);        
+        super(props);
 
         this.onConfirmOrder = this.onConfirmOrder.bind(this);
-        this.checkAllSubmitAndSendEmail = this.checkAllSubmitAndSendEmail.bind(this);
     }
 
     componentWillUnmount() {
@@ -40,47 +39,45 @@ class Order extends React.Component {
 
     createUserOrder() {
         const { eventId } = this.props;
-        createOrder.call({ order: { eventId: eventId } }, handleResult());       
+        createOrder.call({order: {eventId: eventId}}, handleResult());
     }
 
     renderFood() {
         const {event, currentUserOrder, food} = this.props;
         return (<OrderFoodContainer
-                    event={event}
-                    order={currentUserOrder}
-                    onSubmit={this.onConfirmOrder}
-                    food={food}
-                 />);
+            event={event}
+            order={currentUserOrder}
+            onSubmit={this.onConfirmOrder}
+            food={food}
+        />);
     }
 
     onConfirmOrder() {
-        const updatedEvent = {
-            _id: this.props.event._id,
-            partToUpdate: {'status': 'ordered'},
-        };
-
-        updateEvent.call(
-            updatedEvent,
-            handleResult(this.checkAllSubmitAndSendEmail)
-        );
-    }
-
-    checkAllSubmitAndSendEmail() {
         const {event, orders} = this.props;
-
         const allOrdered = (this.checkAllSubmittedOrder(
                 this.getConfirmedOrders(orders),
                 event.users)
         );
 
         if (allOrdered) {
-            console.log('ordered');
-            this.prepareOrdersResultAndSendEmail();
-            browserHistory.push('/');
+            const updatedEvent = {
+                _id: this.props.event._id,
+                partToUpdate: {'status': 'ordered'},
+            };
+
+            updateEvent.call(
+                updatedEvent,
+                handleResult(() => {
+                    console.log('ordered');
+                    this.prepareOrdersResultAndSendEmail();
+                    browserHistory.push('/');
+                })
+            );
         } else {
             browserHistory.push('/');
         }
     }
+
 
     getConfirmedOrders(orders) {
         return orders.filter((order) => order.status);
@@ -94,7 +91,7 @@ class Order extends React.Component {
         const userEmail = Meteor.user().emails[0].address;
         const { orders, food, users, event } = this.props;
 
-        let  emailBody = <OrdersTable
+        let emailBody = <OrdersTable
             orders={detailedUsersPrice(orders, users, food, event)}
             totalPrice={+totalPrice(orders, food, event)}
         />;
@@ -114,10 +111,10 @@ class Order extends React.Component {
         const { loading, currentUserOrder } = this.props;
         console.log(this.props)
         return (
-            <Spinner loading={loading}>                
-                    {currentUserOrder && <Row center="xs">
-                        {this.renderFood()}
-                    </Row>}              
+            <Spinner loading={loading}>
+                {currentUserOrder && <Row center="xs">
+                    {this.renderFood()}
+                </Row>}
             </Spinner>
         );
     }
