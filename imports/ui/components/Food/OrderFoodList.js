@@ -56,21 +56,24 @@ class OrderFoodList extends React.Component {
     }
 
     onSubmitOrder() {
-        this.updateUserOrder('status', true);
-        this.props.onSubmit();
+        this.updateUserOrder('status', true);        
     }
 
     updateUserOrder(field, value) {
-        const { order } = this.props; 
+        const { order, onSubmit } = this.props; 
         
         const updatedOrder = {
             _id: order._id,
             partToUpdate: {[field]: value},
         };
 
-        updateOrder.call(updatedOrder, handleResult());
+        if (field === 'status') {
+            updateOrder.call(updatedOrder, handleResult(onSubmit));
+        } else {
+            updateOrder.call(updatedOrder, handleResult());
+        }
 
-
+        
     }
 
     getEvailableFood() {

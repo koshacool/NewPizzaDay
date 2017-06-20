@@ -7,7 +7,7 @@ import { Row } from 'react-flexbox-grid';
 import Button from 'react-md/lib/Buttons/Button';
 
 import { createOrder } from '../../../api/orders/methods';
-import { updateEvent } from '../../../api/events/methods';
+import { updateEvent, changeEventStatus } from '../../../api/events/methods';
 import { handleResult } from '../../../utils/client-utils';
 import { detailedUsersPrice, totalPrice } from '../../../utils/order-result';
 
@@ -29,13 +29,6 @@ class Order extends React.Component {
     componentWillUnmount() {
         this.props.onUnmount();
     }
-
-    //componentWillReceiveProps(nextProps) {
-    //    //Create empty user order if such collection doesn't exist
-    //    if (!nextProps.currentUserOrder) {
-    //        this.createUserOrder();
-    //    }
-    //}
 
     createUserOrder() {
         const { eventId } = this.props;
@@ -62,10 +55,10 @@ class Order extends React.Component {
         if (allOrdered) {
             const updatedEvent = {
                 _id: this.props.event._id,
-                partToUpdate: {'status': 'ordered'},
+                status: 'ordered',
             };
 
-            updateEvent.call(
+            changeEventStatus.call(
                 updatedEvent,
                 handleResult(() => {
                     console.log('ordered');

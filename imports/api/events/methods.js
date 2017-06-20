@@ -157,3 +157,21 @@ export const updateEventAddFood = new ValidatedMethod({
     return Events.update({ _id }, { $addToSet: { food: { $each: food }  }  });
   },
 });
+
+export const changeEventStatus = new ValidatedMethod({
+  name: 'Events.changeStatus',
+  validate: new SimpleSchema({
+    _id: { type: String },
+    status: { type: String },
+  }).validator(),
+
+  run({ _id, status }) {
+    const event = Events.findOne({ _id });
+
+    if (!event || !this.userId) {
+      throw new Meteor.Error('You can\'t edit this event');
+    }
+
+    return Events.update({ _id }, { $set: { status } });
+  },
+});
