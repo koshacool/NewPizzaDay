@@ -7,7 +7,7 @@ import { Row } from 'react-flexbox-grid';
 import Button from 'react-md/lib/Buttons/Button';
 
 import { createOrder } from '../../../api/orders/methods';
-import { updateEvent } from '../../../api/events/methods';
+import { updateEvent, changeEventStatus } from '../../../api/events/methods';
 import { handleResult } from '../../../utils/client-utils';
 import { detailedUsersPrice, totalPrice } from '../../../utils/order-result';
 
@@ -21,61 +21,56 @@ import OrdersTable   from '../Tables/OrdersTable';
 
 class Order extends React.Component {
     constructor(props) {
-        super(props);        
+        super(props);
 
         this.onConfirmOrder = this.onConfirmOrder.bind(this);
-        this.checkAllSubmitAndSendEmail = this.checkAllSubmitAndSendEmail.bind(this);
     }
 
     componentWillUnmount() {
         this.props.onUnmount();
     }
 
-    componentWillReceiveProps(nextProps) {
-        //Create empty user order if such collection doesn't exist
-        if (!nextProps.currentUserOrder) {
-            this.createUserOrder();
-        }
-    }
-
     createUserOrder() {
         const { eventId } = this.props;
-        createOrder.call({ order: { eventId: eventId } }, handleResult());       
+        createOrder.call({order: {eventId: eventId}}, handleResult());
     }
 
     renderFood() {
         const {event, currentUserOrder, food} = this.props;
-        return (<OrderFoodContainer event={event} order={currentUserOrder} onSubmit={this.onConfirmOrder} food={food} />);
+        return (<OrderFoodContainer
+            event={event}
+            order={currentUserOrder}
+            onSubmit={this.onConfirmOrder}
+            food={food}
+        />);
     }
 
     onConfirmOrder() {
-        const updatedEvent = {
-            _id: this.props.event._id,
-            partToUpdate: {'status': 'ordered'},
-        };
-
-        updateEvent.call(
-            updatedEvent,
-            handleResult(this.checkAllSubmitAndSendEmail)
-        );
-    }
-
-    checkAllSubmitAndSendEmail() {
         const {event, orders} = this.props;
-
         const allOrdered = (this.checkAllSubmittedOrder(
                 this.getConfirmedOrders(orders),
                 event.users)
         );
 
         if (allOrdered) {
-            console.log('ordered');
-            this.prepareOrdersResultAndSendEmail();
-            browserHistory.push('/');
+            const updatedEvent = {
+                _id: this.props.event._id,
+                status: 'ordered',
+            };
+
+            changeEventStatus.call(
+                updatedEvent,
+                handleResult(() => {
+                    console.log('ordered');
+                    this.prepareOrdersResultAndSendEmail();
+                    browserHistory.push('/');
+                })
+            );
         } else {
             browserHistory.push('/');
         }
     }
+
 
     getConfirmedOrders(orders) {
         return orders.filter((order) => order.status);
@@ -87,11 +82,9 @@ class Order extends React.Component {
 
     prepareOrdersResultAndSendEmail() {
         const userEmail = Meteor.user().emails[0].address;
-        const { orders, food, event } = this.props;
+        const { orders, food, users, event } = this.props;
 
-        const users = Meteor.users.find({ _id: { $in: event.users } }).fetch();
-
-        let  emailBody = <OrdersTable
+        let emailBody = <OrdersTable
             orders={detailedUsersPrice(orders, users, food, event)}
             totalPrice={+totalPrice(orders, food, event)}
         />;
@@ -108,13 +101,13 @@ class Order extends React.Component {
     };
 
     render() {
-        const { loading, currentUserOrder, orders } = this.props;
-        
+        const { loading, currentUserOrder } = this.props;
+
         return (
-            <Spinner loading={loading}>                
-                    {currentUserOrder && <Row center="xs">
-                        {this.renderFood()}
-                    </Row>}              
+            <Spinner loading={loading}>
+                {currentUserOrder && <Row center="xs">
+                    {this.renderFood()}
+                </Row>}
             </Spinner>
         );
     }

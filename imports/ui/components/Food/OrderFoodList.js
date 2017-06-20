@@ -32,10 +32,6 @@ class OrderFoodList extends React.Component {
         this.onSubmitOrder = this.onSubmitOrder.bind(this);
     }
 
-    componentWillUnmount() {
-        this.props.onUnmount();
-    }
-
     onAvailableToggle(foodId) {
         return (isChecked) => {
             const {food} = this.props.order;
@@ -60,21 +56,24 @@ class OrderFoodList extends React.Component {
     }
 
     onSubmitOrder() {
-        this.updateUserOrder('status', true);
-        this.props.onSubmit();
+        this.updateUserOrder('status', true);        
     }
 
     updateUserOrder(field, value) {
-        const { order } = this.props; 
+        const { order, onSubmit } = this.props; 
         
         const updatedOrder = {
             _id: order._id,
             partToUpdate: {[field]: value},
         };
 
-        updateOrder.call(updatedOrder, handleResult());
+        if (field === 'status') {
+            updateOrder.call(updatedOrder, handleResult(onSubmit));
+        } else {
+            updateOrder.call(updatedOrder, handleResult());
+        }
 
-
+        
     }
 
     getEvailableFood() {
@@ -103,17 +102,17 @@ class OrderFoodList extends React.Component {
         return +quantity;
     }
 
-    
+
 
     render() {
-        const { loading, event, food, order } = this.props;
+        const {  event, food, order } = this.props;
         const evailableFood = this.getEvailableFood();
       
         return (
-            <Spinner loading={loading}>
+            <div>
 
                 <Col >
-                    {!loading && evailableFood.length === 0 && <NoItems text="Any food is available"/>}
+                    { evailableFood.length === 0 && <NoItems text="Any food is available"/>}
 
                     <List className="m-b-20">
                         { evailableFood.length > 0 && <Subheader primaryText="MENU" primary/> }
@@ -138,14 +137,12 @@ class OrderFoodList extends React.Component {
                 </Col>
 
                 <Button floating fixed primary onClick={this.onSubmitOrder}> done </Button>
-            </Spinner>
+            </div>
         );
     }
 }
 
 OrderFoodList.propTypes = {
-    loading: PropTypes.bool.isRequired,
-    onUnmount: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     event: PropTypes.object.isRequired,
     food: PropTypes.array.isRequired,
