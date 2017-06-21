@@ -13,6 +13,7 @@ import Button from 'react-md/lib/Buttons/Button';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
 import ListItem from 'react-md/lib/Lists/ListItem';
 import List from 'react-md/lib/Lists/List';
+import Avatar from 'react-md/lib/Avatars';
 
 import { handleResult } from '../../../utils/client-utils';
 import { detailedUsersPrice, totalPrice } from '../../../utils/order-result';
@@ -97,11 +98,12 @@ class EventItem extends React.Component {
 
 
     render() {
-        const {event} = this.props
+        const { event, users } = this.props;
         const canEdit = event.createdBy === Meteor.userId();
         const canOrder = event.status === 'ordering';
         const isEventOver = event.status === 'delivered';
-
+        const owner = users.filter(user => user._id === event.createdBy)[0];
+console.log(owner)
         return (
             <Col xs={12} className="m-b-20">
                 <Card>
@@ -110,18 +112,22 @@ class EventItem extends React.Component {
                         subtitle={getTimeAgo(event.createdAt)}
                     />
 
-                    <CardText>
-                        testatat
-                    </CardText>
+                    {owner && (
+                        <CardText>
+                            <Avatar alt={owner.username} src={owner.avatar} iconSized/>
+                            {` ${owner.username}`}
+                        </CardText>
+                    )}
+
 
                     <CardActions>
-                            {canOrder && (
-                                <LinkButton
-                                    flat
-                                    to={`/order/${event._id}`}
-                                    label="Order"
-                                />
-                            )}
+                        {canOrder && (
+                            <LinkButton
+                                flat
+                                to={`/order/${event._id}`}
+                                label="Order"
+                            />
+                        )}
 
                         {canEdit && (
                             <LinkButton
@@ -136,7 +142,8 @@ class EventItem extends React.Component {
                                 active
                                 threeLines
                             >
-                                {canEdit && !isEventOver && (<MenuButtonStatus onSelect={this.onChangeStatus} eventId={event._id} />)}
+                                {canEdit && !isEventOver && (
+                                    <MenuButtonStatus onSelect={this.onChangeStatus} eventId={event._id}/>)}
                             </ListItem>
                         </List>
 

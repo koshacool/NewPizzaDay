@@ -25,7 +25,13 @@ Meteor.publish('users.list', function usersList() {
 
     return Meteor.users.find(
         {},
-        {fields: {emails: 1, username: 1}}
+        {
+            fields: {
+                emails: 1,
+                username: 1,
+                avatar: 1,
+            }
+        }
     );
 });
 
@@ -38,6 +44,12 @@ Meteor.publish('users.byArrayId', function usersByArrayId(arrayId) {
 
     return Meteor.users.find(
         {_id: {$in: arrayId}},
-        {fields: {emails: 1, username: 1}}
+        {
+            fields: {
+                emails: 1,
+                username: 1,
+                avatar: 1,
+            }
+        }
     );
 });

@@ -9,21 +9,21 @@ import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
 import FontIcon from 'react-md/lib/FontIcons';
 import Divider from 'react-md/lib/Dividers';
 import TextField from 'react-md/lib/TextFields';
+import Avatar from 'react-md/lib/Avatars';
 
 
 
 const UserItem = ({ user, onAvailableToggle, checked}) => {
-    const UserIcon = () => <FontIcon>people</FontIcon>;
+    //const UserIcon = () => <FontIcon>people</FontIcon>;
     const evailableToggle = (isChecked) => onAvailableToggle(user._id, isChecked);
     
 
     return (
         <div>
             <ListItem
-                leftIcon={<UserIcon />}
-                primaryText={user.username}
-                threeLines
                 key={user._id}
+                leftAvatar={<Avatar alt={user.username} src={user.avatar} iconSized />}
+                primaryText={user.username}
             >
                 
                 <Checkbox
