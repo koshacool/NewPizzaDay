@@ -4,7 +4,10 @@ import { Meteor } from 'meteor/meteor';
 
 import Button from 'react-md/lib/Buttons';
 
-
+/**
+ * Display modal window with two
+ * buttons for accept or reject action
+ */
 const Confirm = ({ hideModal, onConfirm }) => {
     return (
         <div>

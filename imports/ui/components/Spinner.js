@@ -3,7 +3,12 @@ import React from 'react';
 
 import './Spinner.less';
 
-
+/**
+ *
+ * @param {(boolean|undefined)} isLoading A boolean or a undefined
+ *
+ *  * @return {bool}
+ */
 const showLoader = isLoading => isLoading === true || isLoading === undefined;
 
 const Loader = () => (

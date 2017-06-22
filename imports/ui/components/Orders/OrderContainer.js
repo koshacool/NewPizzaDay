@@ -20,6 +20,7 @@ export default createContainer(({ eventId }) => {
     let food = [];
     let currentUserOrder = {};
 
+    //Get logged user order, if such not exist - create it
     if (subsHandler2.ready()) {
         currentUserOrder = Orders.findOne({eventId: eventId, owner: Meteor.userId()});
         if (!currentUserOrder) {

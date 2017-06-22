@@ -18,7 +18,9 @@ import NoItems from '../NoItems';
 import OrderFoodContainer from '../Food/OrderFoodContainer';
 import OrdersTable   from '../Tables/OrdersTable';
 
-
+/**
+ * Class for display element to make order
+ */
 class Order extends React.Component {
     constructor(props) {
         super(props);
@@ -30,11 +32,19 @@ class Order extends React.Component {
         this.props.onUnmount();
     }
 
+    /**
+     * Insert empty document of user order to DB
+     * @return {void}
+     */
     createUserOrder() {
         const { eventId } = this.props;
         createOrder.call({order: {eventId: eventId}}, handleResult());
     }
 
+    /**
+     * Return component with available food list
+     * @returns {XML}
+     */
     renderFood() {
         const {event, currentUserOrder, food} = this.props;
         return (<OrderFoodContainer
@@ -45,6 +55,12 @@ class Order extends React.Component {
         />);
     }
 
+    /**
+     * Change order status to confirmed
+     * and check all users status for 'confirmed'
+     *
+     * @return {void}
+     */
     onConfirmOrder() {
         const {event, orders} = this.props;
         const allOrdered = (this.checkAllSubmittedOrder(
@@ -71,15 +87,31 @@ class Order extends React.Component {
         }
     }
 
-
+    /**
+     * Return only confirmed orders
+     * @param {array} orders
+     * @returns {array}
+     */
     getConfirmedOrders(orders) {
         return orders.filter((order) => order.status);
     }
 
+    /**
+     * Check all user confirm their orders
+     * @param {array} confirmedOrdersArr
+     * @param {array} availableUsersArr
+     * @returns {boolean}
+     */
     checkAllSubmittedOrder(confirmedOrdersArr, availableUsersArr) {
         return confirmedOrdersArr.length === availableUsersArr.length;
     }
 
+    /**
+     * Create table element with users orders info
+     * and send it by email
+     *
+     * @returns {void}
+     */
     prepareOrdersResultAndSendEmail() {
         const userEmail = Meteor.user().emails[0].address;
         const { orders, food, users, event } = this.props;
@@ -92,6 +124,15 @@ class Order extends React.Component {
         this.sendEmail(userEmail, event.title, 'ordered', emailBody);
     }
 
+    /**
+     * Create html element in server side
+     * end send it by email
+     *
+     * @param {string} from
+     * @param {string} eventName
+     * @param {string} status
+     * @param {object} emailBody
+     */
     sendEmail(from, eventName, status, emailBody) {
         Meteor.call('sendEmail',
             from,

@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
 Meteor.startup(() => {
+    //Set configuration for google auth
     ServiceConfiguration.configurations.remove({service: 'google'});
     ServiceConfiguration.configurations.insert({
         service: 'google',

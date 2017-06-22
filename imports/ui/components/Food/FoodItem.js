@@ -24,6 +24,9 @@ const FoodItem = ({ foodItem, onAvailableToggle, checked, onDiscount, discount, 
     const FoodIcon = () => <FontIcon>restaurant</FontIcon>;
     const evailableToggle = isChecked => onAvailableToggle(foodItem._id, isChecked);
     const edit = foodId => () => onEdit(foodId);
+
+    //Count food item price with discount and
+    //return string with price info
     const getPrice = () => {
         if (discount > 0) {
             return `₴ ${(foodItem.price - discount).toFixed(2)} (${foodItem.price})`;

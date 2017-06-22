@@ -8,12 +8,12 @@ import TextField from 'react-md/lib/TextFields';
 import Button from 'react-md/lib/Buttons';
 import FocusContainer from 'react-md/lib/Helpers/FocusContainer';
 
-import { handleResult } from '../../utils/client-utils';
+import { handleResult, getFieldValue } from '../../utils/client-utils';
 
-
-const getFieldValue = form => field => form[field].value || '';
-
-
+/**
+ * Class for registraion user
+ *
+ */
 class SignUpPage extends React.Component {
   constructor(props) {
     super(props);
@@ -21,6 +21,13 @@ class SignUpPage extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  /**
+ * Get values from form fields and create user acoount
+ *
+ * @param {object} event Form submit event
+ *     
+ * @return {void} 
+ */
   onSubmit(event) {
     event.preventDefault();
 

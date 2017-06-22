@@ -8,12 +8,12 @@ import TextField from 'react-md/lib/TextFields';
 import Button from 'react-md/lib/Buttons';
 import FocusContainer from 'react-md/lib/Helpers/FocusContainer';
 
-import { handleResult } from '../../utils/client-utils';
+import { handleResult, getFieldValue } from '../../utils/client-utils';
 
-
-const getFieldValue = form => field => form[field].value || '';
-
-
+/**
+ * Class for sign in user
+ *
+ */
 class SignInPage extends React.Component {
     constructor(props) {
         super(props);
@@ -22,6 +22,13 @@ class SignInPage extends React.Component {
         this.onGoogleAuth = this.onGoogleAuth.bind(this);
     }
 
+    /**
+ * Get values from form fields and sign in user
+ *
+ * @param {object} event Form submit event
+ *     
+ * @return {void} 
+ */
     onSubmit(event) {
         event.preventDefault();
 
@@ -33,9 +40,16 @@ class SignInPage extends React.Component {
         Meteor.loginWithPassword({email}, password, handleResult());
     }
 
+ /**
+ * Sign in user with google account
+ *
+ *     
+ * @return {void} 
+ */
     onGoogleAuth() {
         Meteor.loginWithGoogle();
     }
+    
 
     render() {
         return (

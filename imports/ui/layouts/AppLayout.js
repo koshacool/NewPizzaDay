@@ -15,81 +15,108 @@ import AuthNavigation from '../components/Navigations/AuthNavigation';
 import PublicNavigation from '../components/Navigations/PublicNavigation';
 
 
+/**
+ * Limit to show error messages
+ * @type {number}
+ */
 const ALERTS_LIMIT = 3;
 
-
+/**
+ * Check current url is equal to one of routes in array
+ * @param {object} router
+ * @param {array} routes
+ *
+ *  @return {boolean}
+ */
 const isCurrentRouteOneOf = (router, routes) => routes.some(publicRoute => router.isActive({
-  pathname: publicRoute,
+    pathname: publicRoute,
 }, true));
 
+/**
+ * Redirect to pathName if such url exist
+ * @param {string} pathname
+ * @param {object} router
+ *
+ * @return {void}
+ */
 const redirectTo = (pathname, router) => {
-  if (!router.isActive(pathname, true)) {
-    router.push(pathname);
-  }
+    if (!router.isActive(pathname, true)) {
+        router.push(pathname);
+    }
 };
 
-
+/**
+ * Class for show different header for
+ * logged users and not logged. And display
+ * content
+ */
 class AppLayout extends React.Component {
-  componentDidMount() {
-    this.checkAuthRoutes(this.props);
-  }
-
-  componentWillUpdate(nextProps) {
-    this.checkAuthRoutes(nextProps);
-  }
-
-  checkAuthRoutes(newProps) {
-    const { router, route, isLoggedIn, loading } = newProps;
-    const { publicRoutes, commonRoutes } = route;
-
-    const isCommonRoute = isCurrentRouteOneOf(router, commonRoutes);
-
-    if (!isCommonRoute) {
-      const isPublicRoute = isCurrentRouteOneOf(router, publicRoutes);
-
-      if (isPublicRoute && isLoggedIn) {
-        redirectTo('/my-events', router);
-      } else if (!isPublicRoute && !isLoggedIn && !loading) {
-        redirectTo('/', router);
-      }
+    componentDidMount() {
+        this.checkAuthRoutes(this.props);
     }
-  }
 
-  render() {
-    const { loading, children, isLoggedIn } = this.props;
-   
-    return (
-      <Spinner loading={loading}>
-       {isLoggedIn ? <AuthNavigation /> : <PublicNavigation />}
+    componentWillUpdate(nextProps) {
+        this.checkAuthRoutes(nextProps);
+    }
 
-        <Grid fluid className="m-t-20">
-          {!loading && children}
-        </Grid>
+    /**
+     *
+     * @param {object} newProps
+     *
+     * * @return {void}
+     */
+    checkAuthRoutes(newProps) {
+        const { router, route, isLoggedIn, loading } = newProps;
+        const { publicRoutes, commonRoutes } = route;
 
-        <Alert stack={{ limit: ALERTS_LIMIT }} />
-      </Spinner>
-    );
-  }
+        const isCommonRoute = isCurrentRouteOneOf(router, commonRoutes);
+
+        if (!isCommonRoute) {
+            const isPublicRoute = isCurrentRouteOneOf(router, publicRoutes);
+
+            if (isPublicRoute && isLoggedIn) {
+                redirectTo('/my-events', router);
+            } else if (!isPublicRoute && !isLoggedIn && !loading) {
+                redirectTo('/', router);
+            }
+        }
+    }
+
+    render() {
+        const { loading, children, isLoggedIn } = this.props;
+
+        return (
+            <Spinner loading={loading}>
+                {isLoggedIn ? <AuthNavigation /> : <PublicNavigation />}
+
+                <Grid fluid className="m-t-20">
+                    {!loading && children}
+                </Grid>
+
+                <Alert stack={{ limit: ALERTS_LIMIT }}/>
+            </Spinner>
+        );
+    }
 }
 
 
 AppLayout.propTypes = {
-  children: PropTypes.node.isRequired,
-  loading: PropTypes.bool.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
+    children: PropTypes.node.isRequired,
+    loading: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
 };
 
 
 AppLayout.contextProps = {
-  router: PropTypes.func.isRequired,
+    router: PropTypes.func.isRequired,
 };
 
 
 export default createContainer(() => {
-  const subsHandler = Meteor.subscribe('users.current');
+    const subsHandler = Meteor.subscribe('users.current');
 
-  return {
-    loading: !subsHandler.ready() || Meteor.loggingIn(),
-    isLoggedIn: !!Meteor.user(),
-  };
+    return {
+        loading: !subsHandler.ready() || Meteor.loggingIn(),
+        isLoggedIn: !!Meteor.user(),
+    };
 }, AppLayout);

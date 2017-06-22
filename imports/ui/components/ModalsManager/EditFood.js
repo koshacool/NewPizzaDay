@@ -8,12 +8,12 @@ import TextField from 'react-md/lib/TextFields';
 import Toolbar from 'react-md/lib/Toolbars';
 import FocusContainer from 'react-md/lib/Helpers/FocusContainer';
 
-import { handleResult } from '../../../utils/client-utils';
+import { handleResult, getFieldValue } from '../../../utils/client-utils';
 import { updateFood } from '../../../api/food/methods';
 
-const getFieldValue = form => field => form[field].value || '';
-
-
+/**
+ * Class for display modal window to edit food item
+ */
 class EditFood extends Component {
     constructor(props) {
         super(props);
@@ -21,6 +21,13 @@ class EditFood extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    /**
+     * When form submit, get values from form field,
+     * and update food item with this values
+     *
+     * @param {object} event DOM event
+     * @return {void}
+     */
     handleSubmit(event){
         event.preventDefault();
         const { hideModal, foodItem } = this.props;

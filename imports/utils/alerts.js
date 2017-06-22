@@ -8,7 +8,6 @@ const alertOptions = {
   effect: 'genie',
 };
 
-
 const getErrorKey = error => errorKeys.find(key => !!error[key]);
 
 const getErrorMessage = (error) => {

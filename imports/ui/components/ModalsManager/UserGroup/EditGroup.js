@@ -18,6 +18,9 @@ import EditGroupInfo from './EditGroupInfo';
 import UserItem from '../../Users/UserItem';
 import Spinner from '../../Spinner';
 
+/**
+ * Class display window for edit group
+ */
 class EditGroup extends Component {
     constructor(props) {
         super(props);
@@ -34,12 +37,34 @@ class EditGroup extends Component {
         this.hideModal = this.hideModal.bind(this);
     }
 
+    componentWillUnmount() {
+        this.props.onUnmount();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        //Change manualy modal windows style, becouse
+        //react-md dialogs auto change style
+        if (!prevState.modal) {
+            document.getElementById('EditUserGroup').style.top = "50%";
+        }
+    }
+
+    /**
+     * Hide modal window whis open in this component
+     * @return {void}
+     */
     hideModal() {
         this.setState({
             modal: false,
         });
     }
 
+    /**
+     * Show modal window by name
+     *
+     * @param {string} name
+     * @returns {Function}
+     */
     showModal(name) {
         return (modalParams = null) => {
             this.setState({
@@ -50,13 +75,10 @@ class EditGroup extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (!prevState.modal) {
-            document.getElementById('EditUserGroup').style.top = "50%";
-        }
-    }
-
-
+    /**
+     * Display modal window to confirm remove this group
+     * @returns {XML}
+     */
     modalConfirm() {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
@@ -67,11 +89,12 @@ class EditGroup extends Component {
         />);
     }
 
-
-    componentWillUnmount() {
-        this.props.onUnmount();
-    }
-
+    /**
+     * Update group by field and value in this field
+     *
+     * @param {string} field
+     * @returns {Function}
+     */
     onGroupUpdate(field) {
         return (value) => {
             const updatedGroup = {
@@ -83,6 +106,11 @@ class EditGroup extends Component {
         };
     }
 
+    /**
+     * Remove group
+     *
+     * @return {void}
+     */
     onGroupRemove() {
         const {groupId, hideModal} = this.props;
 
@@ -91,6 +119,12 @@ class EditGroup extends Component {
         }));
     }
 
+    /**
+     * Add or remove user in this group
+     * @param {string} userId
+     *
+     * @return [void}
+     */
     onUserAvailableToggle(userId) {
         const {group} = this.props;
         let usersArray = group.users;

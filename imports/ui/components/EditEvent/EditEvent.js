@@ -22,7 +22,9 @@ import AddFoodContainer from '../Food/AddFoodContainer';
 import AddUsersContainer from '../Users/AddUsersContainer';
 import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerContainer';
 
-
+/**
+ * Class for add/remove available food and users in the event
+ */
 class EditEvent extends React.Component {
     constructor(props) {
         super(props);
@@ -47,12 +49,21 @@ class EditEvent extends React.Component {
         this.props.onUnmount();
     }
 
+    /**
+     * Change status for display modal(hide modal window)
+     * @returns {void}
+     */
     hideModal() {
         this.setState({
             modal: false,
         });
     }
 
+    /**
+     * Show modal window by name
+     * @param {string} name Modal window name
+     * @returns {Function}
+     */
     showModal(name) {
         return (modalParams = null) =>  this.setState({
             modal: ucFirst(name),
@@ -60,6 +71,10 @@ class EditEvent extends React.Component {
         });
     }
 
+    /**
+     * Display modal window to confirm remove this event
+     * @returns {XML}
+     */
     modalConfirm() {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
@@ -78,26 +93,48 @@ class EditEvent extends React.Component {
         }));
     }
 
+    /**
+     * Change state to show food list
+     * @return {void}
+     */
     onRenderFood() {
         this.setState({
             renderData: 'renderFood',
         });
     }
 
+    /**
+     * Change state to show users list
+     * @return {void}
+     */
     onRenderUsers() {
         this.setState({
             renderData: 'renderUsers',
         });
     }
 
+    /**
+     * Return component with food list
+     * @return {JSX}
+     */
     renderFood() {
         return (<AddFoodContainer event={this.props.event} />);
     }
 
+    /**
+     * Return component with users list
+     * @return {JSX}
+     */
     renderUsers() {
         return (<AddUsersContainer event={this.props.event} />);
     }
 
+    /**
+     * Update event by field and value in this field
+     *
+     * @param {string} field
+     * @returns {Function}
+     */
     onEventUpdate(field) {
         return (value) => {
             const updatedEvent = {
