@@ -15,7 +15,7 @@ import UserItem from './UserItem';
 import Spinner from '../Spinner';
 import LinkButton from '../LinkButton';
 import NoItems from '../NoItems';
-import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerContainer';
+import ModalsManagerContainer from '../ModalsManager/ModalsManagerContainer';
 
 /**
  * Class for display users list

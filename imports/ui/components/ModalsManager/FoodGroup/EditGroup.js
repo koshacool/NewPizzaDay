@@ -12,7 +12,7 @@ import EditGroupInfo from './EditGroupInfo';
 import FoodItem from '../../Food/FoodItem';
 import Spinner from '../../Spinner';
 
-import ModalsManagerContainer from '../Containers/ModalsManagerContainer';
+import ModalsManagerContainer from '../ModalsManagerContainer';
 
 /**
  * Class display window for edit group

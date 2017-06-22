@@ -14,7 +14,7 @@ import { createFoodGroup } from '../../../api/foodGroups/methods';
 import FoodItem from './FoodItem';
 import Spinner from '../Spinner';
 import NoItems from '../NoItems';
-import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerContainer';
+import ModalsManagerContainer from '../ModalsManager/ModalsManagerContainer';
 
 
 /**

@@ -1,19 +1,19 @@
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { UserGroups } from '../../../../api/userGroups/userGroups';
-import GroupsList from '../UserGroup/GroupsList';
+import { FoodGroups } from '../../../../api/foodGroups/foodGroups';
+import GroupsList from './GroupsList';
 
 
 
 export default createContainer(({props: {hideModal, event, editGroup}}) => {
-  const subsHandler = Meteor.subscribe('userGroups.currentUser');
+  const subsHandler = Meteor.subscribe('foodGroups.currentUser');
 
   return {
     hideModal,
     event,
     editGroup,
-    groups: UserGroups.find().fetch(),
+    groups: FoodGroups.find().fetch(),
     loading: !subsHandler.ready(),
     onUnmount: subsHandler.stop,    
   };
