@@ -72,7 +72,7 @@ class SignInPage extends React.Component {
                                 raised
                                 primary
                                 type="submit"
-                                style={{ width: '100%' }}
+                                style={{ width: '100%', marginBottom: '10px', marginTop: '10px' }}
                                 label="Submit"
                             />
 
