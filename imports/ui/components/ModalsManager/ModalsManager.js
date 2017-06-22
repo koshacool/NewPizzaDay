@@ -16,6 +16,11 @@ import UserGroupsListContainer from './Containers/UserGroupsListContainer';
 import EditFoodGroupContainer from './Containers/EditFoodGroupContainer';
 import FoodGroupsListContainer from './Containers/FoodGroupsListContainer';
 
+/**
+ * Object with modal components names
+ *
+ * @type {object}
+ */
 const ModalComponents = {
     Confirm:        ConfirmContainer,
     CreateFood:     CreateFoodContainer,
@@ -26,12 +31,19 @@ const ModalComponents = {
     FoodGroupsList: FoodGroupsListContainer,
 };
 
+/**
+ * Style for modal windows
+ * @type {object}
+ */
 const customStyles = {
     width: 'auto',
     overflow: 'auto',
     top: '50%',
 };
 
+/**
+ * Class for display modal windows
+ */
 class ModalsManager extends PureComponent {
     constructor(props) {
         super(props);
@@ -40,6 +52,10 @@ class ModalsManager extends PureComponent {
         this.closeDialog = this.closeDialog.bind(this);
     }
 
+    /**
+     * Hide modal window
+     * @return {void}
+     */
     closeDialog() {
         this.setState({visible: false});
         this.props.hideModal();
@@ -47,7 +63,7 @@ class ModalsManager extends PureComponent {
 
     render() {
         const { modalName, modalDescription, modal } = this.props;
-        const ModalComponent = ModalComponents[modalName];
+        const ModalComponent = ModalComponents[modalName];//Get component from object by name
 
         return (
             <Dialog

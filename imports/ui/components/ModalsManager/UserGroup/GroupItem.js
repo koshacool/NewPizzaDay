@@ -10,7 +10,16 @@ import Button from 'react-md/lib/Buttons/Button';
 
 import IconButton from '../../IconButton';
 
-
+/**
+ *
+ * @param {object} group
+ * @param {function} onAvailableToggle
+ * @param {boolean} checked
+ * @param {function} editGroup
+ *
+ * @returns {XML}
+ * @constructor
+ */
 const GroupItem = ({ group, onAvailableToggle, checked, editGroup }) => {
 
     const GroupIcon = () => <FontIcon>people</FontIcon>;

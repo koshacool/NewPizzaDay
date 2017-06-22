@@ -17,7 +17,10 @@ import LinkButton from '../LinkButton';
 import NoItems from '../NoItems';
 import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerContainer';
 
-
+/**
+ * Class for display users list
+ *
+ */
 class UsersList extends React.Component {
     constructor(props) {
         super(props);
@@ -39,12 +42,21 @@ class UsersList extends React.Component {
         this.props.onUnmount();
     }
 
+    /**
+     * Change status for display modal(hide modal window)
+     * @returns {void}
+     */
     hideModal() {
         this.setState({
             modal: false,
         });
     }
 
+    /**
+     * Show modal window by name
+     * @param {string} name Modal window name
+     * @returns {Function}
+     */
     showModal(name) {
       return (modalParams = null) =>  this.setState({
             modal: ucFirst(name),
@@ -52,7 +64,10 @@ class UsersList extends React.Component {
         });
     }
 
-
+    /**
+     * Display modal window with groups list
+     * @returns {XML}
+     */
     modalUserGroupsList() {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
@@ -63,6 +78,11 @@ class UsersList extends React.Component {
         />);
     }
 
+    /**
+     * Display modal for edit user group
+     * @param {string} groupId
+     * @returns {XML}
+     */
     modalEditUserGroup(groupId) {
          return (<ModalsManagerContainer
              modalName={this.state.modal}
@@ -75,12 +95,23 @@ class UsersList extends React.Component {
          />);
     }
 
+    /**
+     * Create group and display window for edit this group
+     * @return {void}
+     */
     createGroup() {
         createUserGroup.call({ group: {} }, handleResult((groupId) => {
             this.showModal('editUserGroup')(groupId);
         }));
     }
 
+    /**
+     * Add user or remove in event
+     * @param {string} userId
+     * @param {boolean} isChecked
+     *
+     * @return {void}
+     */
     onAvailableToggle(userId, isChecked) {
         const {event} = this.props;
         let usersArray = event.users;
@@ -95,7 +126,7 @@ class UsersList extends React.Component {
             _id: event._id,
             partToUpdate: {users: usersArray},
         };
-
+        
         updateEvent.call(updatedEvent, handleResult());
     }
 

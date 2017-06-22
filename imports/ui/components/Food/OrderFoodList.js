@@ -16,7 +16,10 @@ import NoItems from '../NoItems';
 import List from 'react-md/lib/Lists/List';
 import Subheader from 'react-md/lib/Subheaders';
 
-
+/**
+ * Class for display available food for order
+ *
+ */
 class OrderFoodList extends React.Component {
     constructor(props) {
         super(props);
@@ -32,6 +35,12 @@ class OrderFoodList extends React.Component {
         this.onSubmitOrder = this.onSubmitOrder.bind(this);
     }
 
+    /**
+     * Add foor item to order
+     * @param {string} foodId
+     *
+     * @return {void}
+     */
     onAvailableToggle(foodId) {
         return (isChecked) => {
             const {food} = this.props.order;
@@ -46,6 +55,12 @@ class OrderFoodList extends React.Component {
         }
     }
 
+    /**
+     * Add quantity of food item to order
+     *
+     * @param {string} foodId
+     * @returns {Function}
+     */
     onQuantity(foodId) {
         return (value) => {
             const quantity = this.props.order.quantity;
@@ -55,10 +70,22 @@ class OrderFoodList extends React.Component {
         };
     }
 
+    /**
+     * Change order status to 'submitted'
+     *
+     * @return {void{
+     */
     onSubmitOrder() {
         this.updateUserOrder('status', true);        
     }
 
+    /**
+     * Update order field with recieved value
+     * @param {string} field
+     * @param {string/number} value
+     *
+     * @return{void{
+     */
     updateUserOrder(field, value) {
         const { order, onSubmit } = this.props; 
         
@@ -76,6 +103,11 @@ class OrderFoodList extends React.Component {
         
     }
 
+    /**
+     * Get only available food for this event
+     *
+     * @returns {array}
+     */
     getEvailableFood() {
         const { event, food } = this.props;
         evailableFoodId = event.food;
@@ -83,6 +115,13 @@ class OrderFoodList extends React.Component {
         return food.filter((foodItem) => evailableFoodId.indexOf(foodItem._id) !== -1);
     }
 
+    /**
+     * Get discount for food item if such exist,
+     * else return 0
+     *
+     * @param {string} foodId
+     * @returns {number}
+     */
     getDiscount(foodId) {
         const { discount } = this.props.event;
 
@@ -93,6 +132,14 @@ class OrderFoodList extends React.Component {
         return +discount[foodId];
     }
 
+    /**
+     * Get quantity of food item if such exist,
+     * else return 1
+     *
+     * @param {object} userOrder
+     * @param {string} foodId
+     * @returns {number}
+     */
     getQuantity(userOrder, foodId) {
         let quantity = 1;
         if (userOrder.quantity[foodId]) {

@@ -18,6 +18,9 @@ import EditGroupInfo from './EditGroupInfo';
 import FoodItem from '../../Food/FoodItem';
 import Spinner from '../../Spinner';
 
+/**
+ * Class display window for edit group
+ */
 class EditGroup extends Component {
     constructor(props) {
         super(props);
@@ -44,12 +47,22 @@ class EditGroup extends Component {
         this.props.onUnmount();
     }
 
+    /**
+     * Hide modal window whis open in this component
+     * @return {void}
+     */
     hideModal() {
         this.setState({
             modal: false,
         });
     }
 
+    /**
+     * Show modal window by name
+     *
+     * @param {string} name
+     * @returns {Function}
+     */
     showModal(name) {
         return (modalParams = null) => {
             this.setState({
@@ -60,8 +73,10 @@ class EditGroup extends Component {
         }
     }
 
-
-
+    /**
+     * Display modal window to confirm remove this group
+     * @returns {XML}
+     */
     modalConfirm() {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
@@ -71,8 +86,13 @@ class EditGroup extends Component {
             modal={true}
         />);
     }
-    
 
+    /**
+     * Update group by field and value in this field
+     *
+     * @param {string} field
+     * @returns {Function}
+     */
     onGroupUpdate(field) {
         return (value) => {
             const updatedGroup = {
@@ -84,6 +104,11 @@ class EditGroup extends Component {
         };
     }
 
+    /**
+     * Remove group
+     *
+     * @return {void}
+     */
     onGroupRemove() {
         const {groupId, hideModal} = this.props;
 
@@ -92,6 +117,12 @@ class EditGroup extends Component {
         }));
     }
 
+    /**
+     * Add or remove food item in this group
+     * @param {string} userId
+     *
+     * @return [void}
+     */
     onFoodAvailableToggle(foodId) {
         const {group} = this.props;
         let foodArray = group.food;
@@ -115,7 +146,7 @@ class EditGroup extends Component {
     render() {
         const { loading, hideModal, group, food } = this.props;
         const { modal, modalParams } = this.state;
-        
+
         return (
             <Spinner loading={loading}>
                 {group && <div>

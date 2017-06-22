@@ -16,7 +16,9 @@ import GroupItem from './GroupItem';
 import Spinner from '../../Spinner';
 import NoItems from '../../NoItems';
 
-
+/**
+ * Class for display list of groups with users
+ */
 class GroupsList extends Component {
     constructor(props) {
         super(props);
@@ -28,6 +30,13 @@ class GroupsList extends Component {
         this.props.onUnmount();
     }
 
+    /**
+     * If group selected add users from group to event
+     * else remove users from event
+     *
+     * @param {object} group
+     * @returns {Function}
+     */
     onAvailableToggle(group) {
         return (isChecked) => {
             const {_id: eventId} = this.props.event;

@@ -7,6 +7,9 @@ const border = {
     border: '1px solid black',
 };
 
+/**
+ * Class for create table of users order
+ */
 class OrdersTable extends React.Component {
     constructor(props) {
         super(props);
@@ -14,6 +17,10 @@ class OrdersTable extends React.Component {
         this.renderUserOrder = this.renderUserOrder.bind(this);
     }
 
+    /**
+     * Create array of components with each user orders
+     * @returns {array}
+     */
     renderUserOrder() {
         const {orders} = this.props;
 
@@ -31,6 +38,12 @@ class OrdersTable extends React.Component {
         );
     }
 
+    /**
+     * Count total price in one order
+     *
+     * @param {object} order
+     * @returns {number}
+     */
     getUserTotalPrice(order) {
         return order.reduce((sum, current) => {
             const {quantity, price} = current;

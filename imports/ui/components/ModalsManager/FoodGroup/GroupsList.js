@@ -17,7 +17,9 @@ import GroupItem from './GroupItem';
 import Spinner from '../../Spinner';
 import NoItems from '../../NoItems';
 
-
+/**
+ * Class for display list of groups with food
+ */
 class GroupsList extends Component {
     constructor(props) {
         super(props);
@@ -29,6 +31,13 @@ class GroupsList extends Component {
         this.props.onUnmount();
     }
 
+    /**
+     * If group selected add food items from group to event
+     * else remove food items from event
+     *
+     * @param {object} group
+     * @returns {Function}
+     */
     onAvailableToggle(group) {
         return (isChecked) => {
             const {_id: eventId} = this.props.event;

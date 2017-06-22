@@ -21,7 +21,7 @@ import MenuButtonStatus from '../MenuButton';
 
 const OrderFoodItem = ({ foodItem, onAvailableToggle, checked, onQuantity, quantity, discount }) => {
     const FoodIcon = () => <FontIcon>restaurant</FontIcon>;
-    const getPrice = () => `₴ ${(foodItem.price - discount).toFixed(2)}`;
+    const getPrice = () => `₴ ${(foodItem.price - discount).toFixed(2)}`;//Count food item price with discount
 
     return (
         <Col xs={12} md={12} sm={12}>

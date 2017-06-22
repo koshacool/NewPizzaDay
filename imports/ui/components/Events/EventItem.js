@@ -23,9 +23,19 @@ import OrdersTable   from '../Tables/OrdersTable';
 import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
 
-
+/**
+ * Get comfortable information about the difference in dates
+ *
+ * @param {date} date
+ * @return {string}
+ */
 const getHumanizeDuration = date => moment.duration(new Date() - date).humanize();
 
+/**
+ *
+ * @param {date} date
+ * @return {string}
+ */
 const getTimeAgo = date => `${getHumanizeDuration(date)} ago`;
 
 
@@ -41,6 +51,14 @@ class EventItem extends React.Component {
         this.props.onUnmount();
     }
 
+    /**
+     * Change event status and send email with info
+     * about orders in this event
+     *
+     * @param {string} status
+     * @param {string} eventId
+     * @returns {Function}
+     */
     onChangeStatus(status, eventId) {
         return () => {
             const updatedEvent = {
@@ -56,6 +74,13 @@ class EventItem extends React.Component {
         };
     }
 
+    /**
+     * Prepare component with informations about users orders
+     * and send email
+     *
+     * @param {string} eventStatus
+     * @return {void}
+     */
     prepareOrdersResultAndSendEmail(eventStatus) {
         const userEmail = Meteor.user().emails[0].address;
         const { orders, users, food, event } = this.props;
@@ -88,6 +113,15 @@ class EventItem extends React.Component {
         }
     }
 
+    /**
+     * Create html element in server side
+     * end send it by email
+     *
+     * @param {string} from
+     * @param {string} eventName
+     * @param {string} status
+     * @param {object} emailBody
+     */
     sendEmail(from, eventName, status, emailBody) {
         Meteor.call('sendEmail',
             from,
@@ -103,7 +137,7 @@ class EventItem extends React.Component {
         const canOrder = event.status === 'ordering';
         const isEventOver = event.status === 'delivered';
         const owner = users.filter(user => user._id === event.createdBy)[0];
-console.log(owner)
+        console.log(owner)
         return (
             <Col xs={12} className="m-b-20">
                 <Card>

@@ -13,7 +13,9 @@ import { createFood } from '../../../api/food/methods';
 
 const getFieldValue = form => field => form[field].value || '';
 
-
+/**
+ * Class for display modal window for create food item
+ */
 class CreateFood extends Component {
     constructor(props) {
         super(props);
@@ -21,6 +23,13 @@ class CreateFood extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    /**
+     * When form submit, get values from form field,
+     * and create food item with this values
+     *
+     * @param {object} event DOM event
+     * @return {void}
+     */
     handleSubmit(event){
         event.preventDefault();
 

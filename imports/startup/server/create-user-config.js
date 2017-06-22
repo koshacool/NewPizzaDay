@@ -1,5 +1,12 @@
 import { Gravatar } from 'meteor/jparker:gravatar';
 
+/**
+ * Change user profile before insert to DB
+ *
+ * @param {object} options
+ * @param {object} user
+ * @return {object}
+ */
 Accounts.onCreateUser(function (options, user) {
     var attachData, email, picture, profileImageUrl, profilePicture, url, service, allEmails, firstEmail;
     profileImageUrl = undefined;
@@ -14,12 +21,11 @@ Accounts.onCreateUser(function (options, user) {
         user.username = user.services.google.given_name;
     }
 
-    //No avatar defined from Google service? Okay let's get a Gravatar
+    //If avatar isn't defined from Google service - get a Gravatar
     if (!user.avatar) {
         email = ((allEmails = user.emails) !== undefined ? (firstEmail = allEmails[0]) !== undefined ? firstEmail.address : undefined : undefined) || '';
 
         url = Gravatar.imageUrl(email);
-        console.log(url)
         user.avatar = url;
     }
     return user;

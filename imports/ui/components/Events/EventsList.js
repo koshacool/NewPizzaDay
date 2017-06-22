@@ -13,7 +13,10 @@ import Spinner from '../Spinner';
 import LinkButton from '../LinkButton';
 import NoItems from '../NoItems';
 
-
+/**
+ * Class for display events list
+ *
+ */
 class EventsList extends React.Component {
   constructor(props) {
     super(props);
@@ -25,6 +28,12 @@ class EventsList extends React.Component {
     this.props.onUnmount();
   }
 
+  /**
+   * Create event and redirect to page edit this event
+   *
+   * @param {object} event DOM event
+   * @return {void}
+     */
   onCreateEvent(event) {
     event.preventDefault();
 

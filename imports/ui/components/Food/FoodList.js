@@ -18,7 +18,10 @@ import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerCon
 import List from 'react-md/lib/Lists/List';
 import Subheader from 'react-md/lib/Subheaders';
 
-
+/**
+ * Class for display all food created by logged user
+ *
+ */
 class FoodList extends React.Component {
     constructor(props) {
         super(props);
@@ -43,12 +46,21 @@ class FoodList extends React.Component {
         this.props.onUnmount();
     }
 
+    /**
+     * Change status for display modal(hide modal window)
+     * @returns {void}
+     */
     hideModal() {
         this.setState({
             modal: false,
         });
     }
 
+    /**
+     * Show modal window by name
+     * @param {string} name Modal window name
+     * @returns {Function}
+     */
     showModal(name) {
       return (modalParams = null) =>  this.setState({
             modal: ucFirst(name),
@@ -56,6 +68,10 @@ class FoodList extends React.Component {
         });
     }
 
+    /**
+     * Display modal window for create food item
+     * @returns {XML}
+     */
     modalCreateFood() {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
@@ -66,6 +82,12 @@ class FoodList extends React.Component {
         />);
     }
 
+    /**
+     * Display modal for edit food item
+     *
+     * @param {object} foodItem
+     * @returns {XML}
+     */
     modalEditFood(foodItem) {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
@@ -77,7 +99,10 @@ class FoodList extends React.Component {
         />);
     }
 
-
+    /**
+     * Display modal window with groups list
+     * @returns {XML}
+     */
     modalFoodGroupsList() {
         return (<ModalsManagerContainer
             modalName={this.state.modal}
@@ -88,6 +113,11 @@ class FoodList extends React.Component {
         />);
     }
 
+    /**
+     * Display modal for edit food group
+     * @param {string} groupId
+     * @returns {XML}
+     */
     modalEditFoodGroup(groupId) {
         return (<ModalsManagerContainer
              modalName={this.state.modal}
@@ -100,6 +130,13 @@ class FoodList extends React.Component {
          />);
     }
 
+    /**
+     * Change discount for food item
+     *
+     * @param {string} field
+     * @param {string} foodId
+     * @returns {Function}
+     */
     onDiscount(field, foodId) {
         return (value) => {
             let discount = this.props.event.discount;
@@ -114,6 +151,13 @@ class FoodList extends React.Component {
         };
     }
 
+    /**
+     * Add food item or remove in event
+     * @param {string} foodId
+     * @param {boolean} isChecked
+     *
+     * @return {void}
+     */
     onAvailableToggle(foodId, isChecked) {
         const {event} = this.props;
         let foodArray = event.food;
@@ -132,6 +176,10 @@ class FoodList extends React.Component {
         updateEvent.call(updatedEvent, handleResult());
     }
 
+    /**
+     * Create group and display window for edit this group
+     * @return {void}
+     */
     createGroup() {
         createFoodGroup.call({ group: {} }, handleResult((groupId) => {           
             this.showModal('editFoodGroup')(groupId);

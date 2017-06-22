@@ -12,11 +12,18 @@ import TextField from 'react-md/lib/TextFields';
 import Avatar from 'react-md/lib/Avatars';
 
 
-
+/**
+ *
+ * @param {object} user
+ * @param {function} onAvailableToggle
+ * @param {boolean} checked
+ *
+ * @returns {XML}
+ * @constructor
+ */
 const UserItem = ({ user, onAvailableToggle, checked}) => {
-    //const UserIcon = () => <FontIcon>people</FontIcon>;
+
     const evailableToggle = (isChecked) => onAvailableToggle(user._id, isChecked);
-    
 
     return (
         <div>
