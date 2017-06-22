@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Button from 'react-md/lib/Buttons/Button';
+import Button from '../../../../../node_modules/react-md/lib/Buttons/Button';
 import TextField from 'react-md/lib/TextFields';
-import FocusContainer from 'react-md/lib/Helpers/FocusContainer';
+import FocusContainer from '../../../../../node_modules/react-md/lib/Helpers/FocusContainer';
 
-import { handleResult, getFieldValue } from '../../../utils/client-utils';
-import { updateFood } from '../../../api/food/methods';
+import { handleResult, getFieldValue } from '../../../../utils/client-utils';
+import { updateFood } from '../../../../api/food/methods';
 
 /**
  * Class for display modal window to edit food item

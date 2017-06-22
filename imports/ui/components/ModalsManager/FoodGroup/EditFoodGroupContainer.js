@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { FoodGroups } from '../../../../api/foodGroups/foodGroups';
-import EditGroup from '../FoodGroup/EditGroup';
+import EditGroup from './EditGroup';
 
 
 

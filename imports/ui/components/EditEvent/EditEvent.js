@@ -12,7 +12,7 @@ import { handleResult, ucFirst } from '../../../utils/client-utils';
 import EditEventInfo from './EditEventInfo';
 import AddFoodContainer from '../Food/AddFoodContainer';
 import AddUsersContainer from '../Users/AddUsersContainer';
-import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerContainer';
+import ModalsManagerContainer from '../ModalsManager/ModalsManagerContainer';
 import Spinner from '../Spinner';
 
 

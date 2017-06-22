@@ -7,7 +7,7 @@ import Divider from 'react-md/lib/Dividers';
 import List from 'react-md/lib/Lists/List';
 import Subheader from 'react-md/lib/Subheaders';
 
-import ModalsManagerContainer from '../Containers/ModalsManagerContainer';
+import ModalsManagerContainer from '../ModalsManagerContainer';
 
 import { handleResult, valueInArray, ucFirst } from '../../../../utils/client-utils';
 import { updateGroup, removeGroup } from '../../../../api/userGroups/methods';

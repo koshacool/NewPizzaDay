@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { UserGroups } from '../../../../api/userGroups/userGroups';
-import EditGroup from '../UserGroup/EditGroup';
+import EditGroup from './EditGroup';
 
 
 

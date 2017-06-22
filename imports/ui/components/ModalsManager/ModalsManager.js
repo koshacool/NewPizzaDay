@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 
 import Dialog from 'react-md/lib/Dialogs';
 
-import ConfirmContainer from './Containers/ConfirmContainer';
+import ConfirmContainer from './Confirm/ConfirmContainer';
 
-import CreateFoodContainer from './Containers/CreateFoodContainer';
-import EditFoodContainer from './Containers/EditFoodContainer';
+import CreateFoodContainer from './Food/CreateFoodContainer';
+import EditFoodContainer from './Food/EditFoodContainer';
 
-import EditUserGroupContainer from './Containers/EditUserGroupContainer';
-import UserGroupsListContainer from './Containers/UserGroupsListContainer';
+import EditUserGroupContainer from './UserGroup/EditUserGroupContainer';
+import UserGroupsListContainer from './UserGroup/UserGroupsListContainer';
 
-import EditFoodGroupContainer from './Containers/EditFoodGroupContainer';
-import FoodGroupsListContainer from './Containers/FoodGroupsListContainer';
+import EditFoodGroupContainer from './FoodGroup/EditFoodGroupContainer';
+import FoodGroupsListContainer from './FoodGroup/FoodGroupsListContainer';
 
 /**
  * Object with modal components names
