@@ -23,12 +23,12 @@ class SignInPage extends React.Component {
     }
 
     /**
- * Get values from form fields and sign in user
- *
- * @param {object} event Form submit event
- *     
- * @return {void} 
- */
+     * Get values from form fields and sign in user
+     *
+     * @param {object} event Form submit event
+     *
+     * @return {void}
+     */
     onSubmit(event) {
         event.preventDefault();
 
@@ -40,16 +40,16 @@ class SignInPage extends React.Component {
         Meteor.loginWithPassword({email}, password, handleResult());
     }
 
- /**
- * Sign in user with google account
- *
- *     
- * @return {void} 
- */
+    /**
+     * Sign in user with google account
+     *
+     *
+     * @return {void}
+     */
     onGoogleAuth() {
         Meteor.loginWithGoogle();
     }
-    
+
 
     render() {
         return (
@@ -72,7 +72,7 @@ class SignInPage extends React.Component {
                                 raised
                                 primary
                                 type="submit"
-                                style={{ width: '100%', marginBottom: '10px', marginTop: '10px' }}
+                                style={{ width: '100%', marginBottom: '10px', marginTop: '10px', }}
                                 label="Submit"
                             />
 
