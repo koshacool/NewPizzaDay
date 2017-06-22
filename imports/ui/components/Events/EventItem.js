@@ -44,6 +44,7 @@ class EventItem extends React.Component {
 
         this.onChangeStatus = this.onChangeStatus.bind(this);
         this.sendEmail = this.sendEmail.bind(this);
+        this.prepareOrdersResultAndSendEmail = this.prepareOrdersResultAndSendEmail.bind(this);
     }
 
     componentWillUnmount() {
@@ -83,30 +84,27 @@ class EventItem extends React.Component {
     prepareOrdersResultAndSendEmail(eventStatus) {
         const userEmail = Meteor.user().emails[0].address;
         const { orders, users, food, event } = this.props;
-        let emailBody = null;
+        let emailBody = <OrdersTable
+            orders={detailedUsersPrice(orders, users, food, event)}
+            totalPrice={+totalPrice(orders, food, event)}
+        />;
 
         switch (eventStatus) {
             case 'ordered':
-                emailBody = <OrdersTable
-                    orders={detailedUsersPrice(orders, users, food, event)}
-                    totalPrice={+totalPrice(orders, food, event)}
-                />;
-
-                this.sendEmail(userEmail, eventStatus, emailBody);// Send email to event owner with detailed orders and price
+                // Send email to event owner with detailed orders and price
+                this.sendEmail(userEmail, event.title, eventStatus, emailBody);
                 break;
 
             case 'delivered':
                 const usersOrders = detailedUsersPrice(orders, users, food, event);
-                emailBody = <OrdersTable
-                    orders={usersOrders}
-                    totalPrice={+totalPrice(orders, food, event)}
-                />;
 
                 usersOrders.forEach((order) => {
                     const body = <OrdersTable
                         orders={[order]}
                     />;
-                    this.sendEmail(order.email, event.title, eventStatus, body);//Send email to each ordered user
+
+                    //Send email to each ordered user
+                    this.sendEmail(order.email, event.title, eventStatus, body);
                 });
                 break;
         }

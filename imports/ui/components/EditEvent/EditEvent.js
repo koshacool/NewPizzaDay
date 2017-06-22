@@ -16,7 +16,6 @@ import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerCon
 import Spinner from '../Spinner';
 
 
-
 /**
  * Class for add/remove available food and users in the event
  */
@@ -27,13 +26,13 @@ class EditEvent extends React.Component {
             modal: false,
             modalParams: null,
             renderData: false,
-        }
+        };
 
         this.onEventUpdate = this.onEventUpdate.bind(this);
         this.onEventRemove = this.onEventRemove.bind(this);
         this.onRenderFood = this.onRenderFood.bind(this);
-        this.renderFood = this.renderFood.bind(this);
         this.onRenderUsers = this.onRenderUsers.bind(this);
+        this.renderFood = this.renderFood.bind(this);
         this.renderUsers = this.renderUsers.bind(this);
 
         this.showModal = this.showModal.bind(this);
