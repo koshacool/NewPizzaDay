@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 
 import ListItem from 'react-md/lib/Lists/ListItem';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
-import FontIcon from 'react-md/lib/FontIcons';
+
 import Divider from 'react-md/lib/Dividers';
 import TextField from 'react-md/lib/TextFields';
-import Button from 'react-md/lib/Buttons/Button';
 
 import IconButton from '../../IconButton';
 
@@ -22,13 +21,12 @@ import IconButton from '../../IconButton';
  */
 const GroupItem = ({ group, onAvailableToggle, checked, editGroup }) => {
 
-    const GroupIcon = () => <FontIcon>people</FontIcon>;
     const edit = groupId => () => editGroup(groupId);
 
     return (
         <div>
             <ListItem
-                leftIcon={<GroupIcon />}
+                leftIcon={<IconButton name="people" />}
                 primaryText={group.name}
                 threeLines
                 key={group._id}

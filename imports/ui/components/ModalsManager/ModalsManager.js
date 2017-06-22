@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import Dialog from 'react-md/lib/Dialogs';
-import Button from 'react-md/lib/Buttons/Button';
 
 import ConfirmContainer from './Containers/ConfirmContainer';
 

@@ -9,8 +9,6 @@ import { handleResult, valueInArray } from '../../../utils/client-utils';
 import { updateOrder } from '../../../api/orders/methods';
 
 import OrderFoodItem from './OrderFoodItem';
-import Spinner from '../Spinner';
-import LinkButton from '../LinkButton';
 import NoItems from '../NoItems';
 
 import List from 'react-md/lib/Lists/List';

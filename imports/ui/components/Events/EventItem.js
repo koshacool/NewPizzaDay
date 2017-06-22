@@ -9,8 +9,6 @@ import Card from 'react-md/lib/Cards/Card';
 import CardTitle from 'react-md/lib/Cards/CardTitle';
 import CardText from 'react-md/lib/Cards/CardText';
 import CardActions from 'react-md/lib/Cards/CardActions';
-import Button from 'react-md/lib/Buttons/Button';
-import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
 import ListItem from 'react-md/lib/Lists/ListItem';
 import List from 'react-md/lib/Lists/List';
 import Avatar from 'react-md/lib/Avatars';
@@ -19,8 +17,8 @@ import { handleResult } from '../../../utils/client-utils';
 import { detailedUsersPrice, totalPrice } from '../../../utils/order-result';
 import { updateEvent } from '../../../api/events/methods';
 import OrdersTable   from '../Tables/OrdersTable';
-import Spinner from '../Spinner';
 
+import Spinner from '../Spinner';
 import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
 

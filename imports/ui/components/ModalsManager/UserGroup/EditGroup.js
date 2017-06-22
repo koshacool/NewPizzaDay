@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
-import { Row, Col } from 'react-flexbox-grid';
-
-import Dialog from 'react-md/lib/Dialogs';
 import Button from 'react-md/lib/Buttons/Button';
 import Divider from 'react-md/lib/Dividers';
 import List from 'react-md/lib/Lists/List';

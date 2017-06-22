@@ -21,7 +21,7 @@ IconButton.defaultProps = {
 
 IconButton.propTypes = {
 	name: PropTypes.string.isRequired,
-  	onClick: PropTypes.func.isRequired,
+  	onClick: PropTypes.func,
   	className: PropTypes.string,
 };
 

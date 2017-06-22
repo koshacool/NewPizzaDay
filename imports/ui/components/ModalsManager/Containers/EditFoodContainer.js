@@ -6,7 +6,6 @@ import EditFood from '../EditFood';
 
 
 export default createContainer(({props: { hideModal, foodItem } }) => {
-	
   return {
     hideModal,
     foodItem,

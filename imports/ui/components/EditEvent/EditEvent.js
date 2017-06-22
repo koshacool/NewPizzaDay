@@ -1,26 +1,21 @@
 import { Meteor } from 'meteor/meteor';
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
 import { Row, Col } from 'react-flexbox-grid';
-import TextField from 'react-md/lib/TextFields/TextField';
 import Button from 'react-md/lib/Buttons/Button';
-import Divider from 'react-md/lib/Dividers';
 
-import LinkButton from '../LinkButton';
-import MenuButtonStatus from '../MenuButton';
-import Spinner from '../Spinner';
-
-import { handleResult, ucFirst } from '../../../utils/client-utils';
 import { updateEvent, removeEvent } from '../../../api/events/methods';
 import { removeOrder } from '../../../api/orders/methods';
+import { handleResult, ucFirst } from '../../../utils/client-utils';
 
 import EditEventInfo from './EditEventInfo';
 import AddFoodContainer from '../Food/AddFoodContainer';
 import AddUsersContainer from '../Users/AddUsersContainer';
 import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerContainer';
+import Spinner from '../Spinner';
+
+
 
 /**
  * Class for add/remove available food and users in the event

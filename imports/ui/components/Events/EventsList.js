@@ -6,7 +6,6 @@ import { Row } from 'react-flexbox-grid';
 
 import { handleResult } from '../../../utils/client-utils';
 import { createEvent } from '../../../api/events/methods';
-import { createOrder } from '../../../api/orders/methods';
 
 import EventItemContainer from './EventItemContainer';
 import Spinner from '../Spinner';

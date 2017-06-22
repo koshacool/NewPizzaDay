@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
 import Button from 'react-md/lib/Buttons/Button';
 import Divider from 'react-md/lib/Dividers';
+import List from 'react-md/lib/Lists/List';
+import Subheader from 'react-md/lib/Subheaders';
 
 import { handleResult, ucFirst, valueInArray } from '../../../utils/client-utils';
 import { updateEvent } from '../../../api/events/methods';
@@ -11,12 +13,9 @@ import { createFoodGroup } from '../../../api/foodGroups/methods';
 
 import FoodItem from './FoodItem';
 import Spinner from '../Spinner';
-import LinkButton from '../LinkButton';
 import NoItems from '../NoItems';
 import ModalsManagerContainer from '../ModalsManager/Containers/ModalsManagerContainer';
 
-import List from 'react-md/lib/Lists/List';
-import Subheader from 'react-md/lib/Subheaders';
 
 /**
  * Class for display all food created by logged user

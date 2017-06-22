@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Dialog from 'react-md/lib/Dialogs';
 import Button from 'react-md/lib/Buttons/Button';
-import Divider from 'react-md/lib/Dividers';
 import TextField from 'react-md/lib/TextFields';
-import Toolbar from 'react-md/lib/Toolbars';
 import FocusContainer from 'react-md/lib/Helpers/FocusContainer';
 
-import { handleResult } from '../../../utils/client-utils';
+import { handleResult, getFieldValue } from '../../../utils/client-utils';
 import { createFood } from '../../../api/food/methods';
 
-const getFieldValue = form => field => form[field].value || '';
 
 /**
  * Class for display modal window for create food item

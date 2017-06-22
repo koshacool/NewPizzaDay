@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 
-import { Row, Col } from 'react-flexbox-grid';
-
-import Dialog from 'react-md/lib/Dialogs';
 import Button from 'react-md/lib/Buttons/Button';
 import Divider from 'react-md/lib/Dividers';
 import List from 'react-md/lib/Lists/List';
 import Subheader from 'react-md/lib/Subheaders';
-
-import ModalsManagerContainer from '../Containers/ModalsManagerContainer';
 
 import { handleResult, valueInArray, ucFirst } from '../../../../utils/client-utils';
 import { updateGroup, removeGroup } from '../../../../api/foodGroups/methods';
 import EditGroupInfo from './EditGroupInfo';
 import FoodItem from '../../Food/FoodItem';
 import Spinner from '../../Spinner';
+
+import ModalsManagerContainer from '../Containers/ModalsManagerContainer';
 
 /**
  * Class display window for edit group
@@ -162,7 +158,7 @@ class EditGroup extends Component {
                     <List>
                         <Subheader primaryText="Food list" primary/>
 
-                        {food.length > 1 && food.map(foodItem => (
+                        {food.length > 0 && food.map(foodItem => (
                             foodItem._id === Meteor.userId() ?
                                 '' :
                                 <FoodItem

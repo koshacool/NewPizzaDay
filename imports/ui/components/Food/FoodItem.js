@@ -1,27 +1,17 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
-import { Meteor } from 'meteor/meteor';
-
-import { Col } from 'react-flexbox-grid';
-
-import List from 'react-md/lib/Lists/List';
 import ListItem from 'react-md/lib/Lists/ListItem';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
-import FontIcon from 'react-md/lib/FontIcons';
-import Subheader from 'react-md/lib/Subheaders';
 import Divider from 'react-md/lib/Dividers';
-import Button from 'react-md/lib/Buttons';
 import TextField from 'react-md/lib/TextFields';
 
-import LinkButton from '../LinkButton';
-import MenuButtonStatus from '../MenuButton';
 import IconButton from '../IconButton';
 
 
 const FoodItem = ({ foodItem, onAvailableToggle, checked, onDiscount, discount, onEdit }) => {
-    const FoodIcon = () => <FontIcon>restaurant</FontIcon>;
+
     const evailableToggle = isChecked => onAvailableToggle(foodItem._id, isChecked);
     const edit = foodId => () => onEdit(foodId);
 
@@ -38,7 +28,7 @@ const FoodItem = ({ foodItem, onAvailableToggle, checked, onDiscount, discount, 
         <div>
             <ListItem
                 key={foodItem._id}
-                leftIcon={<FoodIcon />}
+                leftIcon={<IconButton name="restaurant" />}
                 primaryText={foodItem.name}
                 secondaryText={getPrice()}
                 threeLines
