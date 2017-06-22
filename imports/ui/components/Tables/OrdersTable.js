@@ -65,18 +65,18 @@ class OrdersTable extends React.Component {
                 </thead>
 
                 <tbody>
-                    { this.renderUserOrder() }
+                { this.renderUserOrder() }
                 </tbody>
 
-                {totalPrice &&
-                <tfoot>
-                <tr>
-                    <td>
-                        Total price: ₴{totalPrice}
-                    </td>
-                </tr>
-                </tfoot>
-                }
+                { totalPrice && (
+                    <tfoot>
+                    <tr>
+                        <td>
+                            Total price: ₴{totalPrice}
+                        </td>
+                    </tr>
+                    </tfoot>
+                ) }
             </table>
         );
     }
