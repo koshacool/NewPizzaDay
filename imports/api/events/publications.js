@@ -18,7 +18,8 @@ Meteor.publish('events.public', function eventsPublic() {
         return this.ready();
     }
 
-    return Events.find({users: {$all: [this.userId]}});
+    //Get all available events, not created by logged user
+    return Events.find({ users: { $all: [this.userId] }, createdBy: { $ne: this.userId } });
 });
 
 Meteor.publish('events.byId', function eventsById(eventId) {
