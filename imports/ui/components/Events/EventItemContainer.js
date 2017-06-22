@@ -12,13 +12,16 @@ export default createContainer(({ event }) => {
 
     return {
         event,
-        users: Meteor.users.find({ _id: { $in: event.users } }).fetch(),//Added users in this event
+        users: Meteor.users.find({_id: {$in: event.users}}).fetch(),//Added users in this event
         orders: Orders.find({eventId: event._id}).fetch(),//Users orders in this event
-        food: Food.find({ _id: { $in: event.food } }).fetch(),//Food which are availabled in this event
-        onUnmount:() => {
+        food: Food.find({_id: {$in: event.food}}).fetch(),//Food which are availabled in this event
+        onUnmount: () => {
             subsHandler1.stop();
             subsHandler2.stop();
             subsHandler3.stop();
         },
+        loading: !subsHandler1.ready() ||
+        !subsHandler2.ready() ||
+        !subsHandler3.ready(),
     };
 }, EventItem);

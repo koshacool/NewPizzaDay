@@ -19,6 +19,7 @@ import { handleResult } from '../../../utils/client-utils';
 import { detailedUsersPrice, totalPrice } from '../../../utils/order-result';
 import { updateEvent } from '../../../api/events/methods';
 import OrdersTable   from '../Tables/OrdersTable';
+import Spinner from '../Spinner';
 
 import LinkButton from '../LinkButton';
 import MenuButtonStatus from '../MenuButton';
@@ -132,63 +133,62 @@ class EventItem extends React.Component {
 
 
     render() {
-        const { event, users } = this.props;
+        const { event, users, loading } = this.props;
         const canEdit = event.createdBy === Meteor.userId();
         const canOrder = event.status === 'ordering';
         const isEventOver = event.status === 'delivered';
         const owner = users.filter(user => user._id === event.createdBy)[0];
-        console.log(owner)
+
         return (
             <Col xs={12} className="m-b-20">
-                <Card>
-                    <CardTitle
-                        title={event.title}
-                        subtitle={getTimeAgo(event.createdAt)}
-                    />
+                <Spinner loading={loading}>
+                    <Card>
+                        <CardTitle
+                            title={event.title}
+                            subtitle={getTimeAgo(event.createdAt)}
+                        />
 
-                    {owner && (
-                        <CardText>
-                            <Avatar alt={owner.username} src={owner.avatar} iconSized/>
-                            {` ${owner.username}`}
-                        </CardText>
-                    )}
-
-
-                    <CardActions>
-                        {canOrder && (
-                            <LinkButton
-                                flat
-                                to={`/order/${event._id}`}
-                                label="Order"
-                            />
+                        {owner && (
+                            <CardText>
+                                <Avatar alt={owner.username} src={owner.avatar} iconSized/>
+                                {` ${owner.username}`}
+                            </CardText>
                         )}
 
-                        {canEdit && (
-                            <LinkButton
-                                flat
-                                to={`/event/${event._id}`}
-                                label="Edit"
-                            />
-                        )}
-                        <List className="md-cell--right">
-                            <ListItem
-                                primaryText={`Status: ${event.status}`}
-                                active
-                                threeLines
-                            >
-                                {canEdit && !isEventOver && (
-                                    <MenuButtonStatus onSelect={this.onChangeStatus} eventId={event._id}/>)}
-                            </ListItem>
-                        </List>
 
-                    </CardActions>
-                </Card>
+                        <CardActions>
+                            {canOrder && (
+                                <LinkButton
+                                    flat
+                                    to={`/order/${event._id}`}
+                                    label="Order"
+                                />
+                            )}
+
+                            {canEdit && (
+                                <LinkButton
+                                    flat
+                                    to={`/event/${event._id}`}
+                                    label="Edit"
+                                />
+                            )}
+                            <List className="md-cell--right">
+                                <ListItem
+                                    primaryText={`Status: ${event.status}`}
+                                    active
+                                    threeLines
+                                >
+                                    {canEdit && !isEventOver && (
+                                        <MenuButtonStatus onSelect={this.onChangeStatus} eventId={event._id}/>)}
+                                </ListItem>
+                            </List>
+
+                        </CardActions>
+                    </Card>
+                </Spinner>
             </Col>
         );
-
     }
-
-
 }
 
 
@@ -198,6 +198,7 @@ EventItem.propTypes = {
     users: PropTypes.array,
     order: PropTypes.array,
     food: PropTypes.array,
+    loading: PropTypes.bool.isRequired,
 };
 
 
