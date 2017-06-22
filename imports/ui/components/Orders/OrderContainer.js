@@ -28,8 +28,8 @@ export default createContainer(({ eventId }) => {
         }
     }
 
-    const event = Events.findOne({_id: eventId});
 
+    const event = Events.findOne({_id: eventId});
 
     if (event) {
         subsHandler4 = Meteor.subscribe('food.byArrayId', event.food);
